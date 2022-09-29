@@ -1,10 +1,13 @@
 
 digito		[0-9]
 letra		[a-z]|[A-Z]|"_"|"$"
+			
+parte		{digito}([{digito}|"_"]*{digito})*
+exp		("e"|"E")("-"|"+")?({parte})
 
 
 %%
-
+({parte}"."({parte}?{exp}?)?)|("."{parte}{exp}?)|({parte}{exp})	{printf("REALLIT(%s)\n", yytext);}
 
 "0"|{digito}|({digito}({digito}|"_")*{digito})	{printf("INTLIT(%s)\n", yytext);}
 
