@@ -95,11 +95,11 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 
 \"                                 						{BEGIN STRLIT; linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;}
-<STRLIT>\n|\r|\r\n               						{BEGIN 0; printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); strcpy(string,""); coluna = 1; linha++;}
+<STRLIT>\n|\r|\r\n               						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); strcpy(string,""); coluna = 1; linha++;BEGIN 0; }
 <STRLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      {strcat(string, yytext);  coluna+=yyleng;}
 <STRLIT>\\[^\n\r\"]|\\|\f|\t        					{printf("Line %d, col %d: invalid escape sequence (%s)\n", linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
-<STRLIT>\"                         						{if(imprime) {  printf("STRLIT(\"%s\")\n", string);} strcpy(string,""); BEGIN 0; coluna += yyleng;}
-<STRLIT><<EOF>>                     					{BEGIN 0; printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;}
+<STRLIT>\"                         						{if(imprime && flag) {  printf("STRLIT(\"%s\")\n", string);} strcpy(string,""); BEGIN 0; coluna += yyleng;}
+<STRLIT><<EOF>>                     					{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;BEGIN 0; }
 
 
 
