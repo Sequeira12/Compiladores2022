@@ -16,77 +16,77 @@
 
 
 
-digito					[0-9]
-letra					[a-z]|[A-Z]|"_"|"$"
+digito						[0-9]
+letra						[a-z]|[A-Z]|"_"|"$"
 
 
-BOOLLIT					("true"|"false")
+BOOLLIT						("true"|"false")
 AND						"&&"			
-ASSIGN					"="							
-STAR					"*"				
-COMMA					","				
+ASSIGN						"="							
+STAR						"*"				
+COMMA						","				
 DIV						"/"						
 EQ						"=="				
 GE						">="				
 GT						">"				
-LBRACE					"{"				
+LBRACE						"{"				
 LE						"<="				
-LPAR					"("				
+LPAR						"("				
 LSQ						"["				
 LT						"<"				
-MINUS					"-"								
+MINUS						"-"								
 MOD						"%"				
 NE						"!="				
 NOT						"!"				
 OR						"||"				
-PLUS					"+"				
-RBRACE					"}"				
-RPAR					")"				
+PLUS						"+"				
+RBRACE						"}"				
+RPAR						")"				
 RSQ						"]"				
-SEMICOLON				";"				
-ARROW					"->"				
-LSHIFT					"<<"				
-RSHIFT					">>"				
+SEMICOLON					";"				
+ARROW						"->"				
+LSHIFT						"<<"				
+RSHIFT						">>"				
 XOR						"^"				
-BOOL					"boolean"			
-CLASS					"class"				
-DOTLENGTH				".length"			
-DOUBLE					"double"			
-ELSE					"else"				
+BOOL						"boolean"			
+CLASS						"class"				
+DOTLENGTH					".length"			
+DOUBLE						"double"			
+ELSE						"else"				
 IF						"if"				
 INT						"int"				
-PRINT					"System.out.print"		
-PARSEINT				"Integer.parseInt"		
-PUBLIC					"public"			
-RETURN					"return"			
-STATIC					"static"			
-STRING					"String"			
-VOID					"void"				
-WHILE					"while"				
-RESERVED				("++"|"--"|"null"|"Integer"|"System"|"abstract"|"assert"|"break"|"byte"|"case"|"catch"|"catch"|"char"|"const"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"package"|"private"|"protected"|"short"|"strictfp"|"super"|"switch"|"synchronized"|"this"|"throw"|"throws"|"transient"|"try"|"volatile"|"continue")	
+PRINT						"System.out.print"		
+PARSEINT					"Integer.parseInt"		
+PUBLIC						"public"			
+RETURN						"return"			
+STATIC						"static"			
+STRING						"String"			
+VOID						"void"				
+WHILE						"while"				
+RESERVED					("++"|"--"|"null"|"Integer"|"System"|"abstract"|"assert"|"break"|"byte"|"case"|"catch"|"catch"|"char"|"const"|"default"|"do"|"enum"|"extends"|"final"|"finally"|"float"|"for"|"goto"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"package"|"private"|"protected"|"short"|"strictfp"|"super"|"switch"|"synchronized"|"this"|"throw"|"throws"|"transient"|"try"|"volatile"|"continue")	
 ID						({letra})({letra}|{digito})*		
-STRLIT					\t\n\r\f"\\\\""\\"	
+STRLIT						\t\n\r\f"\\\\""\\"	
 
-REALLIT					({parte}"."({parte}?{exp}?)?)|("."{parte}{exp}?)|({parte}{exp})
-INTLIT					"0"|[1-9]|([1-9]({digito}|"_")*{digito})
+REALLIT						({parte}"."({parte}?{exp}?)?)|("."{parte}{exp}?)|({parte}{exp})
+INTLIT						"0"|[1-9]|([1-9]({digito}|"_")*{digito})
 				
-parte					{digito}([{digito}|"_"]*{digito})*
+parte						{digito}([{digito}|"_"]*{digito})*
 exp						("e"|"E")("-"|"+")?({parte})
 
 
 %%
 
-"/*"					{BEGIN COM1;linhaaux = linha; colunaaux = coluna;coluna+=yyleng;}
-<COM1><<EOF>> 			{BEGIN 0;printf("Line %d, col %d: unterminated comment\n",linhaaux,colunaaux);yyterminate();}
+"/*"						{BEGIN COM1;linhaaux = linha; colunaaux = coluna;coluna+=yyleng;}
+<COM1><<EOF>> 					{BEGIN 0;printf("Line %d, col %d: unterminated comment\n",linhaaux,colunaaux);yyterminate();}
 
-<COM1>"*/"				{BEGIN 0;coluna += yyleng;}
-<COM1>\r\n|\n|\r 		{linha++; coluna=1;}
-<COM1>.					{coluna += yyleng;}
+<COM1>"*/"					{BEGIN 0;coluna += yyleng;}
+<COM1>\r\n|\n|\r 				{linha++; coluna=1;}
+<COM1>.						{coluna += yyleng;}
 
 
-"//"					{BEGIN COM2;linhaaux = linha; colunaaux = coluna;coluna+=yyleng;}
-<COM2>\n|\r|\r\n	{BEGIN 0; linha++; coluna=1;}
-<COM2>.					{coluna += yyleng;}
+"//"						{BEGIN COM2;linhaaux = linha; colunaaux = coluna;coluna+=yyleng;}
+<COM2>\n|\r|\r\n				{BEGIN 0; linha++; coluna=1;}
+<COM2>.						{coluna += yyleng;}
 
 
 
@@ -96,10 +96,10 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 \"                                 						{BEGIN STRLIT; linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;}
 <STRLIT>\n|\r|\r\n               						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); strcpy(string,""); coluna = 1; linha++;BEGIN 0; }
-<STRLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      {strcat(string, yytext);  coluna+=yyleng;}
-<STRLIT>\\[^\n\r\"]|\\|\f|\t        					{printf("Line %d, col %d: invalid escape sequence (%s)\n", linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
+<STRLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      			{strcat(string, yytext);  coluna+=yyleng;}
+<STRLIT>\\[^\n\r\"]|\\|\f|\t        						{printf("Line %d, col %d: invalid escape sequence (%s)\n", linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
 <STRLIT>\"                         						{if(imprime && flag) {  printf("STRLIT(\"%s\")\n", string);} strcpy(string,""); BEGIN 0; coluna += yyleng;}
-<STRLIT><<EOF>>                     					{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;BEGIN 0; }
+<STRLIT><<EOF>>                     						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;BEGIN 0; }
 
 
 
@@ -124,7 +124,7 @@ exp						("e"|"E")("-"|"+")?({parte})
 {LPAR}					{if(flag)printf("LPAR\n");coluna+=yyleng;}
 {LSQ}					{if(flag)printf("LSQ\n");coluna+=yyleng;}
 {LT}					{if(flag)printf("LT\n");coluna+=yyleng;}
-{MINUS}			      	{if(flag)printf("MINUS\n");coluna+=yyleng;}				
+{MINUS}			      		{if(flag)printf("MINUS\n");coluna+=yyleng;}				
 {MOD}					{if(flag)printf("MOD\n");coluna+=yyleng;}
 {NE}					{if(flag)printf("NE\n");coluna+=yyleng;}
 {NOT}					{if(flag)printf("NOT\n");coluna+=yyleng;}
@@ -158,10 +158,10 @@ exp						("e"|"E")("-"|"+")?({parte})
 {STRLIT}				{if(flag)printf("STRLIT\n");coluna+=yyleng;}
 
 
-" " 							{coluna+= yyleng;}
-"\t"							{coluna+= yyleng;}
-"\f" 							{coluna+= yyleng;}
-\r\n|\n|\r				    {linha++; coluna=1;}
+" " 					{coluna+= yyleng;}
+"\t"					{coluna+= yyleng;}
+"\f" 					{coluna+= yyleng;}
+\r\n|\n|\r				{linha++; coluna=1;}
 .                   			{printf("Line %d, col %d: illegal character (%s)\n", linha, coluna, yytext); coluna += yyleng;}
 
 
