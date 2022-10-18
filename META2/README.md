@@ -5,3 +5,5 @@ Amanhã sou capaz de compor, não consegui testar tudo, tem estado a dar erros q
 Está me a dar um erro nos tokens, a passar uns para os outros por causa do seu "tipo"
 
 Verifica-me da linha 37 até à 180, se está conforme pedem, A cena dos printf's era so pa testar 
+
+Linha: %token <char> inves de <char> é <lit> mas mesmo assim nao funciona
