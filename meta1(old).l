@@ -13,7 +13,7 @@
 	char string[254];
 
 %}
-
+da
 
 
 digito					[0-9]
