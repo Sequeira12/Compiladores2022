@@ -1,10 +1,3 @@
-
-
-
-              
-
-
-
 %{
 	#include <string.h>
 	#include <stdbool.h>
@@ -17,181 +10,177 @@
 %}
 
 %union{
-    char* lit;
+    char* id;
     struct node *N_no;
 };
 
 
 
 
-%token	 NE NOT AND OR RBRACE LBRACE RPAR RSQ PARSEINT RETURN ELSE IF LSQ LPAR LE GE GT EQ LT PLUS MINUS DIV STAR ASSIGN COMMA SEMICOLON INT STRING WHILE DOTLENGTH STATIC DOUBLE PUBLIC CLASS VOID MOD XOR RSHIFT LSHIFT STRLIT BOOL PRINT 
 
+%token AND ASSIGN STAR COMMA DIV EQ GE GT LBRACE LE LPAR LSQ LT MINUS MOD NE NOT OR PLUS RBRACE RPAR RSQ SEMICOLON ARROW LSHIFT RSHIFT XOR CLASS DOTLENGTH ELSE IF PRINT PARSEINT PUBLIC RETURN STATIC STRING VOID WHILE INT DOUBLE BOOL RESERVED
 
-%token <lit>  INTLIT REALLIT ID RESERVED BOOLIT
-/*  
-Da linha 35 à 45 foi copy com o grupo do ano passado mas nao resolve, falta mais cenas
+%token <id> ID
+%token <id> INTLIT
+%token <id> REALLIT
+%token <id> BOOLLIT
+%token <id> STRLIT
 
-*/
-%left COMMA SEMICOLON
+%type <N_no> Program declaration MethodDecl FieldDecl FindDeclSec Type MethodHeader MethodHeaderSec FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl VarDeclSec Statement StatementSec  StatementThird StatementPrint MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs  Expr  
+
 %right ASSIGN
-%left OR 
+%left OR
 %left AND
-%left LT LE GT GE EQ NE
+%left XOR
+%left EQ NE
+%left GE GT LE LT
+%left LSHIFT RSHIFT
 %left PLUS MINUS
 %left STAR DIV MOD
 %right NOT
 %left LPAR RPAR LSQ RSQ
-%nonassoc IF
-%nonassoc ELSE
 
-%type <N_no> Program declaration MethodDecl  FieldDecl FieldDeclSec Type MethodHeader MethodHeaderSec FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl VarDeclSec Statement  StatementThird MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs Expr
-
+%right ELSE
 
 %%
 
-Program:
-	CLASS ID LBRACE declaration RBRACE					{$$=NULL;}	// Program
-	;
+Program:	CLASS ID LBRACE declaration RBRACE									{$$ = NULL;}		
+		;
+
+declaration: 
+				MethodDecl declaration																{$$ = NULL;}			
+			|	FieldDecl declaration																	{$$ = NULL;}					
+			|	SEMICOLON declaration																	{$$ = NULL;}			
+			|	/* null */																						{$$ = NULL;}		
+			;
+
+MethodDecl:	PUBLIC STATIC MethodHeader MethodBody							{$$ = NULL;}		
+																
+		;
+
+FieldDecl:	PUBLIC STATIC Type ID FindDeclSec SEMICOLON				{$$ = NULL;}		
 	
-declaration:
-	MethodDecl declaration							{$$=NULL;}			
-	|FieldDecl declaration							{$$=NULL;}	
-	|SEMICOLON declaration							{$$=NULL;}	
-	| /*NULL*/								{$$=NULL;}
-	;
-
-
-MethodDecl:
-	PUBLIC STATIC MethodHeader MethodBody					{$$=NULL;}	
 ;
-FieldDecl:
-	PUBLIC STATIC Type ID FieldDeclSec SEMICOLON				{$$=NULL;}	
-	;
-FieldDeclSec:
-	COMMA ID								{$$=NULL;}	
-	| /*NULL*/								{$$=NULL};
-	;	
-Type:
-	 BOOL									{$$=NULL;}	
-	| INT									{$$=NULL;}	
-	| DOUBLE 								{$$=NULL;}	
+FindDeclSec:
+			COMMA ID FindDeclSec																		{$$ = NULL;}	
+			|/* null */										{$$ = NULL;}	
+		;
+
+Type:	BOOL																										{$$ = NULL;}	
+	|	INT																												{$$ = NULL;}
+	|	DOUBLE																										{$$ = NULL;}
 	;
 
-MethodHeader:
-	Type ID LPAR MethodHeaderSec RPAR					{$$=NULL;}	
-	| VOID ID LPAR MethodHeaderSec RPAR					{$$=NULL;}	
-	;		
-MethodHeaderSec:
-	FormalParams								{$$=NULL;}	
-	| /*NULL*/								{$$=NULL};
-	;
-FormalParams:
-	Type ID FormalParamsSec						{$$=NULL;}	
-	|STRING LSQ RSQ ID							{$$=NULL;}	
-	;
-FormalParamsSec:
-	COMMA Type ID								{$$=NULL;}	
-	| /*NULL*/								{$$=NULL};
-	;
-			
-MethodBody:
-	LBRACE MethodBodySec RBRACE						{$$=NULL;}	
-	;
-MethodBodySec:
-	Statement								{$$=NULL;}	
-	|VarDecl								{$$=NULL;}	
-	| /*NULL*/								{$$=NULL};
-	;
-	
-VarDecl:
-	Type ID VarDeclSec SEMICOLON						{$$=NULL;}	
-	;
-VarDeclSec:
-	COMMA ID								{$$=NULL;}	
-	| /*NULL*/								{$$=NULL};
-	;
-	
-Statement:
-	StatementThird SEMICOLON						{$$=NULL;}	
-	|IF LPAR Expr RPAR Statement						{$$=NULL;}	
-	|IF LPAR Expr RPAR Statement ELSE Statement				{$$=NULL;}	
-	|WHILE LPAR Expr RPAR Statement					{$$=NULL;}	
-	|RETURN Expr SEMICOLON							{$$=NULL;}	
-	|RETURN SEMICOLON							{$$=NULL;}
-	|LBRACE Statement RBRACE						{$$=NULL;}	
-	|PRINT LPAR Expr RPAR SEMICOLON					{$$=NULL;}	
-	|PRINT LPAR STRLIT RPAR SEMICOLON					{$$=NULL;}	
-	|/*NULL*/								{$$=NULL;}
-	;
+MethodHeader:	Type ID LPAR MethodHeaderSec RPAR								{$$ = NULL;}		
+			|	VOID ID LPAR MethodHeaderSec RPAR											{$$ = NULL;}	
+			;
+
+MethodHeaderSec:	
+				FormalParams																					{$$ = $1;}
+			|/* null */																							{$$ = NULL;}																						
+			;
+
+FormalParams:	Type ID FormalParamsSec													{$$ = NULL;}					
+			|	STRING LSQ RSQ ID																			{$$ = NULL;}	
+			;
+
+FormalParamsSec:				
+				COMMA Type ID FormalParamsSec 												{$$ = NULL;}		
+			|/* null */																							{$$ = NULL;}							
+			;
+
+MethodBody:	LBRACE MethodBodySec RBRACE												{$$ = NULL;}						
+		;
+
+MethodBodySec: 	
+				Statement MethodBodySec																{$$ = NULL;}		
+			|	VarDecl MethodBodySec																	{$$ = NULL;}	
+			|	/* nulL */																						{$$ = NULL;}											
+			;
+
+VarDecl:	Type ID VarDeclSec SEMICOLON												{$$ = NULL;}						
+		;
+
+VarDeclSec:	/* null */																				{$$ = NULL;}					
+		|	COMMA ID VarDeclSec																			{$$ = NULL;}		
+		;
+
+Statement:	LBRACE StatementSec RBRACE												{$$ = NULL;}	
+		|	IF LPAR Expr RPAR Statement         										{$$ = NULL;}		
+		|	IF LPAR Expr RPAR Statement ELSE Statement							{$$ = NULL;}	
+		|	WHILE LPAR Expr RPAR Statement													{$$ = NULL;}			
+		|	RETURN SEMICOLON																				{$$ = NULL;}			
+		|	RETURN Expr SEMICOLON																		{$$ = NULL;}			
+		|	StatementThird SEMICOLON																{$$ = NULL;}		
+		|	PRINT LPAR StatementPrint RPAR SEMICOLON								{$$ = NULL;}	
+																	
+		
+		;
+StatementSec:	
+			Statement StatementSec																	{$$ = NULL;}			
+			| /* null */																						{$$ = NULL;}		
+		;
 
 
-StatementThird:
-	MethodInvocation							{$$=NULL;}	
-	|Assignment								{$$=NULL;}	
-	|ParseArgs								{$$=NULL;}	
-	|/*NULL*/								{$$=NULL;}
-	;
+StatementThird:	/* null */																		{$$ = NULL;}
+		|	MethodInvocation																				{$$ = $1;}
+		|	Assignment																							{$$ = $1;}
+		|	ParseArgs																								{$$ = $1;}
+		;
 
+StatementPrint:	Expr																					{$$ = $1;}
+			|	STRLIT																								{$$ = NULL;}			
+			;
 
-MethodInvocation:	
-	ID LPAR MethodInvocationSec RPAR					{$$=NULL;}	
-;
+MethodInvocation:	ID LPAR MethodInvocationSec RPAR  					{$$ = NULL;}					
+				
+				;
+
 MethodInvocationSec:
-	Expr MethodInvocationThird						{$$=NULL;}	
-	| /*NULL*/								{$$=NULL};
+					Expr MethodInvocationThird													{$$ = $1;}
+					|/* null */																					{$$ = NULL;}		
+				;
+
+MethodInvocationThird:		COMMA Expr MethodInvocationThird		{$$ = NULL;}
+				| /* null */																					{$$ = NULL;}		
+					;
+
+Assignment:	ID ASSIGN Expr																		{$$ = NULL;}
+		;
+
+ParseArgs:	PARSEINT LPAR ID LSQ Expr RSQ RPAR								{$$ = NULL;}					
+		|	PARSEINT LPAR error RPAR																{$$ = NULL;}
+			;
+
+Expr:	Expr PLUS Expr											   	{$$ = NULL;}
+			|	Expr MINUS Expr												{$$ = NULL;}
+			|	Expr STAR Expr												{$$ = NULL;}
+			|	Expr DIV Expr													{$$ = NULL;}
+			|	Expr MOD Expr													{$$ = NULL;}
+			|	Expr AND Expr													{$$ = NULL;}
+			|	Expr OR Expr													{$$ = NULL;}
+			|	Expr XOR Expr													{$$ = NULL;}
+			|	Expr LSHIFT Expr											{$$ = NULL;}
+			|	Expr RSHIFT Expr											{$$ = NULL;}
+			|	Expr EQ Expr													{$$ = NULL;}		
+			|	Expr GE Expr													{$$ = NULL;}		
+			|	Expr GT Expr													{$$ = NULL;}	
+			|	Expr LE Expr													{$$ = NULL;}	
+			|	Expr LT Expr													{$$ = NULL;}	
+			|	Expr NE Expr													{$$ = NULL;}	
+			|	PLUS Expr                       			{$$ = NULL;}	
+			|	MINUS Expr 														{$$ = NULL;}	
+			|	NOT Expr															{$$ = NULL;}
+			|	MethodInvocation											{$$ = $1;}
+			|	ParseArgs															{$$ = $1;}
+			|	LPAR error RPAR												{$$ = NULL;}
+			|	ID																		{$$ = NULL;}
+			|	ID DOTLENGTH													{$$ = NULL;}
+			|INTLIT																	{$$ = NULL;}
+			|	REALLIT																{$$ = NULL;}
+			|	BOOLLIT																{$$ = NULL;}		
 	;
-MethodInvocationThird:
-	COMMA Expr MethodInvocationThird					{$$=NULL;}	
-	| /*NULL*/								{$$=NULL};
-	;
-	
 
-Assignment:
-	 ID ASSIGN Expr							{$$=NULL;}	
-	 ;
-
-
-ParseArgs:
-	 PARSEINT LPAR ID LSQ Expr RSQ RPAR					{$$=NULL;}	
-	 ;
-	 
-	 
-
-
-Expr:
-	  Expr PLUS Expr		{printf("add\n");}
-	| Expr MINUS Expr		{printf("sub\n");}
-	| Expr STAR Expr		{printf("STar\n");}
-	| Expr DIV Expr		{printf("Div\n");}
-	| Expr MOD Expr		{printf("Mod\n");}
-	| Expr AND Expr		{printf("And\n");}
-	| Expr OR Expr			{printf("OR\n");}
-	| Expr XOR Expr		{printf("XOR\n");}
-	| Expr LSHIFT Expr		{printf("Lshift\n");}
-	| Expr RSHIFT Expr		{printf("Rshift\n");}
-	| Expr EQ Expr			{printf("Eq\n");}
-	| Expr GE Expr			{printf("Ge\n");}
-	| Expr GT Expr			{printf("Gt\n");}
-	| Expr LE Expr			{printf("LE\n");}
-	| Expr LT Expr			{printf("Lt\n");}
-	| Expr NE Expr			{printf("Ne\n");}
-	| MINUS Expr			{printf("Minus\n");}
-	| NOT Expr			{printf("NOT\n");}
-	| PLUS Expr 			{printf("PLUS\n");}
-	| LPAR Expr RPAR 		{printf("");}
-	| MethodInvocation 		{printf("Method");}
-	| Assignment 			{printf("Assignment\n");}
-	| ParseArgs			{printf("Parse\n");}
-	| ID 				{printf("ID\n");}
-	| ID DOTLENGTH			{printf("ID DOTLENGTH\n");}
-	| INTLIT 			{printf("intlit\n");}				
-	| REALLIT 			{printf("Reallit\n");}		
-	| BOOLIT			{printf("Bool\n");}
-
-	;
-	
-	
 
 
 %%
-
