@@ -123,25 +123,25 @@ exp						("e"|"E")("-"|"+")?({parte})
 {LPAR}					{if(flag)printf("LPAR\n");coluna+=yyleng;if(flag_yacc)return LPAR;}
 {LSQ}					{if(flag)printf("LSQ\n");coluna+=yyleng;if(flag_yacc)return LSQ;}
 {LT}					{if(flag)printf("LT\n");coluna+=yyleng;if(flag_yacc)return LT;}
-{MINUS}			      		{if(flag)printf("MINUS\n");coluna+=yyleng;if(flag_yacc)return MINUS;}				
+{MINUS}			      {if(flag)printf("MINUS\n");coluna+=yyleng;if(flag_yacc)return MINUS;}				
 {MOD}					{if(flag)printf("MOD\n");coluna+=yyleng;if(flag_yacc)return MOD;}
 {NE}					{if(flag)printf("NE\n");coluna+=yyleng;if(flag_yacc)return NE;}
 {NOT}					{if(flag)printf("NOT\n");coluna+=yyleng;if(flag_yacc)return NOT;}
-{OR}					{if(flag){printf("OR\n");coluna+=yyleng;if(flag_yacc)return OR;}
-{PLUS}					{if(flag){printf("PLUS\n");coluna+=yyleng;if(flag_yacc)return PLUS;}
-{RBRACE}				{if(flag){printf("RBRACE\n");coluna+=yyleng;if(flag_yacc)return RBRACE;}
-{RPAR}					{if(flag){printf("RPAR\n");coluna+=yyleng;if(flag_yacc)return RPAR;}
-{RSQ}					{if(flag){printf("RSQ\n");coluna+=yyleng;if(flag_yacc)return RSQ;}
-{SEMICOLON}				{if(flag){printf("SEMICOLON\n");coluna+=yyleng;if(flag_yacc)return SEMICOLON;}
-{ARROW}					{if{(flag)printf("ARROW\n");coluna+=yyleng;if(flag_yacc)return ARROW;}
-{LSHIFT}				{if(flag){printf("LSHIFT\n");coluna+=yyleng;if(flag_yacc)return LSHIFT;}
-{RSHIFT}				{if(flag){printf("RSHIFT\n");coluna+=yyleng;if(flag_yacc)return RSHIFT;}
-{XOR}					{if(flag){printf("XOR\n");coluna+=yyleng;if(flag_yacc)return XOR;}
-{BOOL}					{if(flag){printf("BOOL\n");coluna+=yyleng;if(flag_yacc)return BOOL;}
-{CLASS}					{if{(flag)printf("CLASS\n");coluna+=yyleng;if(flag_yacc)return CLASS;}
-{DOTLENGTH}				{if(flag){printf("DOTLENGTH\n");coluna+=yyleng;if(flag_yacc)return DOTLENGTH;}
-{DOUBLE}				{if(flag){printf("DOUBLE\n");coluna+=yyleng;if(flag_yacc)return DOUBLE;}
-{ELSE}					{if(flag){printf("ELSE\n");coluna+=yyleng;if(flag_yacc)return ELSE;}
+{OR}					{if(flag)printf("OR\n");coluna+=yyleng;if(flag_yacc)return OR;}}
+{PLUS}					{if(flag)printf("PLUS\n");coluna+=yyleng;if(flag_yacc)return PLUS;}
+{RBRACE}				{if(flag)printf("RBRACE\n");coluna+=yyleng;if(flag_yacc)return RBRACE;}
+{RPAR}					{if(flag)printf("RPAR\n");coluna+=yyleng;if(flag_yacc)return RPAR;}
+{RSQ}					{if(flag)printf("RSQ\n");coluna+=yyleng;if(flag_yacc)return RSQ;}
+{SEMICOLON}				{if(flag)printf("SEMICOLON\n");coluna+=yyleng;if(flag_yacc)return SEMICOLON;}
+{ARROW}				{if(flag)printf("ARROW\n");coluna+=yyleng;if(flag_yacc)return ARROW;}
+{LSHIFT}				{if(flag)printf("LSHIFT\n");coluna+=yyleng;if(flag_yacc)return LSHIFT;}
+{RSHIFT}				{if(flag)printf("RSHIFT\n");coluna+=yyleng;if(flag_yacc)return RSHIFT;}
+{XOR}					{if(flag)printf("XOR\n");coluna+=yyleng;if(flag_yacc)return XOR;}
+{BOOL}					{if(flag)printf("BOOL\n");coluna+=yyleng;if(flag_yacc)return BOOL;}
+{CLASS}				{if(flag)printf("CLASS\n");coluna+=yyleng;if(flag_yacc)return CLASS;}
+{DOTLENGTH}				{if(flag)printf("DOTLENGTH\n");coluna+=yyleng;if(flag_yacc)return DOTLENGTH;}
+{DOUBLE}				{if(flag)printf("DOUBLE\n");coluna+=yyleng;if(flag_yacc)return DOUBLE;}
+{ELSE}					{if(flag)printf("ELSE\n");coluna+=yyleng;if(flag_yacc)return ELSE;}
 {IF}					{if(flag)printf("IF\n");coluna+=yyleng;if(flag_yacc)return IF;}
 {INT}					{if(flag)printf("INT\n");coluna+=yyleng;if(flag_yacc)return INT;}
 {PRINT}					{if(flag)printf("PRINT\n");coluna+=yyleng;if(flag_yacc)return PRINT;}
@@ -165,6 +165,7 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 
 %%
+%%
 
 int main(int argc, char *argv[]){
 	linha=1,coluna=1; 
@@ -184,8 +185,10 @@ int main(int argc, char *argv[]){
 		flag = 0;
 		flag_yacc = 0;
 	}
+	}
 	yylex(); 
 	return 0;
+
 }
 
 int yywrap() {
