@@ -1,11 +1,22 @@
 %{
 	#include <string.h>
 	#include <stdbool.h>
+	#include <stdio.h>
+	#include "y.tab.h"
+	#include "functions.h"
+	
 	int linha,coluna;
 	int linhaaux,colunaaux;
+	node* aux=NULL;
+	node* auxi2=NULL;
 	bool flag = false;
 	bool imprime;
 	char string[254];
+	
+    int yylex(void);
+    void yyerror (char *s);
+    int yyparse(void);
+	
 
 %}
 
@@ -44,35 +55,36 @@
 
 %%
 
-Program:	CLASS ID LBRACE declaration RBRACE									{$$ = NULL;}		
+Program:	CLASS ID LBRACE declaration RBRACE									{$$ = NovoNo("Program");AdicionaFilho($$,NovoID("Id",$2);AdicionaFilho($$,$4);}		
 		;
 
 declaration: 
-				MethodDecl declaration																{$$ = NULL;}			
-			|	FieldDecl declaration																	{$$ = NULL;}					
-			|	SEMICOLON declaration																	{$$ = NULL;}			
+				MethodDecl declaration																{$$ = $1;AdicionaIrmao($$,$2);}			
+			|	FieldDecl declaration																	{$$ = $1;AdicionaIrmao($$,$2);}					
+			|	SEMICOLON declaration																	{$$ = $2;}			
 			|	/* null */																						{$$ = NULL;}		
 			;
 
-MethodDecl:	PUBLIC STATIC MethodHeader MethodBody							{$$ = NULL;}		
+MethodDecl:	PUBLIC STATIC MethodHeader MethodBody							{$$ = NovoNo("MethodDecl");AdicionaFilho($$,$3);AdicionaFilho($$,$4);}		
 																
 		;
 
-FieldDecl:	PUBLIC STATIC Type ID FindDeclSec SEMICOLON				{$$ = NULL;}		
+FieldDecl:	PUBLIC STATIC Type ID FindDeclSec SEMICOLON				{$$ = NovoNo("FieldDecl");AdicionaFilho($$,$3);AdicionaFilho($$,NovoID("Id",$4));}		
 	
 ;
 FindDeclSec:
-			COMMA ID FindDeclSec																		{$$ = NULL;}	
+			COMMA ID FindDeclSec																		{$$ = NovoID("Id",$2);AdicionaIrmao($$,$3);}	
 			|/* null */										{$$ = NULL;}	
 		;
 
-Type:	BOOL																										{$$ = NULL;}	
-	|	INT																												{$$ = NULL;}
-	|	DOUBLE																										{$$ = NULL;}
+Type:	BOOL																										{$$ = NovoNo("Bool");}	
+	|	INT																												{$$ = NovoNo("Int");}
+	|	DOUBLE																										{$$ = NovoNo("Double");}
 	;
 
-MethodHeader:	Type ID LPAR MethodHeaderSec RPAR								{$$ = NULL;}		
-			|	VOID ID LPAR MethodHeaderSec RPAR											{$$ = NULL;}	
+MethodHeader:	Type ID LPAR MethodHeaderSec RPAR								{$$ = NovoNo("MethodHeader");AdicionaFilho($$,$1);AdicionaFilho($$,NovoID("Id",$2);
+aux = NovoNo("MethodParams");AdicionaIrmao($1,aux);AdicionaFilho(aux,$4);}		
+			|	VOID ID LPAR MethodHeaderSec RPAR											{$$ = NovoNo("MethodHeader");aux = NovoNo("Void");AdicionaFilho($$,aux));AdicionaIrmao(aux,NovoID("Id",$2);auxi2 = NovoNo("MethodParams");AdicionaIrmao(aux,auxi2);AdicionaFilho(aux2,$4);}	
 			;
 
 MethodHeaderSec:	
@@ -80,44 +92,47 @@ MethodHeaderSec:
 			|/* null */																							{$$ = NULL;}																						
 			;
 
-FormalParams:	Type ID FormalParamsSec													{$$ = NULL;}					
-			|	STRING LSQ RSQ ID																			{$$ = NULL;}	
+FormalParams:	Type ID FormalParamsSec													{$$ = NovoNo("ParamDecl");AdicionaFilho($$,$1);aux=NovoID("Id",$2);AdicionaIrmao($1,aux);AdicionaIrmao($$,$3);}					
+			|	STRING LSQ RSQ ID																			{$$ = NovoNo("ParamDecl");aux = NovoNo("StringArray");AdicionaFilho($$,aux);AdicionaIrmao(aux,NovoID("Id",$4);}	
 			;
 
 FormalParamsSec:				
-				COMMA Type ID FormalParamsSec 												{$$ = NULL;}		
+				COMMA Type ID FormalParamsSec 												{$$ = NovoNo("ParamDecl");aux=NovoID("Id",$3);AdicionaFilho($$,$2);AdicionaIrmao($$,aux);AdicionaIrmao($$,$4);}		
 			|/* null */																							{$$ = NULL;}							
 			;
 
-MethodBody:	LBRACE MethodBodySec RBRACE												{$$ = NULL;}						
+MethodBody:	LBRACE MethodBodySec RBRACE												{$$ = NovoNo("MethodBody");AdicionaFilho($$,$2);}						
 		;
 
 MethodBodySec: 	
-				Statement MethodBodySec																{$$ = NULL;}		
-			|	VarDecl MethodBodySec																	{$$ = NULL;}	
+				Statement MethodBodySec																{if($1 != NULL){
+				$$ = $1; AdicionaIrmao($$,$2);}else{$$=$2;}}		
+			|	VarDecl MethodBodySec																	{$$ = $1;AdicionaIrmao($$,$2);}	
 			|	/* nulL */																						{$$ = NULL;}											
 			;
 
-VarDecl:	Type ID VarDeclSec SEMICOLON												{$$ = NULL;}						
+//NOT FINISHED
+VarDecl:	Type ID VarDeclSec SEMICOLON												{$$ = NovoNo("VarDecl");AdicionaFilho($$,$1);AdicionaFilho($$,NovoID("Id",$2));}						
 		;
 
 VarDeclSec:	/* null */																				{$$ = NULL;}					
-		|	COMMA ID VarDeclSec																			{$$ = NULL;}		
+		|	COMMA ID VarDeclSec																			{$$ = NovoID("Id",$2);AdicionaIrmao($$,$3);}		
 		;
 
-Statement:	LBRACE StatementSec RBRACE												{$$ = NULL;}	
-		|	IF LPAR Expr RPAR Statement         										{$$ = NULL;}		
-		|	IF LPAR Expr RPAR Statement ELSE Statement							{$$ = NULL;}	
-		|	WHILE LPAR Expr RPAR Statement													{$$ = NULL;}			
-		|	RETURN SEMICOLON																				{$$ = NULL;}			
-		|	RETURN Expr SEMICOLON																		{$$ = NULL;}			
-		|	StatementThird SEMICOLON																{$$ = NULL;}		
-		|	PRINT LPAR StatementPrint RPAR SEMICOLON								{$$ = NULL;}	
+Statement:	LBRACE StatementSec RBRACE												{if(conta_irmaos($2)>1){aux = NovoNo("Block");$$=aux;AdicionaFilho(aux,$2);}else{$$=$2}}	
+		|	IF LPAR Expr RPAR Statement         										{$$ = NovoNo("If");AdicionaFilho($$,$3);aux=NovoNo("Block");if(conta_irmaos($5) == 1 && $5 != NULL){AdicionaIrmao($3,$5);AdicionaIrmao($5,aux);}else{AdicionaIrmao($3,aux);AdicionaFilho(aux,$5);AdicionaIrmao(aux,"Block");}}		
+		|	IF LPAR Expr RPAR Statement ELSE Statement							{$$ = NovoNo("If");AdicionaFilho($$,$3); aux = NovoNo("Block");if (conta_irmaos($5) == 1 && $5 != NULL) {AdicionaIrmao($3, $5);if (conta_irmaos($7) == 1 && $7 != NULL) {AdicionaIrmao($5, $7);}else {AdicionaIrmao($5, aux);AdicionaFilho(aux, $7);}}else {AdicionaIrmao($3, aux);AdicionaFilho(aux, $5);if (conta_irmaos($7) == 1 && $7 != NULL) {AdicionaIrmao(aux, $7);
+}else {auxi2 = NovoNo("Block");AdicionaIrmao(aux, auxi2);AdicionaFilho(auxi2, $7);}}}
+		|	WHILE LPAR Expr RPAR Statement													{$$ = NovoNo("While");AdicionaFilho($$,$3);if(conta_irmaos($5) == 1 && $5 != NULL){AdicionaIrmao($3,$5);}else{aux = NovoNo("Block");AdicionaIrmao($3,aux);AdicionaFilho(aux,$5);}}			
+		|	RETURN SEMICOLON																				{$$ = NovoNo("Return");}			
+		|	RETURN Expr SEMICOLON																		{$$ = NovoNo("Return");AdicionaFilho($$,$2);}			
+		|	StatementThird SEMICOLON																{$$ = $1;}		
+		|	PRINT LPAR StatementPrint RPAR SEMICOLON								{$$ = NovoNo("Print");AdicionaFilho($$,$3);}	
 																	
 		
 		;
 StatementSec:	
-			Statement StatementSec																	{$$ = NULL;}			
+			Statement StatementSec																	{$$ = $1 != NULL){$$=$1;AdicionaIrmao($$,$2);}else{$$=$2};}			
 			| /* null */																						{$$ = NULL;}		
 		;
 
@@ -132,53 +147,56 @@ StatementPrint:	Expr																					{$$ = $1;}
 			|	STRLIT																								{$$ = NULL;}			
 			;
 
-MethodInvocation:	ID LPAR MethodInvocationSec RPAR  					{$$ = NULL;}					
+
+//COLOCAR ERRO AQUI TBM
+MethodInvocation:	ID LPAR MethodInvocationSec RPAR  					{$$ = NovoNo("Call");AdicionaFilho($$,NovoID("Id",$1));AdicionaFilho($$,$3);}					
 				
 				;
 
 MethodInvocationSec:
-					Expr MethodInvocationThird													{$$ = $1;}
+					Expr MethodInvocationThird													{$$ = $1;AdicionaIrmao($$,$2);}
 					|/* null */																					{$$ = NULL;}		
 				;
 
-MethodInvocationThird:		COMMA Expr MethodInvocationThird		{$$ = NULL;}
+
+MethodInvocationThird:		COMMA Expr MethodInvocationThird		{if($2!=NULL){$$=$2;AdicionaIrmao($$,$3);}else{$$=$2;}}
 				| /* null */																					{$$ = NULL;}		
 					;
 
-Assignment:	ID ASSIGN Expr																		{$$ = NULL;}
+Assignment:	ID ASSIGN Expr																		{$$ = NovoNo("Assign");AdicionaFilho($$,NovoId("Id",$1));AdicionaFilho($$,$3);}
 		;
 
-ParseArgs:	PARSEINT LPAR ID LSQ Expr RSQ RPAR								{$$ = NULL;}					
-		|	PARSEINT LPAR error RPAR																{$$ = NULL;}
+ParseArgs:	PARSEINT LPAR ID LSQ Expr RSQ RPAR							{$$ = NovoNo("ParseArgs");AdicionaFilho($$,NovoID("Id",$3));AdicionaFilho($$,$5);}					
+		|	PARSEINT LPAR error RPAR																{$$ = NULL;}	//COLOCAR O ERRO
 			;
 
-Expr:	Expr PLUS Expr											   	{$$ = NULL;}
-			|	Expr MINUS Expr												{$$ = NULL;}
-			|	Expr STAR Expr												{$$ = NULL;}
-			|	Expr DIV Expr													{$$ = NULL;}
-			|	Expr MOD Expr													{$$ = NULL;}
-			|	Expr AND Expr													{$$ = NULL;}
-			|	Expr OR Expr													{$$ = NULL;}
-			|	Expr XOR Expr													{$$ = NULL;}
-			|	Expr LSHIFT Expr											{$$ = NULL;}
-			|	Expr RSHIFT Expr											{$$ = NULL;}
-			|	Expr EQ Expr													{$$ = NULL;}		
-			|	Expr GE Expr													{$$ = NULL;}		
-			|	Expr GT Expr													{$$ = NULL;}	
-			|	Expr LE Expr													{$$ = NULL;}	
-			|	Expr LT Expr													{$$ = NULL;}	
-			|	Expr NE Expr													{$$ = NULL;}	
-			|	PLUS Expr                       			{$$ = NULL;}	
-			|	MINUS Expr 														{$$ = NULL;}	
-			|	NOT Expr															{$$ = NULL;}
+Expr:	Expr PLUS Expr											   	{$$ = NovoNo("Add");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr MINUS Expr												{$$ = NovoNo("Sub");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr STAR Expr												{$$ = NovoNo("Mul");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr DIV Expr													{$$ = NovoNo("Div");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr MOD Expr													{$$ = NovoNo("Mod");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr AND Expr													{$$ = NovoNo("And");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr OR Expr													{$$ = NovoNo("Or");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr XOR Expr													{$$ = NovoNo("Xor");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr LSHIFT Expr											{$$ = NovoNo("Lshift");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr RSHIFT Expr											{$$ = NovoNo("Rshift");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}
+			|	Expr EQ Expr													{$$ = NovoNo("Eq");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}		
+			|	Expr GE Expr													{$$ = NovoNo("Ge");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}		
+			|	Expr GT Expr													{$$ = NovoNo("Gt");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}	
+			|	Expr LE Expr													{$$ = NovoNo("Le");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}	
+			|	Expr LT Expr													{$$ = NovoNo("Lt");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}	
+			|	Expr NE Expr													{$$ = NovoNo("Ne");AdicionaFilho($$,$1);AdicionaFilho($$,$3);}	
+			|	PLUS Expr                       			{$$ = NovoNo("Plus");AdicionaFilho($$,$2);}	
+			|	MINUS Expr 														{$$ = NovoNo("Minus");AdicionaFilho($$,$2);}	
+			|	NOT Expr															{$$ = NovoNo("Not");AdicionaFilho($$,$2);}
 			|	MethodInvocation											{$$ = $1;}
 			|	ParseArgs															{$$ = $1;}
-			|	LPAR error RPAR												{$$ = NULL;}
-			|	ID																		{$$ = NULL;}
-			|	ID DOTLENGTH													{$$ = NULL;}
-			|INTLIT																	{$$ = NULL;}
-			|	REALLIT																{$$ = NULL;}
-			|	BOOLLIT																{$$ = NULL;}		
+			|	LPAR error RPAR												{$$ = NULL;}	//COLOCAR O ERRO criar flag
+			|	ID																		{$$ = NovoID("Id",$1);}
+			|	ID DOTLENGTH													{$$ = NovoNo("Length");}
+			|INTLIT																	{$$ = NovoID("IntLit",$1);}
+			|	REALLIT																{$$ = NovoID("RealLit",$1);}
+			|	BOOLLIT																{$$ = NovoID("BoolLit",$1);}		
 	;
 
 

@@ -1,8 +1,7 @@
 #COMPILADORES 2022
 
 
+Consegui tirar todos os bugs, meti ja as cenas das arvores..	tem umas partes que não percebo pq é assim, so dei mesmo copy, mas o resto é facil de se perceber
+Usa o makefile, verifica se está bem ... mas quando executo o make, ele da um erro com o yyparse(), nao sei o que poderá estar a fuder isto
 
-Entretanto compus o bug, ja temos a gramatica correta
-Agora tenho um bug com o jucompiler.l
-Tento executar os dois juntos e dá muita merdaa
-Amanhã se tiver tempo e vontade dou uma vista de olhos.
+
