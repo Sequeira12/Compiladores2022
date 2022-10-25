@@ -2,4 +2,4 @@
 all: jucompiler.l
 	flex jucompiler.l
 	yacc -d jucompiler.y
-	cc lex.yy.c functions.c -o jucompiler
+	cc lex.yy.c y.tab.c functions.c -o jucompiler

@@ -13,9 +13,9 @@
 	#include "y.tab.h"
 	#include "functions.h"
 	int yylex(void);
-    	void yyerror (char *s);
+    	//void yyerror (char *s);
     	int yyparse(void);
-
+	extern struct node* program;
 	int parse = 1;
 %}
 
@@ -191,6 +191,7 @@ int main(int argc, char *argv[]){
 		}else if(strcmp(argv[1],"-t") == 0){
 			flagYacc = true;
 			flag = 1;
+			print_tree(0,program);
 			
 		
 	      }
