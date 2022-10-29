@@ -6,16 +6,16 @@
 	#include <stdbool.h>
 	int linha,coluna;
 	int linhaaux,colunaaux;
-	bool flag = false;
-	bool flagYacc = true;
+	bool flag = true;
+	bool flagYacc = false;
 	bool imprime;
 	char string[254];
 	#include "y.tab.h"
 	#include "functions.h"
 	int yylex(void);
-    	//void yyerror (char *s);
+    	void yyerror (char *s);
     	int yyparse(void);
-	extern struct node* program;
+
 	int parse = 1;
 %}
 
@@ -103,11 +103,11 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 
 
-\"                                 					{BEGIN STRLLIT; linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;}
+\"                                 					{BEGIN STRLLIT; linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;strcpy(string,"\"");}
 <STRLLIT>\n|\r|\r\n               						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); strcpy(string,""); coluna = 1; linha++;BEGIN 0; }
 <STRLLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      			{strcat(string, yytext);  coluna+=yyleng;}
 <STRLLIT>\\[^\n\r\"]|\\|\f|\t        						{printf("Line %d, col %d: invalid escape sequence (%s)\n",linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
-<STRLLIT>\"                         						{if(imprime && flag) {  printf("STRLIT(\"%s\")\n", string);}if(flagYacc){strcpy(string,""); BEGIN 0; coluna += yyleng;return STRLIT;}	}
+<STRLLIT>\"                         						{if(imprime && flag) {  printf("STRLIT(\"%s\")\n", string);}if(flagYacc){ BEGIN 0;strcat(string,"\"");yylval.id = strdup(string);yytext = string;strcpy(string,"");coluna += yyleng;return STRLIT;}	}
 <STRLLIT><<EOF>>                     						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;BEGIN 0; }
 
 
@@ -115,9 +115,9 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 
  
-{REALLIT}				{if(flag){printf("REALLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){return REALLIT;}}
-{INTLIT}				{if(flag){printf("INTLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){return INTLIT;}}
-{BOOLLIT}				{if(flag){printf("BOOLLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){return BOOLLIT;}}
+{REALLIT}				{if(flag){printf("REALLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return REALLIT;}}
+{INTLIT}				{if(flag){printf("INTLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return INTLIT;}}
+{BOOLLIT}				{if(flag){printf("BOOLLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return BOOLLIT;}}
 {AND}					{if(flag){printf("AND\n");}coluna+=yyleng;if(flagYacc){return AND;}}
 {ASSIGN}				{if(flag){printf("ASSIGN\n");}coluna+=yyleng;if(flagYacc){return ASSIGN;}}				
 {STAR}					{if(flag){printf("STAR\n");}coluna+=yyleng;if(flagYacc){return STAR;}}
@@ -146,7 +146,7 @@ exp						("e"|"E")("-"|"+")?({parte})
 {RSHIFT}				{if(flag){printf("RSHIFT\n");}coluna+=yyleng;if(flagYacc){return RSHIFT;}}
 {XOR}					{if(flag){printf("XOR\n");}coluna+=yyleng;if(flagYacc){return XOR;}}
 {BOOL}					{if(flag){printf("BOOL\n");}coluna+=yyleng;if(flagYacc){return BOOL;}}
-{CLASS}				{if(flag){printf("CLASS\n");}coluna+=yyleng;if(flagYacc){return CLASS;printf("ENTROU");}}
+{CLASS}				{if(flag){printf("CLASS\n");}coluna+=yyleng;if(flagYacc){return CLASS;}}
 {DOTLENGTH}				{if(flag){printf("DOTLENGTH\n");}coluna+=yyleng;if(flagYacc){return DOTLENGTH;}}
 {DOUBLE}				{if(flag){printf("DOUBLE\n");}coluna+=yyleng;if(flagYacc){return DOUBLE;}}
 {ELSE}					{if(flag){printf("ELSE\n");}coluna+=yyleng;if(flagYacc){return ELSE;}}
@@ -161,8 +161,8 @@ exp						("e"|"E")("-"|"+")?({parte})
 {VOID}					{if(flag){printf("VOID\n");}coluna+=yyleng;if(flagYacc){return VOID;}}
 {WHILE}				{if(flag){printf("WHILE\n");}coluna+=yyleng;if(flagYacc){return WHILE;}}
 {RESERVED}				{if(flag){printf("RESERVED(%s)\n",yytext);}coluna+=yyleng;if(flagYacc){return RESERVED;}}
-{ID}					{if(flag){printf("ID(%s)\n",yytext);}coluna+=yyleng;if(flagYacc){return ID;}}
-{STRLIT}				{if(flag){printf("STRLIT\n");}coluna+=yyleng;if(flagYacc){return STRLIT;}}
+{ID}					{if(flag){printf("ID(%s)\n",yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return ID;}}
+
 
 
 " " 					{coluna+= yyleng;}
@@ -170,7 +170,6 @@ exp						("e"|"E")("-"|"+")?({parte})
 \f 					{coluna+= yyleng;}
 \r\n|\n|\r				{linha++; coluna=1;}
 .                   			{printf("Line %d, col %d: illegal character (%s)\n", linha, coluna, yytext); coluna += yyleng;}
-
 
 %%
 
@@ -186,14 +185,12 @@ int main(int argc, char *argv[]){
 			yylex();
 		}
 		else if(strcmp(argv[1],"-e1") == 0) {
-			flag = 0;
+			flag = 1;
 			yylex();
 		}else if(strcmp(argv[1],"-t") == 0){
 			flagYacc = true;
-			flag = 1;
-			print_tree(0,program);
-			
-		
+			flag = false;
+			yyparse();
 	      }
     }else{
       
@@ -201,6 +198,9 @@ int main(int argc, char *argv[]){
     }
 	return 0;
 	
+}
+void yyerror(char *s) { 
+     printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(yytext)), s, yytext);
 }
 
 

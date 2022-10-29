@@ -3,17 +3,41 @@
 #include <stdlib.h>
 
 
-typedef struct node{
-	char *nome;
-	struct node* filho;
-	struct node* irmao;
+
+typedef enum {
+	no_raiz,
+	no_metodos,
+	no_var,
+	no_statements,
+	no_operadores,
+	no_terminais,
+	no_ids
+}tipo_no;
+
+
+typedef struct node * no;
+typedef struct node {
+	char *valor;
+	char * s_type;
+	tipo_no tipo;
+	no pai;
+	no filho;
+	no irmao;
+	int num_node;
 }node;
 
 
-int conta_irmaos(node* raiz);
-node* NovoNo(char* nome);
-void AdicionaIrmao(node* no, node* irmao);
-void AdicionaFilho(node* no, node* filho);
-node* NovoID(char* nome, char* valor);
-void print_tree(int level, node* n);
-void free_tree(node* n);
+
+
+
+void AdicionaIrmao(no nod,no irmao);
+void Arvore(no raiz, int pontos);
+no CriaNo(tipo_no tipo, char *valor, char *s_type);
+void AdicionaNo(no pai,no novo);
+int conta_irmaos(no raiz);
+
+
+
+
+
+
