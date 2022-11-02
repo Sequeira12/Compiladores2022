@@ -35,8 +35,8 @@
 %token <id> BOOLLIT
 %token <id> STRLIT
 
-%type <no> Expr1 Expr2 ExprLit Program declaration MethodDecl FieldDecl FindDeclSec Type MethodHeader MethodHeaderSec FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl VarDeclSec Statement StatementSec  StatementThird StatementPrint MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs  Expr  
-
+%type <no> Expr1 Expr2 ExprLit Program declaration MethodDecl FieldDecl FindDeclSec Type MethodHeader MethodHeaderSec FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl VarDeclSec Statement StatementSec  StatementThird StatementPrint MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs  Expr  ExprReturn
+%right ELSE
 %right ASSIGN
 %left OR
 %left AND
@@ -49,7 +49,7 @@
 %right NOT
 %left LPAR RPAR LSQ RSQ
 
-%right ELSE
+
 
 %%
 
@@ -245,8 +245,8 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 																	}
 																	}
 
-		|	RETURN SEMICOLON										{$$ = CriaNo(no_statements,"","Return");}			
-		|	RETURN Expr SEMICOLON									{$$ = CriaNo(no_statements,"","Return");
+	
+		|	RETURN ExprReturn SEMICOLON									{$$ = CriaNo(no_statements,"","Return");
 																	AdicionaNo($$,$2);}			
 		|	StatementThird SEMICOLON								{$$ = $1;}		
 		|	PRINT LPAR StatementPrint RPAR SEMICOLON				{$$ = CriaNo(no_statements,"","Print");
@@ -256,6 +256,11 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 																	
 		
 		;
+		
+ExprReturn:	{$$=NULL;}
+	| Expr 	 		{$$=$1;}
+
+;		
 StatementSec:	
 			Statement StatementSec									{if($1 != NULL){
 																		$$=$1;
@@ -344,6 +349,7 @@ Expr1:	Expr1 PLUS Expr1											   	{$$ = CriaNo(no_operadores,"","Add");Adici
 			|	ID													{$$ = CriaNo(no_ids,$1,"Id");}
 			|	ID DOTLENGTH										{$$ = CriaNo(no_operadores,"","Length");AdicionaNo($$,CriaNo(no_ids,$1,"Id"));}
 			| ExprLit												{$$=$1;}
+			;
 
 Expr2: MethodInvocation										{$$ = $1;}
 		|	ParseArgs											{$$ = $1;}

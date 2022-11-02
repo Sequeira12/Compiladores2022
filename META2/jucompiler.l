@@ -89,14 +89,13 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 
 "/*"						{BEGIN COM1;linhaaux = linha; colunaaux = coluna;coluna+=yyleng;}
-<COM1><<EOF>> 					{BEGIN 0;printf("Line %d, col %d: unterminated comment\n",linhaaux,colunaaux);yyterminate();}
 
 <COM1>"*/"					{BEGIN 0;coluna += yyleng;}
 <COM1>\r\n|\n|\r 				{linha++; coluna=1;}
 <COM1>.						{coluna += yyleng;}
+<COM1><<EOF>> 					{BEGIN 0;printf("Line %d, col %d: unterminated comment\n",linhaaux,colunaaux);yyterminate();}
 
-
-"//"						{BEGIN COM2;linhaaux = linha; colunaaux = coluna;coluna+=yyleng;}
+"//"						{BEGIN COM2;coluna+=yyleng;}
 <COM2>\n|\r|\r\n				{BEGIN 0; linha++; coluna=1;}
 <COM2>.						{coluna += yyleng;}
 
@@ -106,11 +105,11 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 
 
-\"                                 					{BEGIN STRLLIT;isstring=1; strcpy(string,"");linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;strcat(string, yytext);}
-<STRLLIT>\n|\r|\r\n               						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); strcpy(string,""); coluna = 1; linha++;BEGIN 0;isstring=0; }
-<STRLLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      			{strcat(string, yytext);  coluna+=yyleng;}
-<STRLLIT>\\[^\n\r\"]|\\|\f|\t        						{printf("Line %d, col %d: invalid escape sequence (%s)\n",linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
-<STRLLIT>\"                         						{strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}if(flagYacc){yylval.id = (char*)strdup(string);coluna += yyleng;if(imprime){BEGIN 0;return STRLIT;}else{isstring=0;BEGIN 0;}}else{isstring=0;BEGIN 0;}}
+\"                                 					{BEGIN STRLLIT;string[0]=0;strcat(string, yytext);linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;}
+<STRLLIT>\n|\r|\r\n               						{BEGIN 0; string[0] = 0;printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); coluna = 1; linha++;}
+<STRLLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      			{coluna+=yyleng;strcat(string, yytext);  }
+<STRLLIT>\\[^\n\r\"]|\\|\f|\t        						{strcat(string,yytext);printf("Line %d, col %d: invalid escape sequence (%s)\n",linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
+<STRLLIT>\"                         						{BEGIN 0;strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}coluna+=yyleng;if(flagYacc && imprime){yylval.id = strdup(string); yytext = string;return STRLIT;}}
 <STRLLIT><<EOF>>                     						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;isstring=0;BEGIN 0; }
 
 
@@ -187,9 +186,11 @@ int main(int argc, char *argv[]){
 			flag = 1;
 			yylex();
 		}
-		else if(strcmp(argv[1],"-e1") == 0) {
-			flag = 1;
-			yylex();
+		else if (strcmp(argv[1], "-e1") == 0) {
+			flag = 0;
+			while (yylex() != 0) {
+				;
+			}
 		}else if(strcmp(argv[1],"-t") == 0){
 			flagYacc = true;
 			flag = false;
@@ -215,13 +216,7 @@ int main(int argc, char *argv[]){
 	
 }
 void yyerror(char *s) { 
-/*	if(isstring==1){
-		printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(string)), s, string);
-		isstring=0;
-	}
-     else{*/
-		printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(yytext)), s, yytext);
-	//}
+	printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(yytext)), s, yytext);
 }
 
 
