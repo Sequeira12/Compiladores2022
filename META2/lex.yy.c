@@ -2368,13 +2368,13 @@ int main(int argc, char *argv[]){
 	
 }
 void yyerror(char *s) { 
-	if(isstring==1){
+/*	if(isstring==1){
 		printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(string)), s, string);
 		isstring=0;
 	}
-     else{
+     else{*/
 		printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(yytext)), s, yytext);
-	}
+	//}
 }
 
 
