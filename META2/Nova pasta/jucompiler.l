@@ -18,8 +18,6 @@
 	extern no raiz;
 	extern int flagErro;
 	int parse = 1;
-
-	int isstring=0;
 %}
 
 
@@ -106,12 +104,12 @@ exp						("e"|"E")("-"|"+")?({parte})
 
 
 
-\"                                 					{BEGIN STRLLIT;isstring=1; strcpy(string,"");linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;strcat(string, yytext);}
-<STRLLIT>\n|\r|\r\n               						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); strcpy(string,""); coluna = 1; linha++;BEGIN 0;isstring=0; }
+\"                                 					{BEGIN STRLLIT; linhaaux = linha; colunaaux = coluna; coluna+=yyleng; imprime = true;strcpy(string,"\"");}
+<STRLLIT>\n|\r|\r\n               						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); strcpy(string,""); coluna = 1; linha++;BEGIN 0; }
 <STRLLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      			{strcat(string, yytext);  coluna+=yyleng;}
 <STRLLIT>\\[^\n\r\"]|\\|\f|\t        						{printf("Line %d, col %d: invalid escape sequence (%s)\n",linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
-<STRLLIT>\"                         						{strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}if(flagYacc){yylval.id = (char*)strdup(string);coluna += yyleng;if(imprime){BEGIN 0;return STRLIT;}else{isstring=0;BEGIN 0;}}else{isstring=0;BEGIN 0;}}
-<STRLLIT><<EOF>>                     						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;isstring=0;BEGIN 0; }
+<STRLLIT>\"                         						{if(imprime && flag) {  printf("STRLIT(\"%s\")\n", string);}if(flagYacc){ BEGIN 0;strcat(string,"\"");yylval.id = strdup(string);yytext = string;strcpy(string,"");coluna += yyleng;return STRLIT;}	}
+<STRLLIT><<EOF>>                     						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;BEGIN 0; }
 
 
 
@@ -215,13 +213,7 @@ int main(int argc, char *argv[]){
 	
 }
 void yyerror(char *s) { 
-	if(isstring==1){
-		printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(string)), s, string);
-		isstring=0;
-	}
-     else{
-		printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(yytext)), s, yytext);
-	}
+     printf ("Line %d, col %d: %s: %s\n", linha, (int)(coluna-strlen(yytext)), s, yytext);
 }
 
 

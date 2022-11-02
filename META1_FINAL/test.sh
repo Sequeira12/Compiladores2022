@@ -24,7 +24,7 @@
 
 # CONFIGURAR PARA A DIRETORIA ONDE TEM OS TESTES
 in_dir="meta1"
-out_dir="meta1"
+out_dir="meta1out"
 
 # Reset
 Color_Off='\033[0m'       # Text Reset
