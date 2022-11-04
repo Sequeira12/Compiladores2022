@@ -60,6 +60,8 @@ Program:	CLASS ID LBRACE declaration RBRACE							{raiz = CriaNo(no_raiz,"","Pro
 																		AdicionaIrmao(aux,$4);
 																		$$ = raiz;		
 																		}
+		
+			|CLASS ID LBRACE declaration RBRACE	error						{$$ = NULL;flagErro = false;}
 		;
 
 declaration: 
