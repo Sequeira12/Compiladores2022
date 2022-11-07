@@ -35,8 +35,8 @@
 %token <id> BOOLLIT
 %token <id> STRLIT
 
-%type <no> Expr1 Expr2  Program declaration MethodDecl FieldDecl FindDeclSec Type MethodHeader MethodHeaderSec FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl VarDeclSec Statement StatementSec  StatementThird StatementPrint MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs  Expr  ExprReturn
-%right ELSE
+%type <no> Expr1 Expr2  Program declaration MethodDecl FieldDecl FindDeclSec Type MethodHeader FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl VarDeclSec Statement StatementSec StatementPrint MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs  Expr  ExprReturn
+
 %right ASSIGN
 %left OR
 %left AND
@@ -48,6 +48,7 @@
 %left STAR DIV MOD
 %right NOT
 %left LPAR RPAR LSQ RSQ
+%right ELSE
 
 
 
@@ -108,7 +109,7 @@ Type:	BOOL														{$$ = CriaNo("","Bool");}
 	|	DOUBLE														{$$ = CriaNo("","Double");}
 	;
 
-MethodHeader:	Type ID LPAR MethodHeaderSec RPAR					{$$ = CriaNo("","MethodHeader");
+MethodHeader:	Type ID LPAR FormalParams RPAR					{$$ = CriaNo("","MethodHeader");
 																	AdicionaNo($$,$1);
 																	AdicionaIrmao($1,CriaNo($2,"Id"));
 																	aux = CriaNo("","MethodParams");
@@ -116,7 +117,7 @@ MethodHeader:	Type ID LPAR MethodHeaderSec RPAR					{$$ = CriaNo("","MethodHeade
 																	AdicionaNo(aux,$4);
 																	}		
 																															
-			|	VOID ID LPAR MethodHeaderSec RPAR					{$$ = CriaNo("","MethodHeader");
+			|	VOID ID LPAR FormalParams RPAR					{$$ = CriaNo("","MethodHeader");
 																	aux = CriaNo("","Void");
 																	AdicionaNo($$,aux);
 																	AdicionaIrmao(aux,CriaNo($2,"Id"));
@@ -124,11 +125,6 @@ MethodHeader:	Type ID LPAR MethodHeaderSec RPAR					{$$ = CriaNo("","MethodHeade
 																	AdicionaIrmao(aux,auxi2);
 																	AdicionaNo(auxi2,$4);
 																	}	
-			;
-
-MethodHeaderSec:	
-				FormalParams										{$$ = $1;}
-			|/* null */												{$$ = NULL;}																						
 			;
 
 FormalParams:	Type ID FormalParamsSec								{$$ = CriaNo("","ParamDecl");
@@ -141,6 +137,7 @@ FormalParams:	Type ID FormalParamsSec								{$$ = CriaNo("","ParamDecl");
 																	aux = CriaNo("","StringArray");
 																	AdicionaNo($$,aux);
 																	AdicionaIrmao(aux,CriaNo($4,"Id"));}	
+			|/* null */												{$$ = NULL;}
 			;
 
 FormalParamsSec:				
@@ -173,7 +170,7 @@ MethodBodySec:
 VarDecl:	Type ID VarDeclSec SEMICOLON							{$$ = CriaNo("","VarDecl");
 																	AdicionaNo($$,$1);
 																	AdicionaIrmao($1,CriaNo($2,"Id"));
-																	if ($3 != NULL){
+																	if ($3){
 																		aux = $3;
 																		while(aux != NULL){
 																			no aux1 = CriaNo("","VarDecl");
@@ -202,7 +199,7 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 		|	IF LPAR Expr RPAR Statement %prec  ELSE       			{$$ = CriaNo("","If");
 																	AdicionaNo($$,$3);
 																	aux=CriaNo("","Block");
-																	if(conta_irmaos($5) == 1 && $5 != NULL){
+																	if(conta_irmaos($5) == 1 && $5){
 																		AdicionaIrmao($3,$5);
 																		AdicionaIrmao($5,aux);
 																		}else{
@@ -214,9 +211,9 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 		|	IF LPAR Expr RPAR Statement ELSE Statement				{$$ = CriaNo("","If");
 																	AdicionaNo($$,$3); 
 																	aux = CriaNo("","Block");
-																	if (conta_irmaos($5) == 1 && $5 != NULL) {
+																	if (conta_irmaos($5) == 1 && $5) {
 																		AdicionaIrmao($3, $5);
-																		if (conta_irmaos($7) == 1 && $7 != NULL) {
+																		if (conta_irmaos($7) == 1 && $7) {
 																			AdicionaIrmao($5, $7);
 																		}else {
 																			AdicionaIrmao($5, aux);
@@ -224,7 +221,7 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 																	}else {
 																		AdicionaIrmao($3, aux);
 																		AdicionaNo(aux, $5);
-																		if (conta_irmaos($7) == 1 && $7 != NULL) {
+																		if (conta_irmaos($7) == 1 && $7) {
 																			AdicionaIrmao(aux, $7);
 																		}else {
 																			auxi2 = CriaNo("","Block");
@@ -237,7 +234,7 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 
 		|	WHILE LPAR Expr RPAR Statement							{$$ = CriaNo("","While");
 																	AdicionaNo($$,$3);
-																	if(conta_irmaos($5) == 1 && $5 != NULL){
+																	if(conta_irmaos($5) == 1 && $5){
 																		AdicionaIrmao($3,$5);
 																	}else{
 																		aux = CriaNo("","Block");
@@ -249,7 +246,11 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 	
 		|	RETURN ExprReturn SEMICOLON								{$$ = CriaNo("","Return");
 																	AdicionaNo($$,$2);}			
-		|	StatementThird SEMICOLON								{$$ = $1;}		
+		
+		|	MethodInvocation SEMICOLON								{$$ = $1;}
+		|	Assignment	SEMICOLON									{$$ = $1;}
+		|	ParseArgs SEMICOLON										{$$ = $1;}	
+		|	SEMICOLON												{$$ = NULL;}
 		|	PRINT LPAR StatementPrint RPAR SEMICOLON				{$$ = CriaNo("","Print");
 																	AdicionaNo($$,$3);
 																	}	
@@ -263,7 +264,7 @@ ExprReturn:	{$$=NULL;}
 
 ;		
 StatementSec:	
-			Statement StatementSec									{if($1 != NULL){
+			Statement StatementSec									{if($1){
 																		$$=$1;
 																		AdicionaIrmao($$,$2);
 																	}else{
@@ -273,11 +274,6 @@ StatementSec:
 		;
 
 
-StatementThird:	/* null */											{$$ = NULL;}
-		|	MethodInvocation										{$$ = $1;}
-		|	Assignment												{$$ = $1;}
-		|	ParseArgs												{$$ = $1;}
-		;
 
 StatementPrint:	Expr												{$$ = $1;}
 			|	STRLIT												{$$ = CriaNo($1,"StrLit");}			
@@ -297,7 +293,7 @@ MethodInvocationSec:
 				;
 
 																	//verificar se é NULL ou não
-MethodInvocationThird:		COMMA Expr MethodInvocationThird		{if($2!=NULL){
+MethodInvocationThird:		COMMA Expr MethodInvocationThird		{if($2){
 																		$$=$2;
 																		AdicionaIrmao($$,$3);
 																	}else{$$=$2;}}
