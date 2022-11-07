@@ -1,3 +1,6 @@
+ //Rui Santos 2020225542
+ //Bruno Sequeira 2020235721
+
 %{
 	#include <string.h>
 	#include <stdbool.h>
@@ -35,7 +38,7 @@
 %token <id> BOOLLIT
 %token <id> STRLIT
 
-%type <no> Expr1 Expr2  Program declaration MethodDecl FieldDecl FindDeclSec Type MethodHeader FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl VarDeclSec Statement StatementSec StatementPrint MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs  Expr  ExprReturn
+%type <no> Expr1 Expr2  Program declaration MethodDecl FieldDecl CmId Type MethodHeader FormalParams FormalParamsSec MethodBody MethodBodySec VarDecl Statement StatementSec StatementPrint MethodInvocation MethodInvocationSec MethodInvocationThird Assignment ParseArgs  Expr  ExprReturn
 
 %right ASSIGN
 %left OR
@@ -78,7 +81,7 @@ MethodDecl:	PUBLIC STATIC MethodHeader MethodBody					{$$ = CriaNo("","MethodDec
 																
 		;
 
-FieldDecl:	PUBLIC STATIC Type ID FindDeclSec SEMICOLON				{$$ = CriaNo("","FieldDecl");
+FieldDecl:	PUBLIC STATIC Type ID CmId SEMICOLON				{$$ = CriaNo("","FieldDecl");
 																	AdicionaNo($$,$3);
 																	AdicionaIrmao($3,CriaNo($4,"Id"));
 
@@ -97,9 +100,9 @@ FieldDecl:	PUBLIC STATIC Type ID FindDeclSec SEMICOLON				{$$ = CriaNo("","Field
 																	}
 			| error SEMICOLON											{$$ = NULL;flagErro = false;}
 ;
-FindDeclSec:
-			COMMA ID FindDeclSec									{$$ = CriaNo($2,"Id");
-																	AdicionaIrmao($$,$3);
+CmId:
+			COMMA ID CmId											{$$ = CriaNo($2,"Id");
+																		AdicionaIrmao($$,$3);
 																	}	
 			|/* null */												{$$ = NULL;}	
 		;
@@ -109,7 +112,7 @@ Type:	BOOL														{$$ = CriaNo("","Bool");}
 	|	DOUBLE														{$$ = CriaNo("","Double");}
 	;
 
-MethodHeader:	Type ID LPAR FormalParams RPAR					{$$ = CriaNo("","MethodHeader");
+MethodHeader:	Type ID LPAR FormalParams RPAR						{$$ = CriaNo("","MethodHeader");
 																	AdicionaNo($$,$1);
 																	AdicionaIrmao($1,CriaNo($2,"Id"));
 																	aux = CriaNo("","MethodParams");
@@ -117,7 +120,7 @@ MethodHeader:	Type ID LPAR FormalParams RPAR					{$$ = CriaNo("","MethodHeader")
 																	AdicionaNo(aux,$4);
 																	}		
 																															
-			|	VOID ID LPAR FormalParams RPAR					{$$ = CriaNo("","MethodHeader");
+			|	VOID ID LPAR FormalParams RPAR						{$$ = CriaNo("","MethodHeader");
 																	aux = CriaNo("","Void");
 																	AdicionaNo($$,aux);
 																	AdicionaIrmao(aux,CriaNo($2,"Id"));
@@ -167,7 +170,7 @@ MethodBodySec:
 			|	/* null */											{$$ = NULL;}											
 			;
 
-VarDecl:	Type ID VarDeclSec SEMICOLON							{$$ = CriaNo("","VarDecl");
+VarDecl:	Type ID CmId SEMICOLON							{$$ = CriaNo("","VarDecl");
 																	AdicionaNo($$,$1);
 																	AdicionaIrmao($1,CriaNo($2,"Id"));
 																	if ($3){
@@ -185,17 +188,13 @@ VarDecl:	Type ID VarDeclSec SEMICOLON							{$$ = CriaNo("","VarDecl");
 																	}}
 		;
 
-VarDeclSec:	/* null */												{$$ = NULL;}					
-		|	COMMA ID VarDeclSec										{$$ = CriaNo($2,"Id");
-																	AdicionaIrmao($$,$3);}		
-		;
-
 Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 																		aux = CriaNo("","Block");
 																		$$=aux;
 																		AdicionaNo(aux,$2);
 																	}else{$$=$2;}
-																															}	
+																	}	
+
 		|	IF LPAR Expr RPAR Statement %prec  ELSE       			{$$ = CriaNo("","If");
 																	AdicionaNo($$,$3);
 																	aux=CriaNo("","Block");

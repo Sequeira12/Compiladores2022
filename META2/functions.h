@@ -1,3 +1,6 @@
+ //Rui Santos 2020225542
+ //Bruno Sequeira 2020235721
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
