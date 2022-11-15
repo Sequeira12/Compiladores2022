@@ -24,6 +24,7 @@ typedef struct node {
 	no filho;
 	no irmao;
 	int num_node;
+	char * id;
 }node;
 
 

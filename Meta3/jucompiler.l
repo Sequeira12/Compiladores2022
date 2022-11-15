@@ -14,7 +14,7 @@
 	bool imprime;
 	char string[254];
 	#include "y.tab.h"
-	#include "functions.h"
+	#include "semantics.h"
 	int yylex(void);
     	void yyerror (char *s);
     	int yyparse(void);
@@ -205,7 +205,18 @@ int main(int argc, char *argv[]){
 			flagYacc = true;
 			yyparse();
 			yylex();
+		}
+		else if(strcmp(argv[1],"-s") == 0){
+			flagYacc = true;
+			flag = false;
+			yyparse();
+			if(flagErro == true){
+				verifica(raiz);
+				imprime_tabela();							
+				Arvore(raiz,0);
 			}
+	      }
+
     }else{
       
 			flag = 0;
