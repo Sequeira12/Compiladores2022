@@ -2367,8 +2367,9 @@ int main(int argc, char *argv[]){
 			yyparse();
 			if(flagErro == true){
 				verifica(raiz);
+				check_ast(raiz);
 				imprime_tabela();							
-				Arvore(raiz,0);
+				//Arvore(raiz,0);
 			}
 	      }
 

@@ -35,7 +35,7 @@ void novo_metodo(char *nome, char * valor, char ** array_de_parametros, char * t
 void imprime_tabela();
 tabela procura_tab(char * n);
 
-
+tabela check_call(char * id, char ** params, int p);
 
 
 #endif
