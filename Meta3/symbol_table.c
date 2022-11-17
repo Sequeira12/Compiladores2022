@@ -57,6 +57,15 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
     }
 }    
 
+int verifica_repetidos(char * n){
+
+    for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
+            if (strcmp(aux->nome,n)==0){
+                return -1;
+            }    
+    }
+    return 1;
+}
 
 void imprime_tabela(){
     for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
@@ -71,15 +80,17 @@ void imprime_tabela(){
 
 
 
+//mudei aquiii
 tabela procura_tab(char * n){
     tabela i = tabela_simbolos;
+    tabela aux = NULL;
     while(i) {
         if (strcmp(i->nome, n) == 0) {
-            return i;
+            aux = i;
         }
         i = i->next;
     }
-    return NULL;
+    return aux;
 }
 
 
@@ -96,6 +107,7 @@ char * verifica_type(char* tipo){
 
 void insere_elemento(char * valor, char * s_type, char * param_types, char * param, tabela tabela_t) {
     node_t n_node = calloc(1, sizeof(node_table));
+
     n_node->valor = valor;
     n_node->s_type = s_type;
     n_node->next = NULL;
@@ -121,6 +133,11 @@ void novo_metodo(char *nome, char * valor, char ** array_de_parametros, char * t
     node->nome=nome;
     node->c_nome=valor;
     node->array_params=array_de_parametros;
+    
+   /* for(int i=0; i<30 && array_de_parametros[i]!=NULL;i++){
+        printf("%s ",array_de_parametros[i]);
+    }printf("\n");*/
+
     tabela h = tabela_simbolos;
     if (h == NULL) {
         tabela_simbolos = node;
@@ -156,6 +173,7 @@ char* procura_tabela(no node, char * tab){
             strcat(string, aux_node->s_type);
             return strdup(string);
         }
+
     }
     return strdup("- undef");
 }

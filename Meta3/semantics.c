@@ -6,6 +6,7 @@
 
 
 
+
 void verifica(no raiz){
     if(raiz){
         if(strcmp(raiz->s_type,"Program")==0) nova_classe(raiz->filho->valor);
@@ -34,18 +35,21 @@ char* verifica_method_decl(no node){
         strcat(n,valor);
         strcat(n,parametros);
     }
-    insere(node->filho,parametros,NULL,"Class");
+    if(verifica_repetidos(n)>0){
+        insere(node->filho,parametros,NULL,"Class");
 
-    novo_metodo(n,valor,array_de_parametros,tipo);
-    no h = NULL;
-    if(node->filho->irmao->irmao->filho){
-        h = node->filho->irmao->irmao->filho;
+        novo_metodo(n,valor,array_de_parametros,tipo);
+        no h = NULL;
+        if(node->filho->irmao->irmao->filho){
+            h = node->filho->irmao->irmao->filho;
+        }
+        for(h; h!= NULL; h=h->irmao) {
+            //printf("%s %s\n", node->filho->irmao->irmao->filho->filho->s_type,node->filho->irmao->irmao->filho->filho->irmao->valor);
+            insere(node->filho->irmao->irmao->filho->filho,NULL, "param", n);
+        }
+    }else{
+       // printf("Symbol %s already defined\n", n);
     }
-    for(h; h!= NULL; h=h->irmao) {
-        //printf("%s %s\n", node->filho->irmao->irmao->filho->filho->s_type,node->filho->irmao->irmao->filho->filho->irmao->valor);
-        insere(node->filho->irmao->irmao->filho->filho,NULL, "param", n);
-    }
-
     return n;
 };
 
@@ -118,7 +122,8 @@ char ** verifica_array_method_params(no node){
 
 void verifica_method_body(char * tab, no node){
     if(node){
-        if(strcmp(node->s_type,"VarDecl")==0)insere(node->filho, NULL,NULL,tab);
+        if(strcmp(node->s_type,"VarDecl")==0)
+        {insere(node->filho, NULL,NULL,tab);}
 
         if(strcmp(node->s_type,"Id")==0)node->id=procura_tabela(node,tab);  //verifica se ja existe na tabela de simbolos
 
@@ -194,8 +199,6 @@ void verifica_method_body(char * tab, no node){
 }
 
 
-
-
 void check_ast(no raiz){
     if(raiz){
         if(strcmp(raiz->s_type, "MethodDecl")==0){
@@ -208,7 +211,9 @@ void check_ast(no raiz){
                 strcat(n, valor);
                 strcat(n,params);
             }
+
             verifica_method_body(n,raiz->filho->irmao);
+
         }
 
     }else return;

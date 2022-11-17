@@ -36,6 +36,6 @@ void imprime_tabela();
 tabela procura_tab(char * n);
 
 tabela check_call(char * id, char ** params, int p);
-
+int verifica_repetidos(char * n);
 
 #endif
