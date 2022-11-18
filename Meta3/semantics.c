@@ -51,7 +51,8 @@ void verifica_method_decl(no node){
             else printf("Line %s, Col %s: Symbol %s already defined\n",h->filho->irmao->line ,h->filho->irmao->col ,h->filho->irmao->valor);
         }
     }else{
-       printf("Line %s, Col %s: Symbol %s already defined\n", node->filho->irmao->line, node->filho->irmao->col,n);
+        node->filho->irmao->repetido=1;
+        printf("Line %s, Col %s: Symbol %s already defined\n", node->filho->irmao->line, node->filho->irmao->col,n);
     }
 };
 
@@ -121,10 +122,11 @@ char ** verifica_array_method_params(no node){
 
 void verifica_method_body(char * tab, no node){
     if(node){
-        if(strcmp(node->s_type,"VarDecl")==0)
-        {insere(node->filho, NULL,NULL,tab);}
+        
+        if(strcmp(node->s_type,"VarDecl")==0) insere(node->filho, NULL,NULL,tab);
+ 
 
-        if(strcmp(node->s_type,"Id")==0)node->id=procura_tabela(node,tab);  //verifica se ja existe na tabela de simbolos
+        if(strcmp(node->s_type,"Id")==0)node->id=procura_tabela(node,tab);
 
         if(strcmp(node->s_type,"DecLit")==0 || strcmp(node->s_type,"Length")==0 || strcmp(node->s_type,"ParseArgs")==0) node->id=(char*)strdup(" - int");
 
@@ -204,18 +206,18 @@ void verifica_method_body(char * tab, no node){
 void check_ast(no raiz){
     if(raiz){
         if(strcmp(raiz->s_type, "MethodDecl")==0){
-            char * params = verifica_method_params(raiz->filho->filho->irmao->irmao);
-            char * valor = (char*)strdup(raiz->filho->filho->irmao->valor);
+            if(raiz->filho->filho->irmao->repetido==0){
+                char * params = verifica_method_params(raiz->filho->filho->irmao->irmao);
+                char * valor = (char*)strdup(raiz->filho->filho->irmao->valor);
 
-            char * n = malloc(strlen(params)+strlen(valor)+1);
-            if(n){
-                n[0]='\0';
-                strcat(n, valor);
-                strcat(n,params);
+                char * n = malloc(strlen(params)+strlen(valor)+1);
+                if(n){
+                    n[0]='\0';
+                    strcat(n, valor);
+                    strcat(n,params);
+                }
+                verifica_method_body(n,raiz->filho->irmao);
             }
-
-            verifica_method_body(n,raiz->filho->irmao);
-
         }
 
     }else return;

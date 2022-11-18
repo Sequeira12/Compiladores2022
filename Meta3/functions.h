@@ -27,6 +27,7 @@ typedef struct node {
 	no irmao;
 	int num_node;
 	char * id;
+	int repetido;
 }node;
 
 
