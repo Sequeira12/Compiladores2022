@@ -2370,7 +2370,7 @@ int main(int argc, char *argv[]){
 				verifica(raiz);
 				check_ast(raiz);
 				imprime_tabela();							
-				Arvore(raiz,0,0);
+				Arvore(raiz,0,1);
 			}
 	      }
 

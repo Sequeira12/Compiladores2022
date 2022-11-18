@@ -25,7 +25,7 @@ typedef struct table{
 }table;
 
 
-
+int verifica_repetidos_parametros(char *n,char * valor);
 void insere(no no, char * param_types, char * param, char * tabela_t);
 void nova_classe(char * valor);
 char * verifica_type(char* tipo);

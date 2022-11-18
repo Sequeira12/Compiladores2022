@@ -19,6 +19,17 @@ void nova_classe(char * valor){
 }
 
 
+//verificar se existem parametros iguais para nao inserir repetidos
+int verifica_repetidos_parametros(char *n,char * valor){
+    for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
+        if(strcmp(aux->nome,n)==0){
+            for(node_t auxi = aux->tab; auxi!=NULL; auxi=auxi->next){
+                if(strcmp(auxi->valor,valor)==0 && strcmp(auxi->param,"param")==0) return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 void insere(no node, char * param_types, char * param, char * tabela_t){
     char * type = verifica_type(node->s_type);

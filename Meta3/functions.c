@@ -63,12 +63,13 @@ void Arvore(no raiz, int pontos,int anotada){
 			for(int i = 0; i<pontos; i++)printf("..");
 
 			if(strcmp(raiz->valor,"")!=0){
-				if(anotada==0) printf("%s(%s)\n",raiz->s_type,raiz->valor);
-				else printf("%s(%s)%s\n",raiz->s_type,raiz->valor, raiz->id);
+				if(anotada==1 && raiz->id!=NULL) printf("%s(%s)%s\n",raiz->s_type,raiz->valor, raiz->id);
+				else printf("%s(%s)\n",raiz->s_type,raiz->valor);
+				
 			}	
 			else{
-				if(anotada==0)printf("%s\n",raiz->s_type);
-				else printf("%s%s\n",raiz->s_type, raiz->id); 	
+				if(anotada==1 && raiz->id!=NULL)printf("%s%s\n",raiz->s_type, raiz->id);
+				else printf("%s\n",raiz->s_type);	
 			}
 		}
 		no aux = raiz->filho;

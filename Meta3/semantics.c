@@ -23,6 +23,7 @@ void verifica(no raiz){
     }
 }
 
+
 void verifica_method_decl(no node){
     char * tipo = verifica_type(node->filho->s_type);
     char * valor = (char*)strdup(node->filho->irmao->valor);
@@ -42,29 +43,17 @@ void verifica_method_decl(no node){
         no h = NULL;
         if(node->filho->irmao->irmao->filho){
             h = node->filho->irmao->irmao->filho;
-            //printf("passouaqui\n");
         }
-        //printf("-----\n");
-        //to do: verificar se os parametros sao iguais
         for(h; h!= NULL; h=h->irmao) {
-            //printf("%s\n", h->filho->irmao->valor);
-            insere(h->filho,NULL, "param", n);
+            if(verifica_repetidos_parametros(n,h->filho->irmao->valor)==0) {
+                insere(h->filho,NULL, "param", n);
+            }
+            else printf("Line %s, Col %s: Symbol %s already defined\n",h->filho->irmao->line ,h->filho->irmao->col ,h->filho->irmao->valor);
         }
     }else{
        printf("Line %s, Col %s: Symbol %s already defined\n", node->filho->irmao->line, node->filho->irmao->col,n);
     }
 };
-
-   /*         //printf("%s %s\n", h->filho->s_type,h->filho->irmao->valor);
-            for(no aux = node->filho->irmao->irmao->filho;aux != NULL; aux=aux->irmao){
-                if(strcmp(aux->filho->irmao->valor, h->filho->irmao->valor)==0){
-                    printf("iguaissssss");
-                    return;
-                }else{
-                    insere(h->filho,NULL, "param", n);
-                }
-            }*/
-
 
 
 char * verifica_method_params(no node){
@@ -137,7 +126,7 @@ void verifica_method_body(char * tab, no node){
 
         if(strcmp(node->s_type,"Id")==0)node->id=procura_tabela(node,tab);  //verifica se ja existe na tabela de simbolos
 
-        if(strcmp(node->s_type,"Declit")==0 || strcmp(node->s_type,"Length")==0 || strcmp(node->s_type,"ParseArgs")==0) node->id=(char*)strdup(" - int");
+        if(strcmp(node->s_type,"DecLit")==0 || strcmp(node->s_type,"Length")==0 || strcmp(node->s_type,"ParseArgs")==0) node->id=(char*)strdup(" - int");
 
         if(strcmp(node->s_type, "Ne") == 0 || strcmp(node->s_type, "Eq") == 0 || strcmp(node->s_type, "Ge") == 0 || strcmp(node->s_type, "Gt") == 0 
         || strcmp(node->s_type, "Le") == 0 || strcmp(node->s_type, "Lt") == 0 || strcmp(node->s_type, "Not") == 0 || strcmp(node->s_type, "Or") == 0 
@@ -147,30 +136,33 @@ void verifica_method_body(char * tab, no node){
 
         if(strcmp(node->s_type,"RealLit")==0) node->id=(char*)strdup(" - double");
     
-
-       /* if (strcmp(node->s_type,"Add")==0 || strcmp(node->s_type,"Sub")==0 
-        || strcmp(node->s_type,"Div")==0 || strcmp(node->s_type,"Mul")==0 || strcmp(node->s_type,"Mod")==0)
-        {
-            printf("entrou9\n");
-            if(strcmp(node->filho->id, node->filho->irmao->id) != 0) {
-                printf("entrou7\n");
-                node->id=(char*)strdup(" - double");
-                printf("saiu7\n");
-            }
-            printf("naoéaqui\n");
-            if(strcmp(node->filho->id, node->filho->irmao->id) == 0) {
-                 printf("entrou8\n");
-                node->id=(char*)strdup(node->filho->id);
-                 printf("saiu8\n");
-            }
-             printf("saiu9\n");
-        }*/
         no aux = node->filho;
         while (aux != NULL) {
             verifica_method_body(tab, aux);
             aux = aux->irmao;
         }
         if(strcmp(node->s_type, "Assign")==0 || strcmp(node->s_type, "Minus")==0 || strcmp(node->s_type, "Plus")==0)node->id=node->filho->id;
+
+        if (strcmp(node->s_type,"Add")==0 || strcmp(node->s_type,"Sub")==0 
+        || strcmp(node->s_type,"Div")==0 || strcmp(node->s_type,"Mul")==0 || strcmp(node->s_type,"Mod")==0)
+        {
+            //printf("entrou9\n");
+           // printf("----%s %s \n", node->filho->id, node->filho->irmao->s_type);
+            if(strcmp(node->filho->id, node->filho->irmao->id) != 0) {
+               // printf("entrou7\n");
+                node->id=(char*)strdup(" - double");
+                //printf("saiu7\n");
+            }
+           // printf("naoéaqui\n");
+            if(strcmp(node->filho->id, node->filho->irmao->id) == 0) {
+                 //printf("entrou8\n");
+                node->id=(char*)strdup(node->filho->id);
+                 //printf("saiu8\n");
+            }
+             //printf("saiu9\n");
+        
+        }
+
 
         if(strcmp(node->s_type,"Call")==0){
             char ** params = check_calls_method_params(node);
