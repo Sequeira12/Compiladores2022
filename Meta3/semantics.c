@@ -23,7 +23,7 @@ void verifica(no raiz){
     }
 }
 
-char* verifica_method_decl(no node){
+void verifica_method_decl(no node){
     char * tipo = verifica_type(node->filho->s_type);
     char * valor = (char*)strdup(node->filho->irmao->valor);
     char * parametros = verifica_method_params(node->filho->irmao->irmao);
@@ -42,18 +42,28 @@ char* verifica_method_decl(no node){
         no h = NULL;
         if(node->filho->irmao->irmao->filho){
             h = node->filho->irmao->irmao->filho;
+            //printf("passouaqui\n");
         }
+        //printf("-----\n");
+        //to do: verificar se os parametros sao iguais
         for(h; h!= NULL; h=h->irmao) {
-            //printf("%s %s\n", node->filho->irmao->irmao->filho->filho->s_type,node->filho->irmao->irmao->filho->filho->irmao->valor);
-            insere(node->filho->irmao->irmao->filho->filho,NULL, "param", n);
+            //printf("%s\n", h->filho->irmao->valor);
+            insere(h->filho,NULL, "param", n);
         }
     }else{
-       // printf("Symbol %s already defined\n", n);
+       printf("Line %s, Col %s: Symbol %s already defined\n", node->filho->irmao->line, node->filho->irmao->col,n);
     }
-    return n;
 };
 
-
+   /*         //printf("%s %s\n", h->filho->s_type,h->filho->irmao->valor);
+            for(no aux = node->filho->irmao->irmao->filho;aux != NULL; aux=aux->irmao){
+                if(strcmp(aux->filho->irmao->valor, h->filho->irmao->valor)==0){
+                    printf("iguaissssss");
+                    return;
+                }else{
+                    insere(h->filho,NULL, "param", n);
+                }
+            }*/
 
 
 

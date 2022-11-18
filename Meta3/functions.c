@@ -5,12 +5,21 @@
 
 
 
-no CriaNo(char *valor, char *s_type){
+no CriaNo(char *id[3], char *valor, char *s_type){
 	no novo = malloc(sizeof(node));
 	novo->s_type = (char *)malloc(1 + strlen(s_type) * sizeof(char));
-	novo->valor = (char *) malloc(1 + strlen(valor) * sizeof(char));
+	if(valor){
+		novo->valor = (char *) malloc(1 + strlen(valor) * sizeof(char));
+		strcpy(novo->valor,valor);
+	}else{
+		novo->valor = (char *) malloc(1 + strlen(id[0]) * sizeof(char));
+		strcpy(novo->valor,id[0]);
+
+		novo->line=id[1];
+		//printf("%s %s\n",s_type, novo->line);
+		novo->col=id[2];
+	}
 	strcpy(novo->s_type,s_type);
-	strcpy(novo->valor,valor);
 	novo->pai = NULL;
 	novo->irmao = NULL;
 	novo->filho = NULL; 
@@ -47,20 +56,26 @@ void AdicionaIrmao(no nod,no irmao){
 }
 
 
-void Arvore(no raiz, int pontos){
+void Arvore(no raiz, int pontos,int anotada){
 	if(raiz){	
 		if(strcmp(raiz->s_type,"Program")==0) printf("%s\n",raiz->s_type);
 		else{
 			for(int i = 0; i<pontos; i++)printf("..");
 
-			if(strcmp(raiz->valor,"")!=0) printf("%s(%s)\n",raiz->s_type,raiz->valor);	
-			else printf("%s\n",raiz->s_type);	
+			if(strcmp(raiz->valor,"")!=0){
+				if(anotada==0) printf("%s(%s)\n",raiz->s_type,raiz->valor);
+				else printf("%s(%s)%s\n",raiz->s_type,raiz->valor, raiz->id);
+			}	
+			else{
+				if(anotada==0)printf("%s\n",raiz->s_type);
+				else printf("%s%s\n",raiz->s_type, raiz->id); 	
+			}
 		}
 		no aux = raiz->filho;
 		//prints and cleans tree
 		while(aux!=NULL){
 			no aux_free = aux;
-			Arvore(aux,pontos+1);
+			Arvore(aux,pontos+1,anotada);
 			aux = aux->irmao;
 			free(aux_free->valor);
 			free(aux_free->s_type);

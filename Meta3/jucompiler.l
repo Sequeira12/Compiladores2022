@@ -13,15 +13,16 @@
 	bool flagYacc = false;
 	bool imprime;
 	char string[254];
+	
 	#include "y.tab.h"
 	#include "semantics.h"
 	int yylex(void);
-    	void yyerror (char *s);
-    	int yyparse(void);
+	void yyerror (char *s);
+	int yyparse(void);
 	extern no raiz;
 	extern int flagErro;
 	int parse = 1;
-
+	char auxxx[100];
 	int isstring=0;
 %}
 
@@ -110,7 +111,7 @@ exp							("e"|"E")("-"|"+")?({parte})
 <STRLLIT>\n|\r|\r\n               							{BEGIN 0; string[0] = 0;printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); coluna = 1; linha++;}
 <STRLLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      	{coluna+=yyleng;strcat(string, yytext);  }
 <STRLLIT>\\[^\n\r\"]|\\|\f|\t        						{strcat(string,yytext);printf("Line %d, col %d: invalid escape sequence (%s)\n",linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
-<STRLLIT>\"                         						{BEGIN 0;strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}coluna+=yyleng;if(flagYacc && imprime){yylval.id = strdup(string); yytext = string;return STRLIT;}}
+<STRLLIT>\"                         						{BEGIN 0;strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}coluna+=yyleng;if(flagYacc && imprime){yylval.id[0] = strdup(string); yytext = string;return STRLIT;}}
 <STRLLIT><<EOF>>                     						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;isstring=0;BEGIN 0; }
 
 
@@ -118,53 +119,53 @@ exp							("e"|"E")("-"|"+")?({parte})
 
 
  
-{REALLIT}				{if(flag){printf("REALLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return REALLIT;}}
-{INTLIT}				{if(flag){printf("INTLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return INTLIT;}}
-{BOOLLIT}				{if(flag){printf("BOOLLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return BOOLLIT;}}
-{AND}					{if(flag){printf("AND\n");}coluna+=yyleng;if(flagYacc){return AND;}}
-{ASSIGN}				{if(flag){printf("ASSIGN\n");}coluna+=yyleng;if(flagYacc){return ASSIGN;}}				
-{STAR}					{if(flag){printf("STAR\n");}coluna+=yyleng;if(flagYacc){return STAR;}}
-{COMMA}					{if(flag){printf("COMMA\n");}coluna+=yyleng;if(flagYacc){return COMMA;}}
-{DIV}					{if(flag){printf("DIV\n");}coluna+=yyleng;if(flagYacc){return DIV;}}			
-{EQ}					{if(flag){printf("EQ\n");}coluna+=yyleng;if(flagYacc){return EQ;}}
-{GE}					{if(flag){printf("GE\n");}coluna+=yyleng;if(flagYacc){return GE;}}
-{GT}					{if(flag){printf("GT\n");}coluna+=yyleng;if(flagYacc){return GT;}}
-{LBRACE}				{if(flag){printf("LBRACE\n");}coluna+=yyleng;if(flagYacc){return LBRACE;}}
-{LE}					{if(flag){printf("LE\n");}coluna+=yyleng;if(flagYacc){return LE;}}
-{LPAR}					{if(flag){printf("LPAR\n");}coluna+=yyleng;if(flagYacc){return LPAR;}}
-{LSQ}					{if(flag){printf("LSQ\n");}coluna+=yyleng;if(flagYacc){return LSQ;}}
-{LT}					{if(flag){printf("LT\n");}coluna+=yyleng;if(flagYacc){return LT;}}
-{MINUS}			        {if(flag){printf("MINUS\n");}coluna+=yyleng;if(flagYacc){return MINUS;}}				
-{MOD}					{if(flag){printf("MOD\n");}coluna+=yyleng;if(flagYacc){return MOD;}}
-{NE}					{if(flag){printf("NE\n");}coluna+=yyleng;if(flagYacc){return NE;}}
-{NOT}					{if(flag){printf("NOT\n");}coluna+=yyleng;if(flagYacc){return NOT;}}
-{OR}					{if(flag){printf("OR\n");}coluna+=yyleng;if(flagYacc){return OR;}}
-{PLUS}					{if(flag){printf("PLUS\n");}coluna+=yyleng;if(flagYacc){return PLUS;}}
-{RBRACE}				{if(flag){printf("RBRACE\n");}coluna+=yyleng;if(flagYacc){return RBRACE;}}
-{RPAR}					{if(flag){printf("RPAR\n");}coluna+=yyleng;if(flagYacc){return RPAR;}}
-{RSQ}					{if(flag){printf("RSQ\n");}coluna+=yyleng;if(flagYacc){return RSQ;}}
-{SEMICOLON}				{if(flag){printf("SEMICOLON\n");}coluna+=yyleng;if(flagYacc){return SEMICOLON;}}
-{ARROW}					{if(flag){printf("ARROW\n");}coluna+=yyleng;if(flagYacc){return ARROW;}}
-{LSHIFT}				{if(flag){printf("LSHIFT\n");}coluna+=yyleng;if(flagYacc){return LSHIFT;}}
-{RSHIFT}				{if(flag){printf("RSHIFT\n");}coluna+=yyleng;if(flagYacc){return RSHIFT;}}
-{XOR}					{if(flag){printf("XOR\n");}coluna+=yyleng;if(flagYacc){return XOR;}}
-{BOOL}					{if(flag){printf("BOOL\n");}coluna+=yyleng;if(flagYacc){return BOOL;}}
-{CLASS}					{if(flag){printf("CLASS\n");}coluna+=yyleng;if(flagYacc){return CLASS;}}
-{DOTLENGTH}				{if(flag){printf("DOTLENGTH\n");}coluna+=yyleng;if(flagYacc){return DOTLENGTH;}}
-{DOUBLE}				{if(flag){printf("DOUBLE\n");}coluna+=yyleng;if(flagYacc){return DOUBLE;}}
-{ELSE}					{if(flag){printf("ELSE\n");}coluna+=yyleng;if(flagYacc){return ELSE;}}
-{IF}					{if(flag){printf("IF\n");}coluna+=yyleng;if(flagYacc){return IF;}}
-{INT}					{if(flag){printf("INT\n");}coluna+=yyleng;if(flagYacc){return INT;}}
-{PRINT}					{if(flag){printf("PRINT\n");}coluna+=yyleng;if(flagYacc){return PRINT;}}
-{PARSEINT}				{if(flag){printf("PARSEINT\n");}coluna+=yyleng;if(flagYacc){return PARSEINT;}}
-{PUBLIC}				{if(flag){printf("PUBLIC\n");}coluna+=yyleng;if(flagYacc){return PUBLIC;}}
-{RETURN}				{if(flag){printf("RETURN\n");}coluna+=yyleng;if(flagYacc){return RETURN;}}
-{STATIC}				{if(flag){printf("STATIC\n");}coluna+=yyleng;if(flagYacc){return STATIC;}}
-{STRING}				{if(flag){printf("STRING\n");}coluna+=yyleng;if(flagYacc){return STRING;}}
-{VOID}					{if(flag){printf("VOID\n");}coluna+=yyleng;if(flagYacc){return VOID;}}
-{WHILE}					{if(flag){printf("WHILE\n");}coluna+=yyleng;if(flagYacc){return WHILE;}}
-{RESERVED}				{if(flag){printf("RESERVED(%s)\n",yytext);}coluna+=yyleng;if(flagYacc){return RESERVED;}}
-{ID}					{if(flag){printf("ID(%s)\n",yytext);}coluna+=yyleng;if(flagYacc){yylval.id = strdup(yytext);return ID;}}
+{REALLIT}				{if(flag){printf("REALLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return REALLIT;}}
+{INTLIT}				{if(flag){printf("INTLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return INTLIT;}}
+{BOOLLIT}				{if(flag){printf("BOOLLIT(%s)\n", yytext);}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return BOOLLIT;}}
+{AND}					{if(flag){printf("AND\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return AND;}}
+{ASSIGN}				{if(flag){printf("ASSIGN\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return ASSIGN;}}				
+{STAR}					{if(flag){printf("STAR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return STAR;}}
+{COMMA}					{if(flag){printf("COMMA\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return COMMA;}}
+{DIV}					{if(flag){printf("DIV\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return DIV;}}			
+{EQ}					{if(flag){printf("EQ\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return EQ;}}
+{GE}					{if(flag){printf("GE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return GE;}}
+{GT}					{if(flag){printf("GT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return GT;}}
+{LBRACE}				{if(flag){printf("LBRACE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LBRACE;}}
+{LE}					{if(flag){printf("LE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LE;}}
+{LPAR}					{if(flag){printf("LPAR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LPAR;}}
+{LSQ}					{if(flag){printf("LSQ\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LSQ;}}
+{LT}					{if(flag){printf("LT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LT;}}
+{MINUS}			        {if(flag){printf("MINUS\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return MINUS;}}				
+{MOD}					{if(flag){printf("MOD\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return MOD;}}
+{NE}					{if(flag){printf("NE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return NE;}}
+{NOT}					{if(flag){printf("NOT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return NOT;}}
+{OR}					{if(flag){printf("OR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return OR;}}
+{PLUS}					{if(flag){printf("PLUS\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return PLUS;}}
+{RBRACE}				{if(flag){printf("RBRACE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return RBRACE;}}
+{RPAR}					{if(flag){printf("RPAR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return RPAR;}}
+{RSQ}					{if(flag){printf("RSQ\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return RSQ;}}
+{SEMICOLON}				{if(flag){printf("SEMICOLON\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return SEMICOLON;}}
+{ARROW}					{if(flag){printf("ARROW\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return ARROW;}}
+{LSHIFT}				{if(flag){printf("LSHIFT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LSHIFT;}}
+{RSHIFT}				{if(flag){printf("RSHIFT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return RSHIFT;}}
+{XOR}					{if(flag){printf("XOR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return XOR;}}
+{BOOL}					{if(flag){printf("BOOL\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return BOOL;}}
+{CLASS}					{if(flag){printf("CLASS\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return CLASS;}}
+{DOTLENGTH}				{if(flag){printf("DOTLENGTH\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return DOTLENGTH;}}
+{DOUBLE}				{if(flag){printf("DOUBLE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return DOUBLE;}}
+{ELSE}					{if(flag){printf("ELSE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return ELSE;}}
+{IF}					{if(flag){printf("IF\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return IF;}}
+{INT}					{if(flag){printf("INT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return INT;}}
+{PRINT}					{if(flag){printf("PRINT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return PRINT;}}
+{PARSEINT}				{if(flag){printf("PARSEINT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return PARSEINT;}}
+{PUBLIC}				{if(flag){printf("PUBLIC\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return PUBLIC;}}
+{RETURN}				{if(flag){printf("RETURN\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return RETURN;}}
+{STATIC}				{if(flag){printf("STATIC\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return STATIC;}}
+{STRING}				{if(flag){printf("STRING\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return STRING;}}
+{VOID}					{if(flag){printf("VOID\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return VOID;}}
+{WHILE}					{if(flag){printf("WHILE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return WHILE;}}
+{RESERVED}				{if(flag){printf("RESERVED(%s)\n",yytext);}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return RESERVED;}}
+{ID}					{if(flag){printf("ID(%s)\n",yytext);}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx);return ID;}}
 
 
 
@@ -197,7 +198,7 @@ int main(int argc, char *argv[]){
 			flag = false;
 			yyparse();
 			if(flagErro == true){								
-				Arvore(raiz,0);
+				Arvore(raiz,0,0);
 			}
 	      }
 		else if(strcmp(argv[1],"-e2") == 0) {
@@ -214,7 +215,7 @@ int main(int argc, char *argv[]){
 				verifica(raiz);
 				check_ast(raiz);
 				imprime_tabela();							
-				//Arvore(raiz,0);
+				Arvore(raiz,0,0);
 			}
 	      }
 

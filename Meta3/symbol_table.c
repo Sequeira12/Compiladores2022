@@ -49,13 +49,21 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
     
     if(new->tab){// se a tabela ja tem elementos
         node_t t=new->tab;
-        for(; t->next; t=t->next);//adicionamos o novo simbolo ao final da lista
+        for(; t->next; t=t->next){
+            if(strcmp(t->s_type,type)==0 && strcmp(t->valor,valor)==0 && strcmp(node->pai->s_type,"FieldDecl")==0){
+                printf("Line %s, Col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
+                return;
+            }
+        }//adicionamos o novo simbolo ao final da lista
         t->next=no_da_tabela;
     }else{
         //o novo simbolo vai ser colocado no inicio da lista
         new->tab=no_da_tabela;
     }
 }    
+
+
+
 
 int verifica_repetidos(char * n){
 

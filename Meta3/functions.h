@@ -11,13 +11,15 @@ typedef struct node * no;
 
 
 void AdicionaIrmao(no nod,no irmao);
-void Arvore(no raiz, int pontos);
-no CriaNo(char *valor, char *s_type);
+void Arvore(no raiz, int pontos,int anotada);
+no CriaNo(char *id[3],char *valor, char *s_type);
 void AdicionaNo(no pai,no novo);
 int conta_irmaos(no raiz);
 
 
 typedef struct node {
+	char* line;
+	char* col;
 	char *valor;
 	char * s_type;
 	no pai;
