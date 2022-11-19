@@ -120,6 +120,29 @@ char ** verifica_array_method_params(no node){
     return parametros;
 }
 
+
+char * transforma_type(char* tipo){       
+    if (strcmp(tipo, " - boolean") == 0) return "boolean";
+    if (strcmp(tipo, " - int") == 0) return "int";
+    if (strcmp(tipo, " - String[]") == 0) return "String[]";
+    if (strcmp(tipo, " - double") == 0) return "double";
+    if (strcmp(tipo, " - void") == 0) return "void";
+    if (strcmp(tipo, " - void") == 0) return "void";
+    if (strcmp(tipo, "Add") == 0) return "+";
+    if (strcmp(tipo, "Eq") == 0) return "==";
+    if (strcmp(tipo, "Sub") == 0) return "-";
+    if (strcmp(tipo, "Assign") == 0) return "=";
+    if (strcmp(tipo, "Mul") == 0) return "*";
+    if (strcmp(tipo, "Div") == 0) return "/";
+    if (strcmp(tipo, "Mod") == 0) return "%";
+    if (strcmp(tipo, " - undef") == 0) return "undef";
+    if (strcmp(tipo, "none") == 0) return "none";
+
+    return "none";
+}
+
+
+
 void verifica_method_body(char * tab, no node){
     if(node){
         
@@ -138,30 +161,54 @@ void verifica_method_body(char * tab, no node){
 
         if(strcmp(node->s_type,"RealLit")==0) node->id=(char*)strdup(" - double");
     
-        no aux = node->filho;
-        while (aux != NULL) {
-            verifica_method_body(tab, aux);
-            aux = aux->irmao;
+        if(strcmp(node->s_type,"VarDecl")!=0 && strcmp(node->s_type,"Lshift")!=0){
+            no aux = node->filho;
+            while (aux != NULL) {
+                verifica_method_body(tab, aux);
+                aux = aux->irmao;
+            }
         }
-        if(strcmp(node->s_type, "Assign")==0 || strcmp(node->s_type, "Minus")==0 || strcmp(node->s_type, "Plus")==0)node->id=node->filho->id;
+
+        if(strcmp(node->s_type, "Assign")==0){
+            //printf("%s %s\n",node->filho->id,node->filho->irmao->id);
+            char * id1=malloc(sizeof(char) * 50);
+            char * id2=malloc(sizeof(char) * 50);
+            if(node->filho->id==NULL)id1 = "none";
+            else id1=node->filho->id;
+            if(node->filho->irmao->id==NULL)id2="none";
+            else id2=node->filho->irmao->id;
+            if(strcmp(id1,id2)!=0){
+                printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->line,node->col,transforma_type(node->s_type),transforma_type(id1),transforma_type(id2));
+            }
+            node->id=node->filho->id;
+        }
+
+
+        if(strcmp(node->s_type, "Minus")==0 || strcmp(node->s_type, "Plus")==0)node->id=node->filho->id;
 
         if (strcmp(node->s_type,"Add")==0 || strcmp(node->s_type,"Sub")==0 
         || strcmp(node->s_type,"Div")==0 || strcmp(node->s_type,"Mul")==0 || strcmp(node->s_type,"Mod")==0)
         {
-            //printf("entrou9\n");
-           // printf("----%s %s \n", node->filho->id, node->filho->irmao->s_type);
-            if(strcmp(node->filho->id, node->filho->irmao->id) != 0) {
-               // printf("entrou7\n");
-                node->id=(char*)strdup(" - double");
-                //printf("saiu7\n");
+            if(strcmp(node->filho->id," - boolean")==0 ||strcmp(node->filho->irmao->id," - boolean")==0 || strcmp(node->filho->id," - undef")==0 ||strcmp(node->filho->irmao->id," - undef")==0
+             || strcmp(node->filho->id," - String[]")==0 ||strcmp(node->filho->irmao->id," - String[]")==0){
+                printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->line,node->col,transforma_type(node->s_type),transforma_type(node->filho->id),transforma_type(node->filho->irmao->id));
+                node->id=(char*)strdup(" - undef");
+            }else{
+                //printf("entrou9\n");
+            // printf("----%s %s \n", node->filho->id, node->filho->irmao->s_type);
+                if(strcmp(node->filho->id, node->filho->irmao->id) != 0) {
+                // printf("entrou7\n");
+                    node->id=(char*)strdup(" - double");
+                    //printf("saiu7\n");
+                }
+            // printf("naoéaqui\n");
+                if(strcmp(node->filho->id, node->filho->irmao->id) == 0) {
+                    //printf("entrou8\n");
+                    node->id=(char*)strdup(node->filho->id);
+                    //printf("saiu8\n");
+                }
+                //printf("saiu9\n");
             }
-           // printf("naoéaqui\n");
-            if(strcmp(node->filho->id, node->filho->irmao->id) == 0) {
-                 //printf("entrou8\n");
-                node->id=(char*)strdup(node->filho->id);
-                 //printf("saiu8\n");
-            }
-             //printf("saiu9\n");
         
         }
 

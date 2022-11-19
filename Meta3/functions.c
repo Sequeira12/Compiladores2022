@@ -11,6 +11,11 @@ no CriaNo(char *id[3], char *valor, char *s_type){
 	if(valor){
 		novo->valor = (char *) malloc(1 + strlen(valor) * sizeof(char));
 		strcpy(novo->valor,valor);
+		if(id){
+		novo->line=id[1];
+		//printf("%s %s\n",s_type, novo->line);
+		novo->col=id[2];
+		}
 	}else{
 		novo->valor = (char *) malloc(1 + strlen(id[0]) * sizeof(char));
 		strcpy(novo->valor,id[0]);

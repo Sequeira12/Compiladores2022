@@ -1881,7 +1881,7 @@ yyreduce:
 
   case 51: /* Assignment: ID ASSIGN Expr  */
 #line 304 "jucompiler.y"
-                                                                                                                {(yyval.no) = CriaNo(NULL,"","Assign");
+                                                                                                                {(yyval.no) = CriaNo((yyvsp[-1].id),"","Assign");
 																	aux = CriaNo((yyvsp[-2].id),NULL,"Id");
 																	AdicionaNo((yyval.no),aux);
 																	AdicionaIrmao(aux,(yyvsp[0].no));}
@@ -1917,97 +1917,97 @@ yyreduce:
 
   case 56: /* Expr1: Expr1 PLUS Expr1  */
 #line 324 "jucompiler.y"
-                                                                                                                {(yyval.no) = CriaNo(NULL,"","Add");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                {(yyval.no) = CriaNo((yyvsp[-1].id),"","Add");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1922 "y.tab.c"
     break;
 
   case 57: /* Expr1: Expr1 MINUS Expr1  */
 #line 325 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Sub");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Sub");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1928 "y.tab.c"
     break;
 
   case 58: /* Expr1: Expr1 STAR Expr1  */
 #line 326 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Mul");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Mul");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1934 "y.tab.c"
     break;
 
   case 59: /* Expr1: Expr1 DIV Expr1  */
 #line 327 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Div");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Div");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1940 "y.tab.c"
     break;
 
   case 60: /* Expr1: Expr1 MOD Expr1  */
 #line 328 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Mod");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Mod");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1946 "y.tab.c"
     break;
 
   case 61: /* Expr1: Expr1 AND Expr1  */
 #line 329 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","And");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","And");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1952 "y.tab.c"
     break;
 
   case 62: /* Expr1: Expr1 OR Expr1  */
 #line 330 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Or");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Or");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1958 "y.tab.c"
     break;
 
   case 63: /* Expr1: Expr1 XOR Expr1  */
 #line 331 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Xor");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Xor");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1964 "y.tab.c"
     break;
 
   case 64: /* Expr1: Expr1 LSHIFT Expr1  */
 #line 332 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Lshift");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Lshift");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1970 "y.tab.c"
     break;
 
   case 65: /* Expr1: Expr1 RSHIFT Expr1  */
 #line 333 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Rshift");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Rshift");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1976 "y.tab.c"
     break;
 
   case 66: /* Expr1: Expr1 EQ Expr1  */
 #line 334 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Eq");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Eq");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1982 "y.tab.c"
     break;
 
   case 67: /* Expr1: Expr1 GE Expr1  */
 #line 335 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Ge");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Ge");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1988 "y.tab.c"
     break;
 
   case 68: /* Expr1: Expr1 GT Expr1  */
 #line 336 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Gt");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Gt");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 1994 "y.tab.c"
     break;
 
   case 69: /* Expr1: Expr1 LE Expr1  */
 #line 337 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Le");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Le");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 2000 "y.tab.c"
     break;
 
   case 70: /* Expr1: Expr1 LT Expr1  */
 #line 338 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Lt");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Lt");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 2006 "y.tab.c"
     break;
 
   case 71: /* Expr1: Expr1 NE Expr1  */
 #line 339 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Ne");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Ne");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
 #line 2012 "y.tab.c"
     break;
 

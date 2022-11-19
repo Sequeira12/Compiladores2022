@@ -301,7 +301,7 @@ MethodInvocationThird:		COMMA Expr MethodInvocationThird		{if($2){
 				| /* null */										{$$ = NULL;}		
 					;
 
-Assignment:	ID ASSIGN Expr											{$$ = CriaNo(NULL,"","Assign");
+Assignment:	ID ASSIGN Expr											{$$ = CriaNo($2,"","Assign");
 																	aux = CriaNo($1,NULL,"Id");
 																	AdicionaNo($$,aux);
 																	AdicionaIrmao(aux,$3);}
@@ -321,22 +321,22 @@ Expr: Assignment													{$$ = $1;}
 	;
 
 
-Expr1:	Expr1 PLUS Expr1											{$$ = CriaNo(NULL,"","Add");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 MINUS Expr1									{$$ = CriaNo(NULL,"","Sub");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 STAR Expr1									{$$ = CriaNo(NULL,"","Mul");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 DIV Expr1										{$$ = CriaNo(NULL,"","Div");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 MOD Expr1										{$$ = CriaNo(NULL,"","Mod");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 AND Expr1										{$$ = CriaNo(NULL,"","And");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 OR Expr1										{$$ = CriaNo(NULL,"","Or");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 XOR Expr1										{$$ = CriaNo(NULL,"","Xor");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 LSHIFT Expr1									{$$ = CriaNo(NULL,"","Lshift");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 RSHIFT Expr1									{$$ = CriaNo(NULL,"","Rshift");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
-			|	Expr1 EQ Expr1										{$$ = CriaNo(NULL,"","Eq");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}		
-			|	Expr1 GE Expr1										{$$ = CriaNo(NULL,"","Ge");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}		
-			|	Expr1 GT Expr1										{$$ = CriaNo(NULL,"","Gt");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
-			|	Expr1 LE Expr1										{$$ = CriaNo(NULL,"","Le");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
-			|	Expr1 LT Expr1										{$$ = CriaNo(NULL,"","Lt");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
-			|	Expr1 NE Expr1										{$$ = CriaNo(NULL,"","Ne");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
+Expr1:	Expr1 PLUS Expr1											{$$ = CriaNo($2,"","Add");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 MINUS Expr1									{$$ = CriaNo($2,"","Sub");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 STAR Expr1									{$$ = CriaNo($2,"","Mul");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 DIV Expr1										{$$ = CriaNo($2,"","Div");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 MOD Expr1										{$$ = CriaNo($2,"","Mod");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 AND Expr1										{$$ = CriaNo($2,"","And");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 OR Expr1										{$$ = CriaNo($2,"","Or");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 XOR Expr1										{$$ = CriaNo($2,"","Xor");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 LSHIFT Expr1									{$$ = CriaNo($2,"","Lshift");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 RSHIFT Expr1									{$$ = CriaNo($2,"","Rshift");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}
+			|	Expr1 EQ Expr1										{$$ = CriaNo($2,"","Eq");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}		
+			|	Expr1 GE Expr1										{$$ = CriaNo($2,"","Ge");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}		
+			|	Expr1 GT Expr1										{$$ = CriaNo($2,"","Gt");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
+			|	Expr1 LE Expr1										{$$ = CriaNo($2,"","Le");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
+			|	Expr1 LT Expr1										{$$ = CriaNo($2,"","Lt");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
+			|	Expr1 NE Expr1										{$$ = CriaNo($2,"","Ne");AdicionaNo($$,$1);AdicionaIrmao($1,$3);}	
 			|	Expr2												{$$ = $1;}
 			;
 
