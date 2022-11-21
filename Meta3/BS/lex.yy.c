@@ -1051,7 +1051,7 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 114 "jucompiler.l"
-{BEGIN 0;strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}coluna+=yyleng;if(flagYacc && imprime){yylval.id[0] = strdup(string); yytext = string;return STRLIT;}}
+{BEGIN 0;strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}coluna+=yyleng;if(flagYacc && imprime){yylval.id[0] = strdup(string); yytext = string;sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx);return STRLIT;}}
 	YY_BREAK
 case YY_STATE_EOF(STRLLIT):
 #line 115 "jucompiler.l"
@@ -1125,7 +1125,7 @@ YY_RULE_SETUP
 case 26:
 YY_RULE_SETUP
 #line 135 "jucompiler.l"
-{if(flag){printf("LPAR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LPAR;}}
+{if(flag){printf("LPAR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng+1);yylval.id[2]=strdup(auxxx); return LPAR;}}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP

@@ -65,14 +65,20 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
    //     printf("NTROU\n");
    // }
     if(new->tab){// se a tabela ja tem elementos
+       //printf("inserir->%s %s\n", valor,new->nome);
         node_t t=new->tab;
-        for(; t->next; t=t->next){
+        for(; t->next; t=t->next){//compara até ao penultimo simbolo da tabela
             if(strcmp(t->s_type,type)==0 && strcmp(t->valor,valor)==0 && strcmp(node->pai->s_type,"FieldDecl")==0){
-                printf("Line %s, Col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
+                printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
                 return;
             }
-        }//adicionamos o novo simbolo ao final da lista
-        t->next=no_da_tabela;
+        }
+        //compara com o ultimo simbolo da tabela
+        if(strcmp(t->s_type,type)==0 && strcmp(t->valor,valor)==0 && strcmp(node->pai->s_type,"FieldDecl")==0){
+            printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
+            return;
+        }
+        t->next=no_da_tabela;//adicionamos o novo simbolo ao final da lista
     }else{
         //o novo simbolo vai ser colocado no inicio da lista
         new->tab=no_da_tabela;
@@ -183,7 +189,7 @@ void novo_metodo(char *nome, char * valor, char ** array_de_parametros, char * t
 
 char* procura_tabela(no node, char * tab){
     char * nome = node->valor;
-    
+    //printf("%s   ", node->id);
     tabela aux = NULL;
     node_t aux_node = NULL;
     char string[500] = " - ";
@@ -204,7 +210,7 @@ char* procura_tabela(no node, char * tab){
         }
 
     }
-     return strdup("- undef");
+     return strdup(" - undef");
 }
 
 tabela check_call(char * id, char ** params, int p) {

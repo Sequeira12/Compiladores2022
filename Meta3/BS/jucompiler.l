@@ -111,7 +111,7 @@ exp							("e"|"E")("-"|"+")?({parte})
 <STRLLIT>\n|\r|\r\n               							{BEGIN 0; string[0] = 0;printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux); coluna = 1; linha++;}
 <STRLLIT>(\\n|\\f|\\r|\\t|\t|\\\\|\\\")|[^\\\r\n\"]      	{coluna+=yyleng;strcat(string, yytext);  }
 <STRLLIT>\\[^\n\r\"]|\\|\f|\t        						{strcat(string,yytext);printf("Line %d, col %d: invalid escape sequence (%s)\n",linhaaux, coluna, yytext); coluna+=yyleng; imprime = false;}
-<STRLLIT>\"                         						{BEGIN 0;strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}coluna+=yyleng;if(flagYacc && imprime){yylval.id[0] = strdup(string); yytext = string;return STRLIT;}}
+<STRLLIT>\"                         						{BEGIN 0;strcat(string, yytext);if(imprime && flag) {printf("STRLIT(%s)\n", string);}coluna+=yyleng;if(flagYacc && imprime){yylval.id[0] = strdup(string); yytext = string;sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx);return STRLIT;}}
 <STRLLIT><<EOF>>                     						{printf("Line %d, col %d: unterminated string literal\n", linhaaux, colunaaux);strcpy(string,""); coluna = 1;isstring=0;BEGIN 0; }
 
 
@@ -132,7 +132,7 @@ exp							("e"|"E")("-"|"+")?({parte})
 {GT}					{if(flag){printf("GT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return GT;}}
 {LBRACE}				{if(flag){printf("LBRACE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LBRACE;}}
 {LE}					{if(flag){printf("LE\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LE;}}
-{LPAR}					{if(flag){printf("LPAR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LPAR;}}
+{LPAR}					{if(flag){printf("LPAR\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng+1);yylval.id[2]=strdup(auxxx); return LPAR;}}
 {LSQ}					{if(flag){printf("LSQ\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LSQ;}}
 {LT}					{if(flag){printf("LT\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return LT;}}
 {MINUS}			        {if(flag){printf("MINUS\n");}coluna+=yyleng;if(flagYacc){yylval.id[0] = strdup(yytext);sprintf(auxxx,"%d", linha);yylval.id[1]=strdup(auxxx);sprintf(auxxx,"%d", coluna-yyleng);yylval.id[2]=strdup(auxxx); return MINUS;}}				

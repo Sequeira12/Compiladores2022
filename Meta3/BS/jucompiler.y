@@ -245,14 +245,14 @@ Statement:	LBRACE StatementSec RBRACE								{if(conta_irmaos($2)>1){
 																	}
 
 	
-		|	RETURN ExprReturn SEMICOLON								{$$ = CriaNo(NULL,"","Return");
+		|	RETURN ExprReturn SEMICOLON								{$$ = CriaNo($1,"","Return");
 																	AdicionaNo($$,$2);}			
 		
 		|	MethodInvocation SEMICOLON								{$$ = $1;}
 		|	Assignment	SEMICOLON									{$$ = $1;}
 		|	ParseArgs SEMICOLON										{$$ = $1;}	
 		|	SEMICOLON												{$$ = NULL;}
-		|	PRINT LPAR StatementPrint RPAR SEMICOLON				{$$ = CriaNo(NULL,"","Print");
+		|	PRINT LPAR StatementPrint RPAR SEMICOLON				{$$ = CriaNo($2,"","Print");
 																	AdicionaNo($$,$3);
 																	}	
 		| error SEMICOLON 											{$$=NULL;flagErro=false;}
@@ -281,7 +281,7 @@ StatementPrint:	Expr												{$$ = $1;}
 			;
 
 
-MethodInvocation:	ID LPAR MethodInvocationSec RPAR  				{$$ = CriaNo(NULL,"","Call");
+MethodInvocation:	ID LPAR MethodInvocationSec RPAR  				{$$ = CriaNo($1,"","Call");
 																	aux = CriaNo($1,NULL,"Id");
 																	AdicionaNo($$,aux);
 																	AdicionaIrmao(aux,$3);}					
@@ -340,15 +340,15 @@ Expr1:	Expr1 PLUS Expr1											{$$ = CriaNo($2,"","Add");AdicionaNo($$,$1);Ad
 			|	Expr2												{$$ = $1;}
 			;
 
-Expr2:  NOT Expr2													{$$ = CriaNo(NULL,"","Not");AdicionaNo($$,$2);}
-		|	PLUS Expr2                    							{$$ = CriaNo(NULL,"","Plus");AdicionaNo($$,$2);}	
-		|	MINUS Expr2												{$$ = CriaNo(NULL,"","Minus");AdicionaNo($$,$2);}
+Expr2:  NOT Expr2													{$$ = CriaNo($1,"","Not");AdicionaNo($$,$2);}
+		|	PLUS Expr2                    							{$$ = CriaNo($1,"","Plus");AdicionaNo($$,$2);}	
+		|	MINUS Expr2												{$$ = CriaNo($1,"","Minus");AdicionaNo($$,$2);}
 		|	MethodInvocation										{$$ = $1;}
 		|	ParseArgs												{$$ = $1;}
 		|	LPAR Expr RPAR										    {$$ = $2;}
 		|	LPAR error RPAR											{$$ = NULL;flagErro = false;}
 		|	ID														{$$ = CriaNo($1,NULL,"Id");}
-		|	ID DOTLENGTH											{$$ = CriaNo(NULL,"","Length");AdicionaNo($$,CriaNo($1,NULL,"Id"));}
+		|	ID DOTLENGTH											{$$ = CriaNo($1,"","Length");AdicionaNo($$,CriaNo($1,NULL,"Id"));}
 		|	INTLIT													{$$ = CriaNo($1,NULL,"DecLit");}
 		|	REALLIT													{$$ = CriaNo($1,NULL,"RealLit");}
 		|	BOOLLIT													{$$ = CriaNo($1,NULL,"BoolLit");}		
