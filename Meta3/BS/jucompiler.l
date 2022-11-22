@@ -225,6 +225,9 @@ int main(int argc, char *argv[]){
 			flagYacc = true;
 			yyparse();
 			yylex();
+			verifica(raiz);
+			check_ast(raiz);
+			
     }
 	return 0;
 	
