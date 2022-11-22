@@ -1,0 +1,79 @@
+Line 9, col 15: Incompatible type int in while statement
+Line 11, col 15: Incompatible type double in while statement
+Line 13, col 16: Incompatible type undef in while statement
+Line 14, col 19: Incompatible type undef in while statement
+Line 16, col 16: Incompatible type undef in while statement
+Line 17, col 19: Incompatible type undef in while statement
+===== Class while_errors Symbol Table =====
+main	(String[])	void
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+b		boolean
+d		double
+
+Program
+..Id(while_errors)
+..MethodDecl
+....MethodHeader
+......Void
+......Id(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Id(args)
+....MethodBody
+......VarDecl
+........Int
+........Id(i)
+......VarDecl
+........Bool
+........Id(b)
+......VarDecl
+........Double
+........Id(d)
+......While
+........Id(b) - boolean
+........Block
+......While
+........BoolLit(true) - boolean
+........Block
+......While
+........Id(i) - int
+........Block
+......While
+........DecLit(1) - int
+........Block
+......While
+........Id(d) - double
+........Block
+......While
+........RealLit(1.1) - double
+........Block
+......While
+........Lshift - int
+..........DecLit(1) - undef
+..........DecLit(1)
+........Block
+......While
+........Lshift - int
+..........BoolLit(true) - undef
+..........BoolLit(true)
+........Block
+......While
+........Lshift - int
+..........Id(b) - boolean
+..........Id(b)
+........Block
+......While
+........Xor - undef
+..........DecLit(1) - int
+..........DecLit(1) - int
+........Block
+......While
+........Xor - undef
+..........BoolLit(true) - boolean
+..........BoolLit(false) - boolean
+........Block

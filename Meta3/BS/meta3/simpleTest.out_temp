@@ -1,0 +1,250 @@
+Line 6, col 9: Operator = cannot be applied to types int, double
+Line 7, col 13: Operator = cannot be applied to types int, double
+Line 8, col 9: Operator = cannot be applied to types int, double
+Line 9, col 9: Operator = cannot be applied to types int, boolean
+Line 15, col 21: Operator * cannot be applied to types String[], String[]
+Line 15, col 28: Operator + cannot be applied to types undef, String[]
+Line 15, col 14: Operator = cannot be applied to types String[], boolean
+Line 16, col 21: Operator * cannot be applied to types String[], int
+Line 16, col 25: Operator + cannot be applied to types undef, int
+Line 16, col 14: Operator = cannot be applied to types String[], boolean
+Line 17, col 14: Operator = cannot be applied to types String[], boolean
+Line 18, col 14: Operator = cannot be applied to types String[], boolean
+Line 19, col 14: Operator = cannot be applied to types String[], boolean
+Line 21, col 18: Operator = cannot be applied to types int, double
+Line 23, col 18: Operator = cannot be applied to types int, double
+Line 25, col 22: Incompatible type undef in if statement
+Line 27, col 22: Incompatible type undef in if statement
+Line 28, col 22: Incompatible type undef in if statement
+Line 29, col 22: Incompatible type undef in if statement
+Line 30, col 18: Incompatible type undef in if statement
+Line 31, col 16: Cannot find symbol main(int)
+Line 32, col 16: Incompatible type String[] in return statement
+Line 33, col 9: Incompatible type void in return statement
+Line 37, col 12: Incompatible type double in return statement
+===== Class ThatsWhatSheSaid Symbol Table =====
+main2	()	double
+main	(String[])	int
+one	()	int
+two	()	double
+
+===== Method main2() Symbol Table =====
+return		double
+a		int
+b		double
+
+===== Method main(String[]) Symbol Table =====
+return		int
+args		String[]	param
+argument		int
+iterator		double
+
+===== Method one() Symbol Table =====
+return		int
+
+===== Method two() Symbol Table =====
+return		double
+
+Program
+..Id(ThatsWhatSheSaid)
+..MethodDecl
+....MethodHeader
+......Double
+......Id(main2)
+......MethodParams
+....MethodBody
+......VarDecl
+........Int
+........Id(a)
+......VarDecl
+........Double
+........Id(b)
+......Assign - int
+........Id(a) - int
+........Id(b) - double
+......Assign - double
+........Id(b) - double
+........Assign - int
+..........Id(a) - int
+..........Id(b) - double
+......Assign - int
+........Id(a) - int
+........Mul - double
+..........Id(a) - int
+..........Id(b) - double
+......Assign - int
+........Id(a) - int
+........Eq - boolean
+..........Id(a) - int
+..........Id(b) - double
+......Return
+........Id(a) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Id(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Id(args)
+....MethodBody
+......VarDecl
+........Int
+........Id(argument)
+......VarDecl
+........Double
+........Id(iterator)
+......Assign - String[]
+........Id(args) - String[]
+........Or - boolean
+..........Add - undef
+............Mul - undef
+..............Id(args) - String[]
+..............Id(args) - String[]
+............Id(args) - String[]
+..........And - boolean
+............Id(args) - String[]
+............Id(args) - String[]
+......Assign - String[]
+........Id(args) - String[]
+........Or - boolean
+..........Add - undef
+............Mul - undef
+..............Id(args) - String[]
+..............DecLit(1) - int
+............Call - int
+..............Id(main) - (String[])
+..............Id(args) - String[]
+..........And - boolean
+............BoolLit(true) - boolean
+............Id(args) - String[]
+......Assign - String[]
+........Id(args) - String[]
+........Ne - boolean
+..........Eq - boolean
+............Ge - boolean
+..............Lt - boolean
+................Id(args) - String[]
+................DecLit(1) - int
+..............Call - int
+................Id(main) - (String[])
+................Id(args) - String[]
+............BoolLit(true) - boolean
+..........Id(args) - String[]
+......Assign - String[]
+........Id(args) - String[]
+........And - boolean
+..........And - boolean
+............Lt - boolean
+..............BoolLit(true) - boolean
+..............DecLit(1) - int
+............Eq - boolean
+..............Id(args) - String[]
+..............RealLit(1.0) - double
+..........Ne - boolean
+............DecLit(2) - int
+............Call - int
+..............Id(main) - (String[])
+..............Id(args) - String[]
+......Assign - String[]
+........Id(args) - String[]
+........Or - boolean
+..........And - boolean
+............Id(args) - String[]
+............Id(args) - String[]
+..........Id(args) - String[]
+......Assign - String[]
+........Id(args) - String[]
+........Id(args) - String[]
+......Assign - int
+........Id(argument) - int
+........Add - double
+..........Mul - int
+............DecLit(1) - int
+............Id(argument) - int
+..........RealLit(1.0) - double
+......Assign - int
+........Id(argument) - int
+........ParseArgs - int
+..........Id(args) - String[]
+..........Sub - int
+............Length - int
+..............Id(args) - String[]
+............DecLit(1) - int
+......Assign - int
+........Id(argument) - int
+........Add - double
+..........Mul - int
+............Id(argument) - int
+............Id(argument) - int
+..........Mod - double
+............Div - int
+..............Id(argument) - int
+..............Id(argument) - int
+............Id(iterator) - double
+......Assign - double
+........Id(iterator) - double
+........Id(argument) - int
+......If
+........Gt - boolean
+..........Id(argument) - int
+..........Id(iterator) - double
+........Block
+........Block
+......If
+........Eq - boolean
+..........Id(argument) - int
+..........Id(iterator) - double
+........Block
+........Block
+......If
+........Ge - boolean
+..........Id(argument) - int
+..........Id(iterator) - double
+........Block
+........Block
+......If
+........Gt - boolean
+..........Id(argument) - int
+..........Id(argument) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Id(argument) - int
+..........Id(argument) - int
+........Block
+........Block
+......If
+........Gt - boolean
+..........Id(args) - String[]
+..........Id(argument) - int
+........Block
+........Block
+......Return
+........Call - undef
+..........Id(main) - undef
+..........Id(argument) - int
+......Return
+........Id(args) - String[]
+......Return
+..MethodDecl
+....MethodHeader
+......Int
+......Id(one)
+......MethodParams
+....MethodBody
+......Return
+........DecLit(1) - int
+......Return
+........RealLit(1.0) - double
+..MethodDecl
+....MethodHeader
+......Double
+......Id(two)
+......MethodParams
+....MethodBody
+......Return
+........DecLit(1) - int
+......Return
+........RealLit(1.0) - double

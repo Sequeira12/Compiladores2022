@@ -2373,6 +2373,15 @@ int main(int argc, char *argv[]){
 				Arvore(raiz,0,1);
 			}
 	      }
+		else if(strcmp(argv[1],"-e3") == 0){
+			flagYacc = true;
+			flag = false;
+			yyparse();
+			if(flagErro == true){
+				verifica(raiz);
+				check_ast(raiz);
+			}
+	      }
 
     }else{
       
@@ -2380,9 +2389,6 @@ int main(int argc, char *argv[]){
 			flagYacc = true;
 			yyparse();
 			yylex();
-			verifica(raiz);
-			check_ast(raiz);
-			
     }
 	return 0;
 	

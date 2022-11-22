@@ -1,0 +1,117 @@
+Line 19, col 20: Symbol a(int) already defined
+Line 5, col 8: Number 2147483648 out of bounds
+Line 15, col 8: Number 2147483649 out of bounds
+Line 16, col 6: Operator = cannot be applied to types int, boolean
+Line 25, col 9: Operator Integer.parseInt cannot be applied to types undef, double
+===== Class NoFlags Symbol Table =====
+a	(int)	int
+a	(double)	int
+a	(boolean,int,boolean)	int
+main	(String[])	void
+
+===== Method a(int) Symbol Table =====
+return		int
+n		int	param
+a		int
+
+===== Method a(double) Symbol Table =====
+return		int
+n		double	param
+b		int
+
+===== Method a(boolean,int,boolean) Symbol Table =====
+return		int
+n		boolean	param
+a		int	param
+c		boolean	param
+d		int
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+
+Program
+..Id(NoFlags)
+..MethodDecl
+....MethodHeader
+......Int
+......Id(a)
+......MethodParams
+........ParamDecl
+..........Int
+..........Id(n)
+....MethodBody
+......VarDecl
+........Int
+........Id(a)
+......Assign - int
+........Id(a) - int
+........DecLit(2147483648) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Id(a)
+......MethodParams
+........ParamDecl
+..........Double
+..........Id(n)
+....MethodBody
+......VarDecl
+........Int
+........Id(b)
+......Assign - int
+........Id(b) - int
+........DecLit(21474_8_3647) - int
+..MethodDecl
+....MethodHeader
+......Int
+......Id(a)
+......MethodParams
+........ParamDecl
+..........Bool
+..........Id(n)
+........ParamDecl
+..........Int
+..........Id(a)
+........ParamDecl
+..........Bool
+..........Id(c)
+....MethodBody
+......VarDecl
+........Int
+........Id(d)
+......Assign - int
+........Id(d) - int
+........DecLit(2147483649) - int
+......Assign - int
+........Id(d) - int
+........Id(c) - boolean
+..MethodDecl
+....MethodHeader
+......Int
+......Id(a)
+......MethodParams
+........ParamDecl
+..........Int
+..........Id(n)
+....MethodBody
+......VarDecl
+........Int
+........Id(d)
+......Assign
+........Id(d)
+........DecLit(10_0000_00000)
+..MethodDecl
+....MethodHeader
+......Void
+......Id(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Id(args)
+....MethodBody
+......ParseArgs - int
+........Id(s) - undef
+........RealLit(2.2) - double
+......Print
+........RealLit(2e2) - double

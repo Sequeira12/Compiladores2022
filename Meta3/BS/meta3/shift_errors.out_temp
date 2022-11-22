@@ -1,0 +1,142 @@
+Line 27, col 11: Operator = cannot be applied to types boolean, int
+Line 29, col 11: Operator = cannot be applied to types boolean, int
+Line 31, col 11: Operator = cannot be applied to types boolean, int
+===== Class shift_errors Symbol Table =====
+valid	(String[])	void
+main	(String[])	void
+
+===== Method valid(String[]) Symbol Table =====
+return		void
+args		String[]	param
+x		int
+b		int
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+i		int
+d		double
+b		boolean
+
+Program
+..Id(shift_errors)
+..MethodDecl
+....MethodHeader
+......Void
+......Id(valid)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Id(args)
+....MethodBody
+......VarDecl
+........Int
+........Id(x)
+......VarDecl
+........Int
+........Id(b)
+......Assign - int
+........Id(x) - int
+........Lshift - int
+..........DecLit(1)
+..........Mul
+............Id(x)
+............DecLit(1)
+..MethodDecl
+....MethodHeader
+......Void
+......Id(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Id(args)
+....MethodBody
+......VarDecl
+........Int
+........Id(i)
+......VarDecl
+........Double
+........Id(d)
+......VarDecl
+........Bool
+........Id(b)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(i)
+..........DecLit(1)
+......Assign - double
+........Id(d) - double
+........Lshift - int
+..........Id(i)
+..........DecLit(1)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(i)
+..........RealLit(1.1)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(i)
+..........BoolLit(true)
+......Assign - double
+........Id(d) - double
+........Lshift - int
+..........Id(d)
+..........DecLit(1)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(d)
+..........DecLit(1)
+......Assign - double
+........Id(d) - double
+........Lshift - int
+..........Id(d)
+..........RealLit(1.1)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(d)
+..........RealLit(1.1)
+......Assign - double
+........Id(d) - double
+........Lshift - int
+..........Id(d)
+..........BoolLit(true)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(d)
+..........BoolLit(true)
+......Assign - boolean
+........Id(b) - boolean
+........Lshift - int
+..........Id(b)
+..........DecLit(1)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(b)
+..........DecLit(1)
+......Assign - boolean
+........Id(b) - boolean
+........Lshift - int
+..........Id(b)
+..........RealLit(1.1)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(b)
+..........RealLit(1.1)
+......Assign - boolean
+........Id(b) - boolean
+........Lshift - int
+..........Id(b)
+..........BoolLit(true)
+......Assign - int
+........Id(i) - int
+........Lshift - int
+..........Id(b)
+..........BoolLit(true)

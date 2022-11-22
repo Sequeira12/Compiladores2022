@@ -172,16 +172,16 @@ MethodBodySec:
 			|	/* null */											{$$ = NULL;}											
 			;
 
-VarDecl:	Type ID CmId SEMICOLON							{$$ = CriaNo(NULL,"","VarDecl");
+VarDecl:	Type ID CmId SEMICOLON							{$$ = CriaNo($2,"","VarDecl");
 																	AdicionaNo($$,$1);
 																	AdicionaIrmao($1,CriaNo($2,NULL,"Id"));
 																	if ($3){
 																		aux = $3;
 																		while(aux != NULL){
-																			no aux1 = CriaNo(NULL,"","VarDecl");
-																			no aux2 = CriaNo(NULL,$1->valor,$1->s_type);
+																			no aux1 = CriaNo($2,"","VarDecl");
+																			no aux2 = CriaNo($2,$1->valor,$1->s_type);
 																			AdicionaNo(aux1,aux2);
-																			AdicionaIrmao(aux2,CriaNo(NULL,aux->valor,"Id"));
+																			AdicionaIrmao(aux2,CriaNo($2,aux->valor,"Id"));
 																			AdicionaIrmao($$,aux1);
 																			aux = aux->irmao;
 																		}	

@@ -71,7 +71,7 @@ if [[ -d meta3 ]]; then
         echo "$inp"
         out=${inp%.java}.out
         tmp=${inp%.java}.out_temp
-        flag="-t"
+        flag="-s"
         if [[ "$inp" == *_e2.java ]]; then
             flag="-e2"
         fi

@@ -36,7 +36,8 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
     char * valor = node->irmao->valor;
    
     if(strcmp(valor,"_")==0){
-        printf("Line %s, col %s: Symbol _ is reserved\n",node->irmao->line,node->irmao->col);
+        //printf("%s\n", node->pai->line);
+        printf("Line %s, col %s: Symbol _ is reserved\n",node->line,node->col);
         return;
     }
     node_t no_da_tabela = calloc(1000,sizeof(node_t));
@@ -68,13 +69,13 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
        //printf("inserir->%s %s\n", valor,new->nome);
         node_t t=new->tab;
         for(; t->next; t=t->next){//compara até ao penultimo simbolo da tabela
-            if(strcmp(t->s_type,type)==0 && strcmp(t->valor,valor)==0 && strcmp(node->pai->s_type,"FieldDecl")==0){
+            if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || strcmp(node->pai->s_type,"FieldDecl")==0)){
                 printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
                 return;
             }
         }
         //compara com o ultimo simbolo da tabela
-        if(strcmp(t->s_type,type)==0 && strcmp(t->valor,valor)==0 && strcmp(node->pai->s_type,"FieldDecl")==0){
+        if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || strcmp(node->pai->s_type,"FieldDecl")==0)){
             printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
             return;
         }
