@@ -41,8 +41,8 @@ Program
 ......Assign - int
 ........Id(x) - int
 ........Lshift - int
-..........Id(b)
-..........Id(a)
+..........Id(b) - int
+..........Id(a) - int
 ......Assign - int
 ........Id(b) - int
 ........Mul - int

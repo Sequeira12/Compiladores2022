@@ -8,3 +8,6 @@ char * verifica_method_params(no node);
 char ** verifica_array_method_params(no node);
 void verifica_method_body(char * tab, no node);
 void check_ast(no raiz);
+char * coloca_id(no node,char *tab);
+char * ColocaOperadores(no node);
+char * tipoXor(no node);

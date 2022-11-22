@@ -50,8 +50,8 @@ Program
 ........Block
 ......If
 ........Lshift - int
-..........Id(a)
-..........DecLit(1)
+..........Id(a) - int
+..........DecLit(1) - int
 ........Assign - int
 ..........Id(a) - int
 ..........DecLit(0) - int

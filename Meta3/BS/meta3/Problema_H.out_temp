@@ -1,3 +1,4 @@
+Line 9, col 48: Cannot find symbol e
 Line 9, col 26: Operator Integer.parseInt cannot be applied to types String[], undef
 Line 10, col 16: Incompatible type String[] in return statement
 Line (null), col (null): Incompatible type int in return statement

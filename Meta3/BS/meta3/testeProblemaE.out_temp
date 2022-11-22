@@ -182,8 +182,8 @@ Program
 ......Assign - int
 ........Id(x) - int
 ........Lshift - int
-..........DecLit(1)
-..........Mul
+..........DecLit(1) - int
+..........Mul - undef
 ............Id(x)
 ............DecLit(1)
 ..MethodDecl

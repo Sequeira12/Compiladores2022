@@ -38,8 +38,8 @@ Program
 ......Assign - int
 ........Id(x) - int
 ........Lshift - int
-..........DecLit(1)
-..........Mul
+..........DecLit(1) - int
+..........Mul - undef
 ............Id(x)
 ............DecLit(1)
 ..MethodDecl
@@ -63,80 +63,80 @@ Program
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(i)
-..........DecLit(1)
+..........Id(i) - int
+..........DecLit(1) - int
 ......Assign - double
 ........Id(d) - double
 ........Lshift - int
-..........Id(i)
-..........DecLit(1)
+..........Id(i) - int
+..........DecLit(1) - int
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(i)
-..........RealLit(1.1)
+..........Id(i) - int
+..........RealLit(1.1) - undef
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(i)
-..........BoolLit(true)
+..........Id(i) - int
+..........BoolLit(true) - undef
 ......Assign - double
 ........Id(d) - double
 ........Lshift - int
-..........Id(d)
-..........DecLit(1)
+..........Id(d) - double
+..........DecLit(1) - int
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(d)
-..........DecLit(1)
+..........Id(d) - double
+..........DecLit(1) - int
 ......Assign - double
 ........Id(d) - double
 ........Lshift - int
-..........Id(d)
-..........RealLit(1.1)
+..........Id(d) - double
+..........RealLit(1.1) - undef
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(d)
-..........RealLit(1.1)
+..........Id(d) - double
+..........RealLit(1.1) - undef
 ......Assign - double
 ........Id(d) - double
 ........Lshift - int
-..........Id(d)
-..........BoolLit(true)
+..........Id(d) - double
+..........BoolLit(true) - undef
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(d)
-..........BoolLit(true)
+..........Id(d) - double
+..........BoolLit(true) - undef
 ......Assign - boolean
 ........Id(b) - boolean
 ........Lshift - int
-..........Id(b)
-..........DecLit(1)
+..........Id(b) - boolean
+..........DecLit(1) - int
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(b)
-..........DecLit(1)
+..........Id(b) - boolean
+..........DecLit(1) - int
 ......Assign - boolean
 ........Id(b) - boolean
 ........Lshift - int
-..........Id(b)
-..........RealLit(1.1)
+..........Id(b) - boolean
+..........RealLit(1.1) - undef
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(b)
-..........RealLit(1.1)
+..........Id(b) - boolean
+..........RealLit(1.1) - undef
 ......Assign - boolean
 ........Id(b) - boolean
 ........Lshift - int
-..........Id(b)
-..........BoolLit(true)
+..........Id(b) - boolean
+..........BoolLit(true) - undef
 ......Assign - int
 ........Id(i) - int
 ........Lshift - int
-..........Id(b)
-..........BoolLit(true)
+..........Id(b) - boolean
+..........BoolLit(true) - undef
