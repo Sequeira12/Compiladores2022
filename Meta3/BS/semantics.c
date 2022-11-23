@@ -202,11 +202,47 @@ char * transforma_type(char* tipo){
     if (strcmp(tipo,"Xor") == 0) return "^";
     if (strcmp(tipo,"Eq") == 0) return "==";
     if (strcmp(tipo,"Ne") == 0) return "!=";
+    if (strcmp(tipo,"Le") == 0) return "<=";
+    if (strcmp(tipo,"Lt") == 0) return "<";
+    if (strcmp(tipo,"Ge") == 0) return ">=";
+    if (strcmp(tipo,"Gt") == 0) return ">";
+
 
     return "none";
 }
 
-
+char * coloca_id(no node, char *tab){
+    if(strcmp(node->s_type,"Le")==0 || strcmp(node->s_type,"Lt")==0 || strcmp(node->s_type,"Gt")==0 || strcmp(node->s_type,"Ge")==0){
+        return " - boolean";
+        
+    }
+    if(strcmp(node->s_type,"BoolLit")==0){
+        return " - boolean";
+            
+    };
+    if(strcmp(node->s_type,"RealLit")==0){
+        
+        return " - double";
+        
+    };
+    if(strcmp(node->s_type,"DecLit")==0){
+        return " - int";
+     
+    };
+    if(strcmp(node->s_type,"DecLit")==0){
+        return " - int";
+        
+    };
+    if(strcmp(node->s_type,"Id")==0){
+        
+        node->id = procura_tabela(node,tab);
+        return node->id;
+    };
+    if(strcmp(node->s_type,"Rshift")==0){
+        return "";
+    }
+    return "none";
+}
 
 void verifica_method_body(char * tab, no node){
     if(node){
@@ -305,6 +341,40 @@ void verifica_method_body(char * tab, no node){
 
         }
         
+        
+        if(strcmp(node->s_type,"Ge")==0 ||strcmp(node->s_type,"Gt")==0 || strcmp(node->s_type,"Lt")==0 || strcmp(node->s_type,"Le")==0 ){
+         //   printf("%s   %s  %s   %s \n",node->filho->id,node->filho->irmao->id,node->filho->s_type,node->filho->irmao->s_type);
+           
+            if(node->filho->id == NULL){
+                node->filho->id = coloca_id(node->filho,tab);
+            }
+            if(node->filho->irmao->id == NULL){    
+            node->filho->irmao->id = coloca_id(node->filho->irmao,tab);
+            }
+          /*  if(strcmp(node->filho->id,"R")==0){
+                strcpy(node->filho->id,"");
+            }
+            if(strcmp(node->filho->irmao->id,"R")==0){
+                strcpy(node->filho->irmao->id,"");
+            }
+            */
+            node->filho->id = ColocaOperadores(node->filho);
+            node->filho->irmao->id =ColocaOperadores(node->filho->irmao);
+
+            //printf("2%s   %s  %s   %s \n",node->filho->id,node->irmao->id,node->filho->s_type,node->filho->irmao->s_type);
+            if(!(((strcmp(transforma_type(node->filho->id),transforma_type(node->filho->irmao->id))==0 )&&
+             (strcmp(transforma_type(node->filho->id),"double")==0 || strcmp(transforma_type(node->filho->id), "int")==0)) || 
+             (strcmp(transforma_type(node->filho->id),"int")==0 && strcmp(transforma_type(node->filho->irmao->id),"double")==0 ||
+             strcmp(transforma_type(node->filho->irmao->id),"int")==0 && strcmp(transforma_type(node->filho->id),"double")==0 )))
+                printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->line,node->col,transforma_type(node->s_type),transforma_type(node->filho->id),transforma_type(node->filho->irmao->id));
+        
+
+
+            
+        }
+
+
+        
         if(strcmp(node->s_type,"If")==0){
           
             tabela noo = procura_tab(tab);
@@ -324,10 +394,25 @@ void verifica_method_body(char * tab, no node){
             if(strcmp(node->filho->s_type,"Lshift")==0){
                 strcpy(node->filho->id," - int");
             }
-             if(strcmp(node->filho->s_type,"Ne")==0){
+            if(strcmp(node->filho->s_type,"Ne")==0){
+                strcpy(node->filho->id," - boolean");
+            }
+             if(strcmp(node->filho->s_type,"Ge")==0){
+                strcpy(node->filho->id," - boolean");
+            }
+             if(strcmp(node->filho->s_type,"Lt")==0){
+                strcpy(node->filho->id," - boolean");
+            }
+             if(strcmp(node->filho->s_type,"Gt")==0){
+                strcpy(node->filho->id," - boolean");
+            }
+             if(strcmp(node->filho->s_type,"Le")==0){
                 strcpy(node->filho->id," - boolean");
             }
 
+
+         
+           
            
 
             if(strcmp(transforma_type(node->filho->id),"boolean")!=0){
@@ -360,17 +445,17 @@ void verifica_method_body(char * tab, no node){
         }
 
 
-        if(strcmp(node->s_type,"VarDecl")==0) insere(node->filho, NULL,NULL,tab);
+        if(strcmp(node->s_type,"VarDecl")==0) {insere(node->filho, NULL,NULL,tab);}
  
 
         if(strcmp(node->s_type,"Id")==0){
 
             node->id=procura_tabela(node,tab);
             
-            if(strcmp(node->id,"_")==0){
-                printf("Line %s, col %s: Symbol _ is reserved\n",node->line,node->col);
+            if(strcmp(node->valor,"_")==0){
+                printf("Line %s, col %s: Symbssol _ is reserved\n",node->line,node->col);
             }  
-            if(strcmp(transforma_type(node->id),"undef")==0 && strcmp(node->pai->s_type,"Length")==0){
+            if(strcmp(transforma_type(node->id),"undef")==0 && (strcmp(node->pai->s_type,"Length")==0 || strcmp(node->pai->s_type,"ParseArgs")==0)){
                 printf("Line %s, col %s: Cannot find symbol %s\n",node->line,node->col,node->valor);
             }
         }
@@ -394,8 +479,42 @@ void verifica_method_body(char * tab, no node){
         }
         if(strcmp(node->s_type,"Lshift")==0){
             node->id = (char*)strdup(" - int");
+            if(node->filho && node->filho->irmao){
+              
+                node->filho->id = procura_tabela(node->filho,tab);
+                node->filho->irmao->id = procura_tabela(node->filho->irmao,tab);
+                if(strcmp(node->filho->s_type,"DecLit")==0){
+                    node->filho->id = (char*)strdup(" - int");
+                }else if(strcmp(node->filho->irmao->s_type,"DecLit")==0){
+                    node->filho->irmao->id = (char*)strdup(" - int");
+            }
         }
+        }
+        /*if(strcmp(node->s_type,"Le")==0){
+            char *ids,*ids2;
+           
+            if(node->filho->id==NULL && strcmp(node->filho->s_type,"Id")!=0){
+                strcpy(ids,"none");
+            }else{
+                ids = node->filho->id;
+            }
+            if(node->filho->irmao->id==NULL && strcmp(node->filho->irmao->s_type,"Id")!=0){
+                strcpy(ids2,"none");
+            }else{
+                strcpy(ids,node->filho->irmao->id);
+               
+            }
+           
+            if(node->filho != NULL  && node->filho->irmao != NULL){
+               
+                if(strcmp(ids,ids2)!=0){
+                   
+                    printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->line,node->col,transforma_type(node->s_type),transforma_type(ids),transforma_type(ids2));
+                }
+            
+        }   }*/
 
+    
         if(strcmp(node->s_type,"ParseArgs")==0){
             if(strcmp(node->filho->irmao->id, " - undef")==0 && strcmp(node->filho->irmao->s_type, "Id")==0){
                 printf("Line %s, col %s: Cannot find symbol %s\n",node->filho->irmao->line,node->filho->irmao->col, node->filho->irmao->valor);
@@ -423,6 +542,9 @@ void verifica_method_body(char * tab, no node){
                     printf("Line %s, col %d: Operator %s cannot be applied to types %s, %s\n",node->filho->line,a,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->id),transforma_type(node->filho->irmao->id));
                 }
             }
+           
+            
+
             if(strcmp(node->filho->irmao->s_type,"Xor")==0){
                
                 if(strcmp(node->filho->id,node->filho->irmao->filho->id)==0 && strcmp(transforma_type(node->filho->id),"boolean")==0
@@ -437,7 +559,8 @@ void verifica_method_body(char * tab, no node){
                 if(strcmp(transforma_type(node->filho->irmao->id),"undef")==0){
                 printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->filho->irmao->line,node->filho->irmao->col,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->irmao->filho->irmao->id),transforma_type(node->filho->irmao->filho->id));
                 }
-                }
+            }
+           
 
           
             
@@ -639,4 +762,34 @@ void check_ast(no raiz){
 
     }else return;
     for(no aux = raiz->filho; aux!=NULL; aux=aux->irmao) check_ast(aux);
+}
+
+
+
+char * ColocaOperadores(no node){
+    int i = 0;
+    char *valor;
+     if (strcmp(node->s_type,"Add")==0 || strcmp(node->s_type,"Sub")==0 
+        || strcmp(node->s_type,"Div")==0 || strcmp(node->s_type,"Mul")==0 || strcmp(node->s_type,"Mod")==0)
+        {
+                if(strcmp(node->filho->id, node->filho->irmao->id) != 0) {
+                
+                    valor=(char*)strdup(" - double");
+                    return valor;
+                    i++;
+                 
+
+                }
+            
+                if(strcmp(node->filho->id, node->filho->irmao->id) == 0) {
+                    
+                    valor=(char*)strdup(node->filho->id);
+                    return valor;
+                   i++;
+                }
+               
+            }
+    if(i == 0){
+        return node->id;
+    }        
 }
