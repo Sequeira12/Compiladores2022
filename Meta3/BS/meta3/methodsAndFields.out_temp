@@ -3,8 +3,8 @@ Line 17, col 11: Symbol b already defined
 Line 18, col 4: Operator = cannot be applied to types int, boolean
 Line 21, col 10: Incompatible type int in return statement
 Line 30, col 7: Symbol a already defined
-Line 30, col 7: Symbol b already defined
-Line 30, col 7: Symbol e already defined
+Line 30, col 10: Symbol b already defined
+Line 30, col 19: Symbol e already defined
 ===== Class newClass Symbol Table =====
 i		int
 b		boolean

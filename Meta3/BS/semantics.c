@@ -503,13 +503,28 @@ void verifica_method_body(char * tab, no node){
         }
     
 
+        char * vars[100];
+        
+        
 
         if(strcmp(node->s_type,"Call")==0){
             char ** params = check_calls_method_params(node);
-           
+            
+            char **vars=retorna_variaveis_parametros(tab);
+            
+            int control=0;
+            if(vars!=NULL && node->filho->irmao){
+                for(int i=0; vars[i]; i++){
+                    if(strcmp(vars[i], node->filho->irmao->valor)==0) control++;
+                }
+                if(control==0 && strcmp(node->filho->irmao->valor,"")!=0 && strcmp(node->filho->irmao->s_type,"Id")==0) printf("Line %s, col %s: Cannot find symbol %s\n",node->filho->irmao->line,node->filho->irmao->col,node->filho->irmao->valor);
+            }
             tabela anota = check_call(node->filho->valor, params, 0);
             int Num_param = atoi(params[0]);
             
+        
+
+
             if (anota != NULL) {
                 char * n_string;
                 if ((n_string = malloc(strlen(" - ")+strlen(anota->tab->s_type)+1)) != NULL) {
@@ -526,10 +541,8 @@ void verifica_method_body(char * tab, no node){
                     strcat(n_string2, &anota->nome[i]);
                 }
                 node->filho->id = n_string2;
-                
             }
             else {
-                
                 char stringP[500]="";
                 //printf("%d",Num_param);
                 for(int x = 1; x <= Num_param; x++){

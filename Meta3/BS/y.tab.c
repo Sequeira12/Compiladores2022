@@ -734,14 +734,14 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    63,    63,    70,    74,    75,    76,    77,    80,    86,
-     103,   106,   109,   112,   113,   114,   117,   125,   135,   141,
-     145,   149,   154,   157,   163,   169,   172,   175,   193,   200,
-     212,   236,   248,   251,   252,   253,   254,   255,   258,   263,
-     264,   268,   274,   279,   280,   284,   288,   292,   293,   297,
-     301,   304,   310,   314,   319,   320,   324,   325,   326,   327,
-     328,   329,   330,   331,   332,   333,   334,   335,   336,   337,
-     338,   339,   340,   343,   344,   345,   346,   347,   348,   349,
-     350,   351,   352,   353,   354
+     109,   112,   115,   118,   119,   120,   123,   131,   141,   147,
+     151,   155,   160,   163,   169,   175,   178,   181,   203,   210,
+     222,   246,   258,   261,   262,   263,   264,   265,   268,   273,
+     274,   278,   284,   289,   290,   294,   298,   302,   303,   307,
+     311,   314,   320,   324,   329,   330,   334,   335,   336,   337,
+     338,   339,   340,   341,   342,   343,   344,   345,   346,   347,
+     348,   349,   350,   353,   354,   355,   356,   357,   358,   359,
+     360,   361,   362,   363,   364
 };
 #endif
 
@@ -1503,66 +1503,72 @@ yyreduce:
 
   case 9: /* FieldDecl: PUBLIC STATIC Type ID CmId SEMICOLON  */
 #line 86 "jucompiler.y"
-                                                                                {(yyval.no) = CriaNo(NULL,"","FieldDecl");
+                                                                                {(yyval.no) = CriaNo((yyvsp[-2].id),"","FieldDecl");
+																	//printf("%s %s %s\n",$4[0] ,$$->col,$$->line);
 																	AdicionaNo((yyval.no),(yyvsp[-3].no));
 																	AdicionaIrmao((yyvsp[-3].no),CriaNo((yyvsp[-2].id),NULL,"Id"));
 
 																	if ( (yyvsp[-1].no) != NULL ) {
 																		aux = (yyvsp[-1].no);
 																		while(aux != NULL){
-																			no aux1 = CriaNo(NULL,"","FieldDecl");
-																			no aux2 = CriaNo(NULL,(yyvsp[-3].no)->valor,(yyvsp[-3].no)->s_type);
+																			char* auxi[3];
+																			auxi[0] = aux->valor;
+																			auxi[1] = aux->line;
+																			auxi[2] = aux->col;
+																			//printf("%s %s %s\n", auxi[0],auxi[1],auxi[2]);
+																			no aux1 = CriaNo(auxi,"","FieldDecl");
+																			no aux2 = CriaNo(auxi,(yyvsp[-3].no)->valor,(yyvsp[-3].no)->s_type);
 																			AdicionaNo(aux1,aux2);
-																			AdicionaIrmao(aux2,CriaNo(NULL,aux->valor,"Id"));
+																			AdicionaIrmao(aux2,CriaNo(auxi,aux->valor,"Id"));
 																			AdicionaIrmao((yyval.no),aux1);
 																			aux = aux->irmao;
 																		}		
 																		free(aux);
 																	}
 																	}
-#line 1524 "y.tab.c"
-    break;
-
-  case 10: /* FieldDecl: error SEMICOLON  */
-#line 103 "jucompiler.y"
-                                                                                                                                {(yyval.no) = NULL;flagErro = false;}
 #line 1530 "y.tab.c"
     break;
 
+  case 10: /* FieldDecl: error SEMICOLON  */
+#line 109 "jucompiler.y"
+                                                                                                                                {(yyval.no) = NULL;flagErro = false;}
+#line 1536 "y.tab.c"
+    break;
+
   case 11: /* CmId: COMMA ID CmId  */
-#line 106 "jucompiler.y"
+#line 112 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),NULL,"Id");
 																		AdicionaIrmao((yyval.no),(yyvsp[0].no));
 																	}
-#line 1538 "y.tab.c"
-    break;
-
-  case 12: /* CmId: %empty  */
-#line 109 "jucompiler.y"
-                                                                                                                                {(yyval.no) = NULL;}
 #line 1544 "y.tab.c"
     break;
 
-  case 13: /* Type: BOOL  */
-#line 112 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Bool");}
+  case 12: /* CmId: %empty  */
+#line 115 "jucompiler.y"
+                                                                                                                                {(yyval.no) = NULL;}
 #line 1550 "y.tab.c"
     break;
 
-  case 14: /* Type: INT  */
-#line 113 "jucompiler.y"
-                                                                                                                                        {(yyval.no) = CriaNo(NULL,"","Int");}
+  case 13: /* Type: BOOL  */
+#line 118 "jucompiler.y"
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[0].id),"","Bool");}
 #line 1556 "y.tab.c"
     break;
 
-  case 15: /* Type: DOUBLE  */
-#line 114 "jucompiler.y"
-                                                                                                                                {(yyval.no) = CriaNo(NULL,"","Double");}
+  case 14: /* Type: INT  */
+#line 119 "jucompiler.y"
+                                                                                                                                        {(yyval.no) = CriaNo((yyvsp[0].id),"","Int");}
 #line 1562 "y.tab.c"
     break;
 
+  case 15: /* Type: DOUBLE  */
+#line 120 "jucompiler.y"
+                                                                                                                                {(yyval.no) = CriaNo((yyvsp[0].id),"","Double");}
+#line 1568 "y.tab.c"
+    break;
+
   case 16: /* MethodHeader: Type ID LPAR FormalParams RPAR  */
-#line 117 "jucompiler.y"
+#line 123 "jucompiler.y"
                                                                                         {(yyval.no) = CriaNo(NULL,"","MethodHeader");
 																	AdicionaNo((yyval.no),(yyvsp[-4].no));
 																	AdicionaIrmao((yyvsp[-4].no),CriaNo((yyvsp[-3].id),NULL,"Id"));
@@ -1570,11 +1576,11 @@ yyreduce:
 																	AdicionaIrmao((yyvsp[-4].no),aux);
 																	AdicionaNo(aux,(yyvsp[-1].no));
 																	}
-#line 1574 "y.tab.c"
+#line 1580 "y.tab.c"
     break;
 
   case 17: /* MethodHeader: VOID ID LPAR FormalParams RPAR  */
-#line 125 "jucompiler.y"
+#line 131 "jucompiler.y"
                                                                                                         {(yyval.no) = CriaNo(NULL,"","MethodHeader");
 																	aux = CriaNo(NULL,"","Void");
 																	AdicionaNo((yyval.no),aux);
@@ -1583,117 +1589,121 @@ yyreduce:
 																	AdicionaIrmao(aux,auxi2);
 																	AdicionaNo(auxi2,(yyvsp[-1].no));
 																	}
-#line 1587 "y.tab.c"
+#line 1593 "y.tab.c"
     break;
 
   case 18: /* FormalParams: Type ID FormalParamsSec  */
-#line 135 "jucompiler.y"
-                                                                                                {(yyval.no) = CriaNo(NULL,"","ParamDecl");
+#line 141 "jucompiler.y"
+                                                                                                {(yyval.no) = CriaNo((yyvsp[-1].id),"","ParamDecl");
 																	AdicionaNo((yyval.no),(yyvsp[-2].no));
 																	aux=CriaNo((yyvsp[-1].id),NULL,"Id");
 																	AdicionaIrmao((yyvsp[-2].no),aux);
 																	AdicionaIrmao((yyval.no),(yyvsp[0].no));}
-#line 1597 "y.tab.c"
+#line 1603 "y.tab.c"
     break;
 
   case 19: /* FormalParams: STRING LSQ RSQ ID  */
-#line 141 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo(NULL,"","ParamDecl");
-																	aux = CriaNo(NULL,"","StringArray");
+#line 147 "jucompiler.y"
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[0].id),"","ParamDecl");
+																	aux = CriaNo((yyvsp[0].id),"","StringArray");
 																	AdicionaNo((yyval.no),aux);
 																	AdicionaIrmao(aux,CriaNo((yyvsp[0].id),NULL,"Id"));}
-#line 1606 "y.tab.c"
-    break;
-
-  case 20: /* FormalParams: %empty  */
-#line 145 "jucompiler.y"
-                                                                                                                                {(yyval.no) = NULL;}
 #line 1612 "y.tab.c"
     break;
 
+  case 20: /* FormalParams: %empty  */
+#line 151 "jucompiler.y"
+                                                                                                                                {(yyval.no) = NULL;}
+#line 1618 "y.tab.c"
+    break;
+
   case 21: /* FormalParamsSec: COMMA Type ID FormalParamsSec  */
-#line 149 "jucompiler.y"
-                                                                                                        {(yyval.no) = CriaNo(NULL,"","ParamDecl");
+#line 155 "jucompiler.y"
+                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","ParamDecl");
 																	aux=CriaNo((yyvsp[-1].id),NULL,"Id");
 																	AdicionaNo((yyval.no),(yyvsp[-2].no));
 																	AdicionaIrmao((yyvsp[-2].no),aux);
 																	AdicionaIrmao((yyval.no),(yyvsp[0].no));}
-#line 1622 "y.tab.c"
-    break;
-
-  case 22: /* FormalParamsSec: %empty  */
-#line 154 "jucompiler.y"
-                                                                                                                                {(yyval.no) = NULL;}
 #line 1628 "y.tab.c"
     break;
 
+  case 22: /* FormalParamsSec: %empty  */
+#line 160 "jucompiler.y"
+                                                                                                                                {(yyval.no) = NULL;}
+#line 1634 "y.tab.c"
+    break;
+
   case 23: /* MethodBody: LBRACE MethodBodySec RBRACE  */
-#line 157 "jucompiler.y"
+#line 163 "jucompiler.y"
                                                                                                         {(yyval.no) = CriaNo(NULL,"","MethodBody");
 																	AdicionaNo((yyval.no),(yyvsp[-1].no));
 																	}
-#line 1636 "y.tab.c"
+#line 1642 "y.tab.c"
     break;
 
   case 24: /* MethodBodySec: Statement MethodBodySec  */
-#line 163 "jucompiler.y"
+#line 169 "jucompiler.y"
                                                                                                                 {if((yyvsp[-1].no) != NULL){
 																		(yyval.no) = (yyvsp[-1].no); 
 																		AdicionaIrmao((yyval.no),(yyvsp[0].no));
 																	}else{
 																		(yyval.no)=(yyvsp[0].no);}
 																	}
-#line 1647 "y.tab.c"
+#line 1653 "y.tab.c"
     break;
 
   case 25: /* MethodBodySec: VarDecl MethodBodySec  */
-#line 169 "jucompiler.y"
+#line 175 "jucompiler.y"
                                                                                                                 {(yyval.no) = (yyvsp[-1].no);
 																	AdicionaIrmao((yyval.no),(yyvsp[0].no));
 																	}
-#line 1655 "y.tab.c"
-    break;
-
-  case 26: /* MethodBodySec: %empty  */
-#line 172 "jucompiler.y"
-                                                                                                                                {(yyval.no) = NULL;}
 #line 1661 "y.tab.c"
     break;
 
+  case 26: /* MethodBodySec: %empty  */
+#line 178 "jucompiler.y"
+                                                                                                                                {(yyval.no) = NULL;}
+#line 1667 "y.tab.c"
+    break;
+
   case 27: /* VarDecl: Type ID CmId SEMICOLON  */
-#line 175 "jucompiler.y"
-                                                                                        {(yyval.no) = CriaNo((yyvsp[-2].id),"","VarDecl");
+#line 181 "jucompiler.y"
+                                                                                        {(yyval.no) = CriaNo(NULL,"","VarDecl");
 																	AdicionaNo((yyval.no),(yyvsp[-3].no));
 																	AdicionaIrmao((yyvsp[-3].no),CriaNo((yyvsp[-2].id),NULL,"Id"));
 																	if ((yyvsp[-1].no)){
 																		aux = (yyvsp[-1].no);
 																		while(aux != NULL){
-																			no aux1 = CriaNo((yyvsp[-2].id),"","VarDecl");
-																			no aux2 = CriaNo((yyvsp[-2].id),(yyvsp[-3].no)->valor,(yyvsp[-3].no)->s_type);
+																			char* auxi[3];
+																			auxi[0]=aux->valor;
+																			auxi[1]=aux->line;
+																			auxi[2]=aux->col;
+																			no aux1 = CriaNo(auxi,"","VarDecl");
+																			no aux2 = CriaNo(NULL,(yyvsp[-3].no)->valor,(yyvsp[-3].no)->s_type);
 																			AdicionaNo(aux1,aux2);
-																			AdicionaIrmao(aux2,CriaNo((yyvsp[-2].id),aux->valor,"Id"));
+																			AdicionaIrmao(aux2,CriaNo(auxi,aux->valor,"Id"));
 																			AdicionaIrmao((yyval.no),aux1);
 																			aux = aux->irmao;
 																		}	
 																		free(aux);
 																															
 																	}}
-#line 1682 "y.tab.c"
+#line 1692 "y.tab.c"
     break;
 
   case 28: /* Statement: LBRACE StatementSec RBRACE  */
-#line 193 "jucompiler.y"
+#line 203 "jucompiler.y"
                                                                                                         {if(conta_irmaos((yyvsp[-1].no))>1){
 																		aux = CriaNo(NULL,"","Block");
 																		(yyval.no)=aux;
 																		AdicionaNo(aux,(yyvsp[-1].no));
 																	}else{(yyval.no)=(yyvsp[-1].no);}
 																	}
-#line 1693 "y.tab.c"
+#line 1703 "y.tab.c"
     break;
 
   case 29: /* Statement: IF LPAR Expr RPAR Statement  */
-#line 200 "jucompiler.y"
+#line 210 "jucompiler.y"
                                                                                         {(yyval.no) = CriaNo(NULL,"","If");
 																	AdicionaNo((yyval.no),(yyvsp[-2].no));
 																	aux=CriaNo(NULL,"","Block");
@@ -1706,11 +1716,11 @@ yyreduce:
 																			AdicionaIrmao(aux,CriaNo(NULL,"","Block"));
 																		}
 																	}
-#line 1710 "y.tab.c"
+#line 1720 "y.tab.c"
     break;
 
   case 30: /* Statement: IF LPAR Expr RPAR Statement ELSE Statement  */
-#line 212 "jucompiler.y"
+#line 222 "jucompiler.y"
                                                                                                 {(yyval.no) = CriaNo(NULL,"","If");
 																	AdicionaNo((yyval.no),(yyvsp[-4].no)); 
 																	aux = CriaNo(NULL,"","Block");
@@ -1733,11 +1743,11 @@ yyreduce:
 																		}
 																	}
 																	}
-#line 1737 "y.tab.c"
+#line 1747 "y.tab.c"
     break;
 
   case 31: /* Statement: WHILE LPAR Expr RPAR Statement  */
-#line 236 "jucompiler.y"
+#line 246 "jucompiler.y"
                                                                                                         {(yyval.no) = CriaNo(NULL,"","While");
 																	AdicionaNo((yyval.no),(yyvsp[-2].no));
 																	if(conta_irmaos((yyvsp[0].no)) == 1 && (yyvsp[0].no)){
@@ -1748,349 +1758,349 @@ yyreduce:
 																		AdicionaNo(aux,(yyvsp[0].no));
 																		}
 																	}
-#line 1752 "y.tab.c"
+#line 1762 "y.tab.c"
     break;
 
   case 32: /* Statement: RETURN ExprReturn SEMICOLON  */
-#line 248 "jucompiler.y"
+#line 258 "jucompiler.y"
                                                                                                                 {(yyval.no) = CriaNo((yyvsp[-2].id),"","Return");
 																	AdicionaNo((yyval.no),(yyvsp[-1].no));}
-#line 1759 "y.tab.c"
+#line 1769 "y.tab.c"
     break;
 
   case 33: /* Statement: MethodInvocation SEMICOLON  */
-#line 251 "jucompiler.y"
+#line 261 "jucompiler.y"
                                                                                                                 {(yyval.no) = (yyvsp[-1].no);}
-#line 1765 "y.tab.c"
+#line 1775 "y.tab.c"
     break;
 
   case 34: /* Statement: Assignment SEMICOLON  */
-#line 252 "jucompiler.y"
+#line 262 "jucompiler.y"
                                                                                                                         {(yyval.no) = (yyvsp[-1].no);}
-#line 1771 "y.tab.c"
+#line 1781 "y.tab.c"
     break;
 
   case 35: /* Statement: ParseArgs SEMICOLON  */
-#line 253 "jucompiler.y"
+#line 263 "jucompiler.y"
                                                                                                                         {(yyval.no) = (yyvsp[-1].no);}
-#line 1777 "y.tab.c"
+#line 1787 "y.tab.c"
     break;
 
   case 36: /* Statement: SEMICOLON  */
-#line 254 "jucompiler.y"
+#line 264 "jucompiler.y"
                                                                                                                                 {(yyval.no) = NULL;}
-#line 1783 "y.tab.c"
+#line 1793 "y.tab.c"
     break;
 
   case 37: /* Statement: PRINT LPAR StatementPrint RPAR SEMICOLON  */
-#line 255 "jucompiler.y"
+#line 265 "jucompiler.y"
                                                                                                 {(yyval.no) = CriaNo((yyvsp[-3].id),"","Print");
 																	AdicionaNo((yyval.no),(yyvsp[-2].no));
 																	}
-#line 1791 "y.tab.c"
+#line 1801 "y.tab.c"
     break;
 
   case 38: /* Statement: error SEMICOLON  */
-#line 258 "jucompiler.y"
+#line 268 "jucompiler.y"
                                                                                                                         {(yyval.no)=NULL;flagErro=false;}
-#line 1797 "y.tab.c"
+#line 1807 "y.tab.c"
     break;
 
   case 39: /* ExprReturn: %empty  */
-#line 263 "jucompiler.y"
+#line 273 "jucompiler.y"
                 {(yyval.no)=NULL;}
-#line 1803 "y.tab.c"
+#line 1813 "y.tab.c"
     break;
 
   case 40: /* ExprReturn: Expr  */
-#line 264 "jucompiler.y"
+#line 274 "jucompiler.y"
                                 {(yyval.no)=(yyvsp[0].no);}
-#line 1809 "y.tab.c"
+#line 1819 "y.tab.c"
     break;
 
   case 41: /* StatementSec: Statement StatementSec  */
-#line 268 "jucompiler.y"
+#line 278 "jucompiler.y"
                                                                                                                 {if((yyvsp[-1].no)){
 																		(yyval.no)=(yyvsp[-1].no);
 																		AdicionaIrmao((yyval.no),(yyvsp[0].no));
 																	}else{
 																		(yyval.no)=(yyvsp[0].no);}
 			}
-#line 1820 "y.tab.c"
+#line 1830 "y.tab.c"
     break;
 
   case 42: /* StatementSec: %empty  */
-#line 274 "jucompiler.y"
+#line 284 "jucompiler.y"
                                                                                                                         {(yyval.no) = NULL;}
-#line 1826 "y.tab.c"
+#line 1836 "y.tab.c"
     break;
 
   case 43: /* StatementPrint: Expr  */
-#line 279 "jucompiler.y"
+#line 289 "jucompiler.y"
                                                                                                                 {(yyval.no) = (yyvsp[0].no);}
-#line 1832 "y.tab.c"
+#line 1842 "y.tab.c"
     break;
 
   case 44: /* StatementPrint: STRLIT  */
-#line 280 "jucompiler.y"
+#line 290 "jucompiler.y"
                                                                                                                                 {(yyval.no) = CriaNo((yyvsp[0].id),NULL,"StrLit");}
-#line 1838 "y.tab.c"
+#line 1848 "y.tab.c"
     break;
 
   case 45: /* MethodInvocation: ID LPAR MethodInvocationSec RPAR  */
-#line 284 "jucompiler.y"
+#line 294 "jucompiler.y"
                                                                                         {(yyval.no) = CriaNo((yyvsp[-3].id),"","Call");
 																	aux = CriaNo((yyvsp[-3].id),NULL,"Id");
 																	AdicionaNo((yyval.no),aux);
 																	AdicionaIrmao(aux,(yyvsp[-1].no));}
-#line 1847 "y.tab.c"
+#line 1857 "y.tab.c"
     break;
 
   case 46: /* MethodInvocation: ID LPAR error RPAR  */
-#line 288 "jucompiler.y"
+#line 298 "jucompiler.y"
                                                                                                                         {(yyval.no) = NULL;flagErro = false;}
-#line 1853 "y.tab.c"
+#line 1863 "y.tab.c"
     break;
 
   case 47: /* MethodInvocationSec: Expr MethodInvocationThird  */
-#line 292 "jucompiler.y"
+#line 302 "jucompiler.y"
                                                                                                                 {(yyval.no) = (yyvsp[-1].no);AdicionaIrmao((yyval.no),(yyvsp[0].no));}
-#line 1859 "y.tab.c"
+#line 1869 "y.tab.c"
     break;
 
   case 48: /* MethodInvocationSec: %empty  */
-#line 293 "jucompiler.y"
+#line 303 "jucompiler.y"
                                                                                                                                 {(yyval.no) = NULL;}
-#line 1865 "y.tab.c"
+#line 1875 "y.tab.c"
     break;
 
   case 49: /* MethodInvocationThird: COMMA Expr MethodInvocationThird  */
-#line 297 "jucompiler.y"
+#line 307 "jucompiler.y"
                                                                                 {if((yyvsp[-1].no)){
 																		(yyval.no)=(yyvsp[-1].no);
 																		AdicionaIrmao((yyval.no),(yyvsp[0].no));
 																	}else{(yyval.no)=(yyvsp[-1].no);}}
-#line 1874 "y.tab.c"
+#line 1884 "y.tab.c"
     break;
 
   case 50: /* MethodInvocationThird: %empty  */
-#line 301 "jucompiler.y"
+#line 311 "jucompiler.y"
                                                                                                                         {(yyval.no) = NULL;}
-#line 1880 "y.tab.c"
+#line 1890 "y.tab.c"
     break;
 
   case 51: /* Assignment: ID ASSIGN Expr  */
-#line 304 "jucompiler.y"
+#line 314 "jucompiler.y"
                                                                                                                 {(yyval.no) = CriaNo((yyvsp[-1].id),"","Assign");
 																	aux = CriaNo((yyvsp[-2].id),NULL,"Id");
 																	AdicionaNo((yyval.no),aux);
 																	AdicionaIrmao(aux,(yyvsp[0].no));}
-#line 1889 "y.tab.c"
+#line 1899 "y.tab.c"
     break;
 
   case 52: /* ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR  */
-#line 310 "jucompiler.y"
+#line 320 "jucompiler.y"
                                                                                                 {(yyval.no) = CriaNo(NULL,"","ParseArgs");
 																	aux = CriaNo((yyvsp[-4].id),NULL,"Id");
 																	AdicionaNo((yyval.no),aux);
 																	AdicionaIrmao(aux,(yyvsp[-2].no));}
-#line 1898 "y.tab.c"
+#line 1908 "y.tab.c"
     break;
 
   case 53: /* ParseArgs: PARSEINT LPAR error RPAR  */
-#line 314 "jucompiler.y"
+#line 324 "jucompiler.y"
                                                                                                                 {(yyval.no) = NULL;flagErro=false;}
-#line 1904 "y.tab.c"
+#line 1914 "y.tab.c"
     break;
 
   case 54: /* Expr: Assignment  */
-#line 319 "jucompiler.y"
+#line 329 "jucompiler.y"
                                                                                                                         {(yyval.no) = (yyvsp[0].no);}
-#line 1910 "y.tab.c"
+#line 1920 "y.tab.c"
     break;
 
   case 55: /* Expr: Expr1  */
-#line 320 "jucompiler.y"
+#line 330 "jucompiler.y"
                                                                                                                                 {(yyval.no) = (yyvsp[0].no);}
-#line 1916 "y.tab.c"
+#line 1926 "y.tab.c"
     break;
 
   case 56: /* Expr1: Expr1 PLUS Expr1  */
-#line 324 "jucompiler.y"
+#line 334 "jucompiler.y"
                                                                                                                 {(yyval.no) = CriaNo((yyvsp[-1].id),"","Add");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1922 "y.tab.c"
+#line 1932 "y.tab.c"
     break;
 
   case 57: /* Expr1: Expr1 MINUS Expr1  */
-#line 325 "jucompiler.y"
+#line 335 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Sub");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1928 "y.tab.c"
+#line 1938 "y.tab.c"
     break;
 
   case 58: /* Expr1: Expr1 STAR Expr1  */
-#line 326 "jucompiler.y"
+#line 336 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Mul");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1934 "y.tab.c"
+#line 1944 "y.tab.c"
     break;
 
   case 59: /* Expr1: Expr1 DIV Expr1  */
-#line 327 "jucompiler.y"
+#line 337 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Div");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1940 "y.tab.c"
+#line 1950 "y.tab.c"
     break;
 
   case 60: /* Expr1: Expr1 MOD Expr1  */
-#line 328 "jucompiler.y"
+#line 338 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Mod");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1946 "y.tab.c"
+#line 1956 "y.tab.c"
     break;
 
   case 61: /* Expr1: Expr1 AND Expr1  */
-#line 329 "jucompiler.y"
+#line 339 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","And");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1952 "y.tab.c"
+#line 1962 "y.tab.c"
     break;
 
   case 62: /* Expr1: Expr1 OR Expr1  */
-#line 330 "jucompiler.y"
+#line 340 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Or");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1958 "y.tab.c"
+#line 1968 "y.tab.c"
     break;
 
   case 63: /* Expr1: Expr1 XOR Expr1  */
-#line 331 "jucompiler.y"
+#line 341 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Xor");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1964 "y.tab.c"
+#line 1974 "y.tab.c"
     break;
 
   case 64: /* Expr1: Expr1 LSHIFT Expr1  */
-#line 332 "jucompiler.y"
+#line 342 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Lshift");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1970 "y.tab.c"
+#line 1980 "y.tab.c"
     break;
 
   case 65: /* Expr1: Expr1 RSHIFT Expr1  */
-#line 333 "jucompiler.y"
+#line 343 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Rshift");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1976 "y.tab.c"
+#line 1986 "y.tab.c"
     break;
 
   case 66: /* Expr1: Expr1 EQ Expr1  */
-#line 334 "jucompiler.y"
+#line 344 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Eq");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1982 "y.tab.c"
+#line 1992 "y.tab.c"
     break;
 
   case 67: /* Expr1: Expr1 GE Expr1  */
-#line 335 "jucompiler.y"
+#line 345 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Ge");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1988 "y.tab.c"
+#line 1998 "y.tab.c"
     break;
 
   case 68: /* Expr1: Expr1 GT Expr1  */
-#line 336 "jucompiler.y"
+#line 346 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Gt");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 1994 "y.tab.c"
+#line 2004 "y.tab.c"
     break;
 
   case 69: /* Expr1: Expr1 LE Expr1  */
-#line 337 "jucompiler.y"
+#line 347 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Le");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 2000 "y.tab.c"
+#line 2010 "y.tab.c"
     break;
 
   case 70: /* Expr1: Expr1 LT Expr1  */
-#line 338 "jucompiler.y"
+#line 348 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Lt");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 2006 "y.tab.c"
+#line 2016 "y.tab.c"
     break;
 
   case 71: /* Expr1: Expr1 NE Expr1  */
-#line 339 "jucompiler.y"
+#line 349 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Ne");AdicionaNo((yyval.no),(yyvsp[-2].no));AdicionaIrmao((yyvsp[-2].no),(yyvsp[0].no));}
-#line 2012 "y.tab.c"
+#line 2022 "y.tab.c"
     break;
 
   case 72: /* Expr1: Expr2  */
-#line 340 "jucompiler.y"
+#line 350 "jucompiler.y"
                                                                                                                                 {(yyval.no) = (yyvsp[0].no);}
-#line 2018 "y.tab.c"
+#line 2028 "y.tab.c"
     break;
 
   case 73: /* Expr2: NOT Expr2  */
-#line 343 "jucompiler.y"
+#line 353 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Not");AdicionaNo((yyval.no),(yyvsp[0].no));}
-#line 2024 "y.tab.c"
+#line 2034 "y.tab.c"
     break;
 
   case 74: /* Expr2: PLUS Expr2  */
-#line 344 "jucompiler.y"
+#line 354 "jucompiler.y"
                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Plus");AdicionaNo((yyval.no),(yyvsp[0].no));}
-#line 2030 "y.tab.c"
+#line 2040 "y.tab.c"
     break;
 
   case 75: /* Expr2: MINUS Expr2  */
-#line 345 "jucompiler.y"
+#line 355 "jucompiler.y"
                                                                                                                                 {(yyval.no) = CriaNo((yyvsp[-1].id),"","Minus");AdicionaNo((yyval.no),(yyvsp[0].no));}
-#line 2036 "y.tab.c"
+#line 2046 "y.tab.c"
     break;
 
   case 76: /* Expr2: MethodInvocation  */
-#line 346 "jucompiler.y"
+#line 356 "jucompiler.y"
                                                                                                                         {(yyval.no) = (yyvsp[0].no);}
-#line 2042 "y.tab.c"
+#line 2052 "y.tab.c"
     break;
 
   case 77: /* Expr2: ParseArgs  */
-#line 347 "jucompiler.y"
+#line 357 "jucompiler.y"
                                                                                                                                 {(yyval.no) = (yyvsp[0].no);}
-#line 2048 "y.tab.c"
+#line 2058 "y.tab.c"
     break;
 
   case 78: /* Expr2: LPAR Expr RPAR  */
-#line 348 "jucompiler.y"
+#line 358 "jucompiler.y"
                                                                                                                     {(yyval.no) = (yyvsp[-1].no);}
-#line 2054 "y.tab.c"
+#line 2064 "y.tab.c"
     break;
 
   case 79: /* Expr2: LPAR error RPAR  */
-#line 349 "jucompiler.y"
+#line 359 "jucompiler.y"
                                                                                                                         {(yyval.no) = NULL;flagErro = false;}
-#line 2060 "y.tab.c"
+#line 2070 "y.tab.c"
     break;
 
   case 80: /* Expr2: ID  */
-#line 350 "jucompiler.y"
+#line 360 "jucompiler.y"
                                                                                                                                         {(yyval.no) = CriaNo((yyvsp[0].id),NULL,"Id");}
-#line 2066 "y.tab.c"
+#line 2076 "y.tab.c"
     break;
 
   case 81: /* Expr2: ID DOTLENGTH  */
-#line 351 "jucompiler.y"
+#line 361 "jucompiler.y"
                                                                                                                         {(yyval.no) = CriaNo((yyvsp[-1].id),"","Length");AdicionaNo((yyval.no),CriaNo((yyvsp[-1].id),NULL,"Id"));}
-#line 2072 "y.tab.c"
+#line 2082 "y.tab.c"
     break;
 
   case 82: /* Expr2: INTLIT  */
-#line 352 "jucompiler.y"
+#line 362 "jucompiler.y"
                                                                                                                                 {(yyval.no) = CriaNo((yyvsp[0].id),NULL,"DecLit");}
-#line 2078 "y.tab.c"
+#line 2088 "y.tab.c"
     break;
 
   case 83: /* Expr2: REALLIT  */
-#line 353 "jucompiler.y"
+#line 363 "jucompiler.y"
                                                                                                                                 {(yyval.no) = CriaNo((yyvsp[0].id),NULL,"RealLit");}
-#line 2084 "y.tab.c"
+#line 2094 "y.tab.c"
     break;
 
   case 84: /* Expr2: BOOLLIT  */
-#line 354 "jucompiler.y"
+#line 364 "jucompiler.y"
                                                                                                                                 {(yyval.no) = CriaNo((yyvsp[0].id),NULL,"BoolLit");}
-#line 2090 "y.tab.c"
+#line 2100 "y.tab.c"
     break;
 
 
-#line 2094 "y.tab.c"
+#line 2104 "y.tab.c"
 
       default: break;
     }
@@ -2283,7 +2293,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 357 "jucompiler.y"
+#line 367 "jucompiler.y"
 
 
 

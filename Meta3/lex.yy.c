@@ -2374,12 +2374,26 @@ int main(int argc, char *argv[]){
 			}
 	      }
 
+		else if(strcmp(argv[1],"-e3") == 0){
+			flagYacc = true;
+			flag = false;
+			yyparse();
+			if(flagErro == true){
+				verifica(raiz);
+				check_ast(raiz);
+			}
+	      }
+
     }else{
       
-			flag = 0;
 			flagYacc = true;
+			flag = false;
 			yyparse();
-			yylex();
+			if(flagErro == true){
+				verifica(raiz);
+				check_ast(raiz);
+			}
+			
     }
 	return 0;
 	

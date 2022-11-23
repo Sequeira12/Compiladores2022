@@ -36,8 +36,8 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
     char * valor = node->irmao->valor;
    
     if(strcmp(valor,"_")==0){
-        //printf("%s\n", node->pai->line);
-        printf("Line %s, col %s: Symbol _ is reserved\n",node->line,node->col);
+        //printf("%s\n", node->pai->col);
+        printf("Line %s, col %s: Symbol _ is reserved\n",node->pai->line,node->pai->col);
         return;
     }
     node_t no_da_tabela = calloc(1000,sizeof(node_t));
@@ -214,6 +214,34 @@ char* procura_tabela(no node, char * tab){
      return strdup(" - undef");
 }
 
+
+
+char ** retorna_variaveis_parametros(char* tab){
+    char** vars= (char**)malloc(100*sizeof(char*));;
+    int i = 0;
+
+    
+
+    for(node_t auxi = tabela_simbolos->tab; auxi!=NULL; auxi=auxi->next){
+        vars[i]=auxi->valor;
+        i++;
+    }
+
+
+    for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
+        if(strcmp(aux->nome, tab)==0){
+            for(node_t auxi = aux->tab; auxi!=NULL; auxi=auxi->next){
+                vars[i] = auxi->valor;
+                i++;
+            }
+        }
+    }
+    if(i>0) return vars;
+    return NULL;
+}
+
+
+
 tabela check_call(char * id, char ** params, int p) {
     tabela head = tabela_simbolos->next;
     while (head != NULL) {
@@ -246,6 +274,5 @@ tabela check_call(char * id, char ** params, int p) {
     if (p == 0) {
         return check_call(id, params, 1);
     }
-    
     return NULL;
 }

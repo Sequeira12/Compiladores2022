@@ -1,3 +1,4 @@
+Line 15, col 29: Cannot find symbol W
 Line 15, col 27: Cannot find symbol f(undef)
 Line 15, col 5: Cannot find symbol f(void,String[],int,undef)
 ===== Class Alguns_Erros Symbol Table =====

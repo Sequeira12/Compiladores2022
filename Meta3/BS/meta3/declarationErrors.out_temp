@@ -1,16 +1,16 @@
 Line 4, col 23: Symbol c already defined
-Line (null), col (null): Symbol a already defined
-Line (null), col (null): Symbol b already defined
-Line (null), col (null): Symbol _ is reserved
+Line 4, col 26: Symbol a already defined
+Line 4, col 29: Symbol b already defined
+Line 5, col 26: Symbol _ is reserved
 Line 15, col 45: Symbol i already defined
 Line 23, col 45: Symbol i already defined
-Line (null), col (null): Symbol _ is reserved
+Line 23, col 51: Symbol _ is reserved
 Line 8, col 11: Incompatible type int in if statement
 Line 13, col 11: Symbol ola already defined
 Line 17, col 13: Symbol i already defined
 Line 18, col 13: Symbol argument already defined
 Line 20, col 16: Symbol i already defined
-Line 20, col 16: Symbol _ is reserved
+Line 20, col 18: Symbol _ is reserved
 ===== Class errors Symbol Table =====
 a		int
 b		int

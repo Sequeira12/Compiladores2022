@@ -24,7 +24,7 @@ typedef struct table{
     tabela next;
 }table;
 
-
+char ** retorna_variaveis_parametros(char* tab);
 int verifica_repetidos_parametros(char *n,char * valor);
 void insere(no no, char * param_types, char * param, char * tabela_t);
 void nova_classe(char * valor);

@@ -83,17 +83,23 @@ MethodDecl:	PUBLIC STATIC MethodHeader MethodBody					{$$ = CriaNo(NULL,"","Meth
 																
 		;
 
-FieldDecl:	PUBLIC STATIC Type ID CmId SEMICOLON				{$$ = CriaNo(NULL,"","FieldDecl");
+FieldDecl:	PUBLIC STATIC Type ID CmId SEMICOLON				{$$ = CriaNo($4,"","FieldDecl");
+																	//printf("%s %s %s\n",$4[0] ,$$->col,$$->line);
 																	AdicionaNo($$,$3);
 																	AdicionaIrmao($3,CriaNo($4,NULL,"Id"));
 
 																	if ( $5 != NULL ) {
 																		aux = $5;
 																		while(aux != NULL){
-																			no aux1 = CriaNo(NULL,"","FieldDecl");
-																			no aux2 = CriaNo(NULL,$3->valor,$3->s_type);
+																			char* auxi[3];
+																			auxi[0] = aux->valor;
+																			auxi[1] = aux->line;
+																			auxi[2] = aux->col;
+																			//printf("%s %s %s\n", auxi[0],auxi[1],auxi[2]);
+																			no aux1 = CriaNo(auxi,"","FieldDecl");
+																			no aux2 = CriaNo(auxi,$3->valor,$3->s_type);
 																			AdicionaNo(aux1,aux2);
-																			AdicionaIrmao(aux2,CriaNo(NULL,aux->valor,"Id"));
+																			AdicionaIrmao(aux2,CriaNo(auxi,aux->valor,"Id"));
 																			AdicionaIrmao($$,aux1);
 																			aux = aux->irmao;
 																		}		
@@ -109,9 +115,9 @@ CmId:
 			|/* null */												{$$ = NULL;}	
 		;
 
-Type:	BOOL														{$$ = CriaNo(NULL,"","Bool");}	
-	|	INT															{$$ = CriaNo(NULL,"","Int");}
-	|	DOUBLE														{$$ = CriaNo(NULL,"","Double");}
+Type:	BOOL														{$$ = CriaNo($1,"","Bool");}	
+	|	INT															{$$ = CriaNo($1,"","Int");}
+	|	DOUBLE														{$$ = CriaNo($1,"","Double");}
 	;
 
 MethodHeader:	Type ID LPAR FormalParams RPAR						{$$ = CriaNo(NULL,"","MethodHeader");
@@ -132,21 +138,21 @@ MethodHeader:	Type ID LPAR FormalParams RPAR						{$$ = CriaNo(NULL,"","MethodHe
 																	}	
 			;
 
-FormalParams:	Type ID FormalParamsSec								{$$ = CriaNo(NULL,"","ParamDecl");
+FormalParams:	Type ID FormalParamsSec								{$$ = CriaNo($2,"","ParamDecl");
 																	AdicionaNo($$,$1);
 																	aux=CriaNo($2,NULL,"Id");
 																	AdicionaIrmao($1,aux);
 																	AdicionaIrmao($$,$3);}		
 																																		
-			|	STRING LSQ RSQ ID									{$$ = CriaNo(NULL,"","ParamDecl");
-																	aux = CriaNo(NULL,"","StringArray");
+			|	STRING LSQ RSQ ID									{$$ = CriaNo($4,"","ParamDecl");
+																	aux = CriaNo($4,"","StringArray");
 																	AdicionaNo($$,aux);
 																	AdicionaIrmao(aux,CriaNo($4,NULL,"Id"));}	
 			|/* null */												{$$ = NULL;}
 			;
 
 FormalParamsSec:				
-				COMMA Type ID FormalParamsSec 						{$$ = CriaNo(NULL,"","ParamDecl");
+				COMMA Type ID FormalParamsSec 						{$$ = CriaNo($3,"","ParamDecl");
 																	aux=CriaNo($3,NULL,"Id");
 																	AdicionaNo($$,$2);
 																	AdicionaIrmao($2,aux);
@@ -172,16 +178,20 @@ MethodBodySec:
 			|	/* null */											{$$ = NULL;}											
 			;
 
-VarDecl:	Type ID CmId SEMICOLON							{$$ = CriaNo($2,"","VarDecl");
+VarDecl:	Type ID CmId SEMICOLON							{$$ = CriaNo(NULL,"","VarDecl");
 																	AdicionaNo($$,$1);
 																	AdicionaIrmao($1,CriaNo($2,NULL,"Id"));
 																	if ($3){
 																		aux = $3;
 																		while(aux != NULL){
-																			no aux1 = CriaNo($2,"","VarDecl");
-																			no aux2 = CriaNo($2,$1->valor,$1->s_type);
+																			char* auxi[3];
+																			auxi[0]=aux->valor;
+																			auxi[1]=aux->line;
+																			auxi[2]=aux->col;
+																			no aux1 = CriaNo(auxi,"","VarDecl");
+																			no aux2 = CriaNo(NULL,$1->valor,$1->s_type);
 																			AdicionaNo(aux1,aux2);
-																			AdicionaIrmao(aux2,CriaNo($2,aux->valor,"Id"));
+																			AdicionaIrmao(aux2,CriaNo(auxi,aux->valor,"Id"));
 																			AdicionaIrmao($$,aux1);
 																			aux = aux->irmao;
 																		}	
