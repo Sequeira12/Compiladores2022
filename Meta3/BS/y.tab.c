@@ -1900,7 +1900,7 @@ yyreduce:
 
   case 52: /* ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR  */
 #line 320 "jucompiler.y"
-                                                                                                {(yyval.no) = CriaNo(NULL,"","ParseArgs");
+                                                                                                {(yyval.no) = CriaNo((yyvsp[-6].id),"","ParseArgs");
 																	aux = CriaNo((yyvsp[-4].id),NULL,"Id");
 																	AdicionaNo((yyval.no),aux);
 																	AdicionaIrmao(aux,(yyvsp[-2].no));}
@@ -2077,7 +2077,7 @@ yyreduce:
 
   case 81: /* Expr2: ID DOTLENGTH  */
 #line 361 "jucompiler.y"
-                                                                                                                        {(yyval.no) = CriaNo((yyvsp[-1].id),"","Length");AdicionaNo((yyval.no),CriaNo((yyvsp[-1].id),NULL,"Id"));}
+                                                                                                                        {(yyval.no) = CriaNo((yyvsp[0].id),"","Length");AdicionaNo((yyval.no),CriaNo((yyvsp[-1].id),NULL,"Id"));}
 #line 2082 "y.tab.c"
     break;
 

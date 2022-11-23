@@ -317,7 +317,7 @@ Assignment:	ID ASSIGN Expr											{$$ = CriaNo($2,"","Assign");
 																	AdicionaIrmao(aux,$3);}
 		;
 
-ParseArgs:	PARSEINT LPAR ID LSQ Expr RSQ RPAR						{$$ = CriaNo(NULL,"","ParseArgs");
+ParseArgs:	PARSEINT LPAR ID LSQ Expr RSQ RPAR						{$$ = CriaNo($1,"","ParseArgs");
 																	aux = CriaNo($3,NULL,"Id");
 																	AdicionaNo($$,aux);
 																	AdicionaIrmao(aux,$5);}					
@@ -358,7 +358,7 @@ Expr2:  NOT Expr2													{$$ = CriaNo($1,"","Not");AdicionaNo($$,$2);}
 		|	LPAR Expr RPAR										    {$$ = $2;}
 		|	LPAR error RPAR											{$$ = NULL;flagErro = false;}
 		|	ID														{$$ = CriaNo($1,NULL,"Id");}
-		|	ID DOTLENGTH											{$$ = CriaNo($1,"","Length");AdicionaNo($$,CriaNo($1,NULL,"Id"));}
+		|	ID DOTLENGTH											{$$ = CriaNo($2,"","Length");AdicionaNo($$,CriaNo($1,NULL,"Id"));}
 		|	INTLIT													{$$ = CriaNo($1,NULL,"DecLit");}
 		|	REALLIT													{$$ = CriaNo($1,NULL,"RealLit");}
 		|	BOOLLIT													{$$ = CriaNo($1,NULL,"BoolLit");}		

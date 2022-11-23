@@ -229,11 +229,13 @@ int main(int argc, char *argv[]){
 	      }
 
     }else{
-      
-			flag = 0;
 			flagYacc = true;
+			flag = false;
 			yyparse();
-			yylex();
+			if(flagErro == true){
+				verifica(raiz);
+				check_ast(raiz);
+			}
     }
 	return 0;
 	

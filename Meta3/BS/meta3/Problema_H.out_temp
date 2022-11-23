@@ -1,6 +1,9 @@
+Line 4, col 26: Incompatible type String[] in System.out.print statement
+Line 5, col 27: Operator .length cannot be applied to type int
+Line 9, col 48: Cannot find symbol e
 Line 9, col 26: Operator Integer.parseInt cannot be applied to types String[], undef
 Line 10, col 16: Incompatible type String[] in return statement
-Line (null), col (null): Incompatible type int in return statement
+Line 11, col 16: Incompatible type int in return statement
 Line 12, col 16: Incompatible type void in return statement
 Line 13, col 16: Incompatible type int in return statement
 Line 14, col 16: Incompatible type double in return statement

@@ -33,6 +33,15 @@ void verifica_method_decl(no node){
     char * parametros = verifica_method_params(node->filho->irmao->irmao);
     char ** array_de_parametros = verifica_array_method_params(node->filho->irmao->irmao);
 
+    char** vars_in_param = (char**)malloc((strlen(valor)+strlen(parametros)+1)*sizeof(char*));
+
+    int control=0;
+    for(no aux = node->filho->irmao->irmao->filho; aux != NULL; aux = aux->irmao){
+        vars_in_param[control]=aux->filho->irmao->valor;
+        control++;
+    }
+
+
     char *n = malloc(strlen(valor)+strlen(parametros)+1);
     if(n){
         n[0]='\0';
@@ -51,10 +60,33 @@ void verifica_method_decl(no node){
             if(verifica_repetidos_parametros(n,h->filho->irmao->valor)==0) {
                 insere(h->filho,NULL, "param", n);
             }
-            else printf("Line %s, col %s: Symbol %s already defined\n",h->filho->irmao->line ,h->filho->irmao->col ,h->filho->irmao->valor);
+            
+            else {
+                printf("Line %s, col %s: Symbol %s already defined\n",h->filho->irmao->line ,h->filho->irmao->col ,h->filho->irmao->valor);
+            }
+
         }
     }else{
         node->filho->irmao->repetido=1;
+        no h = NULL;
+        if(node->filho->irmao->irmao->filho){
+            h = node->filho->irmao->irmao->filho;
+        }
+        
+        int contador_parametros=0;
+        for(h; h!= NULL; h=h->irmao){ 
+            int ctrl=0;
+            for(int i = 0; vars_in_param[i] && i<=contador_parametros; i++){
+                if(strcmp(vars_in_param[i], h->filho->irmao->valor)==0){
+                    ctrl+=1;
+                }
+            }
+            contador_parametros+=1;
+            if (ctrl>1)
+            {
+                printf("Line %s, col %s: Symbol %s already defined\n",h->filho->irmao->line ,h->filho->irmao->col ,h->filho->irmao->valor);
+            }
+        }
         printf("Line %s, col %s: Symbol %s already defined\n", node->filho->irmao->line, node->filho->irmao->col,n);
     }
 };
@@ -342,6 +374,7 @@ void verifica_method_body(char * tab, no node){
                 printf("Line %s, col %s: Cannot find symbol %s\n",node->line,node->col,node->valor);
             }
         }
+
         if(strcmp(node->s_type,"DecLit")==0 || strcmp(node->s_type,"Length")==0 || strcmp(node->s_type,"ParseArgs")==0) node->id=(char*)strdup(" - int");
 
         if(strcmp(node->s_type, "Ne") == 0 || strcmp(node->s_type, "Eq") == 0 || strcmp(node->s_type, "Ge") == 0 || strcmp(node->s_type, "Gt") == 0 
@@ -364,6 +397,12 @@ void verifica_method_body(char * tab, no node){
         }
 
         if(strcmp(node->s_type,"ParseArgs")==0){
+            if(strcmp(node->filho->irmao->id, " - undef")==0 && strcmp(node->filho->irmao->s_type, "Id")==0){
+                printf("Line %s, col %s: Cannot find symbol %s\n",node->filho->irmao->line,node->filho->irmao->col, node->filho->irmao->valor);
+            }
+            if(strcmp(node->filho->id, " - undef")==0 && strcmp(node->filho->s_type, "Id")==0){
+                printf("Line %s, col %s: Cannot find symbol %s\n",node->filho->line,node->filho->col, node->filho->valor);
+            }
             if(strcmp(node->filho->id,node->filho->irmao->id) != 0 && (strcmp(transforma_type(node->filho->id),"undef") == 0||strcmp(transforma_type(node->filho->irmao->id),"undef") == 0) || strcmp(node->filho->id,node->filho->irmao->id) == 0 && strcmp(transforma_type(node->filho->id),"undef")==0){
                 int a = atoi(node->filho->col);
                 a = a - 17;
@@ -426,10 +465,9 @@ void verifica_method_body(char * tab, no node){
                 x = x + strlen(node->filho->irmao->filho->valor);
                 char s[11];
                 sprintf(s,"%d",x);
-               
 
                 if(strcmp(transforma_type(node->filho->irmao->filho->id),"String[]")!= 0){
-                    printf("Line %s, col %s: Operator %s cannot be applied to type %s\n",node->filho->irmao->line,s,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->irmao->filho->id));
+                    printf("Line %s, col %s: Operator %s cannot be applied to type %s\n",node->filho->irmao->line,node->filho->irmao->col,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->irmao->filho->id));
                 }
             }
             
@@ -454,10 +492,21 @@ void verifica_method_body(char * tab, no node){
             char * id = procura_tabela(node->filho,tab);
             tabela noo = procura_tab(tab);
 
-            if(strcmp(node->filho->s_type,"Call")==0 && (strcmp(transforma_type(node->filho->id),"undef")==0 || strcmp(transforma_type(node->filho->id),"void")==0)){
+        if(strcmp(node->filho->s_type,"Length")==0){
+                    if(node->filho->filho && strcmp(node->filho->filho->id, " - String[]")!=0){
+                        printf("Line %s, col %s: Operator .length cannot be applied to type %s\n",node->filho->line,node->filho->col,transforma_type(node->filho->filho->id));
+                    }
+                }
+
+            if(strcmp(node->filho->id, " - String[]")==0 || strcmp(node->filho->id, " - undef")==0){
                 printf("Line %s, col %s: Incompatible type %s in System.out.print statement\n",node->line,
                 node->col,transforma_type(node->filho->id));
             }
+
+            else{if(strcmp(node->filho->s_type,"Call")==0 && (strcmp(transforma_type(node->filho->id),"undef")==0 || strcmp(transforma_type(node->filho->id),"void")==0)){
+                printf("Line %s, col %s: Incompatible type %s in System.out.print statement\n",node->line,
+                node->col,transforma_type(node->filho->id));
+            }}
           
             
         }
