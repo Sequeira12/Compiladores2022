@@ -6,11 +6,24 @@ Bugs(2 TESTES):
 -o teste "invalid_parse_int" tem um bug com o Declit
 
 Testes que estão corretos mas o Script não mostra:
--> DoublePrecisionErros.java
+
 -> Problema_H.java
 -> algunsErros.java
+-> NoFlags.java
 
 
+Casos Por Resolver:
+testsMethods --> Ambiguous.
+while_erros.java --> uma manada de Coisas.
+testProblemaE --> SEG. FAULT
+simpleTest.java --> Operadores 
+shift_errors--> Operadores, Arvore.....
+Operatores -> ARvore
+Operator_single---> id's mal e operadores
+Operadores3---> SEG FAULT
+Operadores2---> idś e operadores
+
+24 + 3 feitos
 
 Penso que so falte lidar com o resto dos erros
 Erros já vistos:
