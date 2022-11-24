@@ -90,3 +90,4 @@ void Arvore(no raiz, int pontos,int anotada){
 	}else return;
 }
 
+

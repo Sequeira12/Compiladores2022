@@ -54,18 +54,18 @@ Program
 ........Block
 ......While
 ........Lshift - int
-..........DecLit(1) - undef
-..........DecLit(1)
+..........DecLit(1) - int
+..........DecLit(1) - int
 ........Block
 ......While
 ........Lshift - int
-..........BoolLit(true) - undef
-..........BoolLit(true)
+..........BoolLit(true) - boolean
+..........BoolLit(true) - boolean
 ........Block
 ......While
 ........Lshift - int
 ..........Id(b) - boolean
-..........Id(b)
+..........Id(b) - boolean
 ........Block
 ......While
 ........Xor - undef

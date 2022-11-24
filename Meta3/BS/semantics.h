@@ -11,3 +11,7 @@ void check_ast(no raiz);
 char * coloca_id(no node,char *tab);
 char * ColocaOperadores(no node);
 char * tipoXor(no node);
+
+char * VerificaE(char *nome,int contador2);
+bool temE(char * nome);
+int VerificaELen(char * nome,int contador2);

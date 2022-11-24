@@ -59,8 +59,8 @@ Program
 ..........Id(y) - double
 ..........Mul - double
 ............Lshift - int
-..............Id(a)
-..............Id(b)
+..............Id(a) - int
+..............Id(b) - int
 ............RealLit(1.0) - double
 ........Assign - double
 ..........Id(y) - double

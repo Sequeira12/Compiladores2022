@@ -1,5 +1,5 @@
-Line 10, col 32: Cannot find symbol undef
 Line 10, col 26: Cannot find symbol undef
+Line 10, col 32: Cannot find symbol undef
 Line 10, col 9: Operator Integer.parseInt cannot be applied to types undef, undef
 Line 11, col 26: Cannot find symbol undef
 Line 11, col 9: Operator Integer.parseInt cannot be applied to types undef, int
@@ -57,8 +57,8 @@ Program
 ......ParseArgs - int
 ........Id(undef) - undef
 ........Lshift - int
-..........DecLit(1)
-..........DecLit(1)
+..........DecLit(1) - int
+..........DecLit(1) - int
 ......ParseArgs - int
 ........Id(undef) - undef
 ........DecLit(0) - int

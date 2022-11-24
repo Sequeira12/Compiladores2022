@@ -19,6 +19,6 @@ Program
 ......Print
 ........RealLit(2.5E-324) - double
 ......Print
-........RealLit(0.002_4E-321) - double
+........RealLit(0.002_4_3E-321) - double
 ......Print
 ........RealLit(0.5E-4965) - double

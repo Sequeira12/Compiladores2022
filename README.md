@@ -5,23 +5,10 @@ Bugs(2 TESTES):
 -os testes "if_tests" tem um bugzito com o id.
 -o teste "invalid_parse_int" tem um bug com o Declit
 
-Os 15 funcionais são os seguintes:
-Call_me_maybe
-CallError
-Declit_out_bounds
-divide
-e_dot_lenght
-Factorial
-FieldDeclError
-ifwhile
-LongNameOperators...
-MEthodInvocation
-mult_op
-MultipleArguments
-NoFlag
-printing_void
-widening
-
+Testes que estão corretos mas o Script não mostra:
+-> DoublePrecisionErros.java
+-> Problema_H.java
+-> algunsErros.java
 
 
 

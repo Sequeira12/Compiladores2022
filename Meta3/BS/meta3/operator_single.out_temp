@@ -1,7 +1,11 @@
 Line 13, col 9: Operator = cannot be applied to types int, double
+Line 20, col 11: Operator + cannot be applied to type boolean
+Line 21, col 11: Operator + cannot be applied to type boolean
 Line 28, col 12: Operator .length cannot be applied to type int
 Line 29, col 12: Operator .length cannot be applied to type double
+Line 33, col 11: Operator ! cannot be applied to type int
 Line 33, col 9: Operator = cannot be applied to types int, boolean
+Line 34, col 11: Operator ! cannot be applied to type double
 Line 34, col 9: Operator = cannot be applied to types double, boolean
 ===== Class operator_single Symbol Table =====
 main	(String[])	void

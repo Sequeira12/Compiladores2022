@@ -1,6 +1,35 @@
-Line 27, col 11: Operator = cannot be applied to types boolean, int
-Line 29, col 11: Operator = cannot be applied to types boolean, int
-Line 31, col 11: Operator = cannot be applied to types boolean, int
+Line 7, col 14: Operator << cannot be applied to types int, none
+Line 7, col 11: Operator = cannot be applied to types undef, none
+Line 15, col 11: Operator = cannot be applied to types int, none
+Line 16, col 11: Operator = cannot be applied to types double, none
+Line 17, col 15: Operator << cannot be applied to types int, double
+Line 17, col 11: Operator = cannot be applied to types undef, none
+Line 18, col 15: Operator << cannot be applied to types int, boolean
+Line 18, col 11: Operator = cannot be applied to types undef, none
+Line 20, col 15: Operator << cannot be applied to types double, int
+Line 20, col 11: Operator = cannot be applied to types undef, none
+Line 21, col 15: Operator << cannot be applied to types double, int
+Line 21, col 11: Operator = cannot be applied to types undef, none
+Line 22, col 15: Operator << cannot be applied to types double, double
+Line 22, col 11: Operator = cannot be applied to types undef, none
+Line 23, col 15: Operator << cannot be applied to types double, double
+Line 23, col 11: Operator = cannot be applied to types undef, none
+Line 24, col 15: Operator << cannot be applied to types double, boolean
+Line 24, col 11: Operator = cannot be applied to types undef, none
+Line 25, col 15: Operator << cannot be applied to types double, boolean
+Line 25, col 11: Operator = cannot be applied to types undef, none
+Line 27, col 15: Operator << cannot be applied to types boolean, int
+Line 27, col 11: Operator = cannot be applied to types undef, none
+Line 28, col 15: Operator << cannot be applied to types boolean, int
+Line 28, col 11: Operator = cannot be applied to types undef, none
+Line 29, col 15: Operator << cannot be applied to types boolean, double
+Line 29, col 11: Operator = cannot be applied to types undef, none
+Line 30, col 15: Operator << cannot be applied to types boolean, double
+Line 30, col 11: Operator = cannot be applied to types undef, none
+Line 31, col 15: Operator << cannot be applied to types boolean, boolean
+Line 31, col 11: Operator = cannot be applied to types undef, none
+Line 32, col 15: Operator << cannot be applied to types boolean, boolean
+Line 32, col 11: Operator = cannot be applied to types undef, none
 ===== Class shift_errors Symbol Table =====
 valid	(String[])	void
 main	(String[])	void
@@ -35,11 +64,11 @@ Program
 ......VarDecl
 ........Int
 ........Id(b)
-......Assign - int
-........Id(x) - int
-........Lshift - int
-..........DecLit(1)
-..........Mul
+......Assign - undef
+........Id(x) - undef
+........Lshift
+..........DecLit(1) - int
+..........Mulnone
 ............Id(x)
 ............DecLit(1)
 ..MethodDecl
@@ -62,81 +91,81 @@ Program
 ........Id(b)
 ......Assign - int
 ........Id(i) - int
-........Lshift - int
-..........Id(i)
-..........DecLit(1)
+........Lshift
+..........Id(i) - int
+..........DecLit(1) - int
 ......Assign - double
 ........Id(d) - double
-........Lshift - int
-..........Id(i)
-..........DecLit(1)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(i)
-..........RealLit(1.1)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(i)
-..........BoolLit(true)
-......Assign - double
-........Id(d) - double
-........Lshift - int
-..........Id(d)
-..........DecLit(1)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(d)
-..........DecLit(1)
-......Assign - double
-........Id(d) - double
-........Lshift - int
-..........Id(d)
-..........RealLit(1.1)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(d)
-..........RealLit(1.1)
-......Assign - double
-........Id(d) - double
-........Lshift - int
-..........Id(d)
-..........BoolLit(true)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(d)
-..........BoolLit(true)
-......Assign - boolean
-........Id(b) - boolean
-........Lshift - int
-..........Id(b)
-..........DecLit(1)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(b)
-..........DecLit(1)
-......Assign - boolean
-........Id(b) - boolean
-........Lshift - int
-..........Id(b)
-..........RealLit(1.1)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(b)
-..........RealLit(1.1)
-......Assign - boolean
-........Id(b) - boolean
-........Lshift - int
-..........Id(b)
-..........BoolLit(true)
-......Assign - int
-........Id(i) - int
-........Lshift - int
-..........Id(b)
-..........BoolLit(true)
+........Lshift
+..........Id(i) - int
+..........DecLit(1) - int
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(i) - int
+..........RealLit(1.1) - double
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(i) - int
+..........BoolLit(true) - boolean
+......Assign - undef
+........Id(d) - undef
+........Lshift
+..........Id(d) - double
+..........DecLit(1) - int
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(d) - double
+..........DecLit(1) - int
+......Assign - undef
+........Id(d) - undef
+........Lshift
+..........Id(d) - double
+..........RealLit(1.1) - double
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(d) - double
+..........RealLit(1.1) - double
+......Assign - undef
+........Id(d) - undef
+........Lshift
+..........Id(d) - double
+..........BoolLit(true) - boolean
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(d) - double
+..........BoolLit(true) - boolean
+......Assign - undef
+........Id(b) - undef
+........Lshift
+..........Id(b) - boolean
+..........DecLit(1) - int
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(b) - boolean
+..........DecLit(1) - int
+......Assign - undef
+........Id(b) - undef
+........Lshift
+..........Id(b) - boolean
+..........RealLit(1.1) - double
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(b) - boolean
+..........RealLit(1.1) - double
+......Assign - undef
+........Id(b) - undef
+........Lshift
+..........Id(b) - boolean
+..........BoolLit(true) - boolean
+......Assign - undef
+........Id(i) - undef
+........Lshift
+..........Id(b) - boolean
+..........BoolLit(true) - boolean
