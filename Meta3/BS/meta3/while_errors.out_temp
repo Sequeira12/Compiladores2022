@@ -1,9 +1,13 @@
 Line 9, col 15: Incompatible type int in while statement
+Line 10, col 15: Incompatible type int in while statement
 Line 11, col 15: Incompatible type double in while statement
-Line 13, col 16: Incompatible type undef in while statement
+Line 12, col 15: Incompatible type double in while statement
+Line 13, col 16: Incompatible type int in while statement
+Line 14, col 19: Operator << cannot be applied to types boolean, boolean
 Line 14, col 19: Incompatible type undef in while statement
-Line 16, col 16: Incompatible type undef in while statement
-Line 17, col 19: Incompatible type undef in while statement
+Line 15, col 16: Operator << cannot be applied to types boolean, boolean
+Line 15, col 16: Incompatible type undef in while statement
+Line 16, col 16: Incompatible type int in while statement
 ===== Class while_errors Symbol Table =====
 main	(String[])	void
 
@@ -58,22 +62,22 @@ Program
 ..........DecLit(1) - int
 ........Block
 ......While
-........Lshift - int
+........Lshift - undef
 ..........BoolLit(true) - boolean
 ..........BoolLit(true) - boolean
 ........Block
 ......While
-........Lshift - int
+........Lshift - undef
 ..........Id(b) - boolean
 ..........Id(b) - boolean
 ........Block
 ......While
-........Xor - undef
+........Xor - int
 ..........DecLit(1) - int
 ..........DecLit(1) - int
 ........Block
 ......While
-........Xor - undef
+........Xor - boolean
 ..........BoolLit(true) - boolean
 ..........BoolLit(false) - boolean
 ........Block
