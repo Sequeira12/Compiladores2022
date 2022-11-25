@@ -9,7 +9,7 @@ char ** verifica_array_method_params(no node);
 void verifica_method_body(char * tab, no node);
 void check_ast(no raiz);
 char * coloca_id(no node,char *tab);
-char * ColocaOperadores(no node);
+char * ColocaOperadores(no node, char* tab);
 char * tipoXor(no node);
 
 char * VerificaE(char *nome,int contador2);

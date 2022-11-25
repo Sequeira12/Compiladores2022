@@ -253,7 +253,6 @@ char * coloca_id(no node, char *tab){
 
 void verifica_method_body(char * tab, no node){
     if(node){
-
         if(strcmp(node->s_type,"Return")==0){
             tabela noo = procura_tab(tab);
             if(node->filho){
@@ -374,10 +373,8 @@ void verifica_method_body(char * tab, no node){
             if(node->filho->irmao->id == NULL){    
             node->filho->irmao->id = coloca_id(node->filho->irmao,tab);
             }
-         
-            node->filho->id = ColocaOperadores(node->filho);
-            node->filho->irmao->id =ColocaOperadores(node->filho->irmao);
-            
+            node->filho->id = ColocaOperadores(node->filho,tab);
+            node->filho->irmao->id =ColocaOperadores(node->filho->irmao,tab);
             if(!(((strcmp(transforma_type(node->filho->id),transforma_type(node->filho->irmao->id))==0 )&&
              (strcmp(transforma_type(node->filho->id),"double")==0 || strcmp(transforma_type(node->filho->id), "int")==0)) || 
              (strcmp(transforma_type(node->filho->id),"int")==0 && strcmp(transforma_type(node->filho->irmao->id),"double")==0 ||
@@ -939,12 +936,13 @@ void check_ast(no raiz){
 
 
 
-char * ColocaOperadores(no node){
+char * ColocaOperadores(no node, char*tab){
     int i = 0;
     char *valor;
      if (strcmp(node->s_type,"Add")==0 || strcmp(node->s_type,"Sub")==0 
         || strcmp(node->s_type,"Div")==0 || strcmp(node->s_type,"Mul")==0 || strcmp(node->s_type,"Mod")==0)
         {
+                verifica_method_body(tab,node);///////////////////////////////////////////////////////////////VER ISTOOOOO
                 if(strcmp(node->filho->id, node->filho->irmao->id) != 0) {
                 
                     valor=(char*)strdup(" - double");
