@@ -362,7 +362,7 @@ void verifica_method_body(char * tab, no node){
        
 
 
-
+      
         
         if(strcmp(node->s_type,"Ge")==0 ||strcmp(node->s_type,"Gt")==0 || 
         strcmp(node->s_type,"Lt")==0 || strcmp(node->s_type,"Le")==0 ){
@@ -456,12 +456,26 @@ void verifica_method_body(char * tab, no node){
         
 
         if(strcmp(node->s_type,"VarDecl")==0) {insere(node->filho, NULL,NULL,tab);}
- 
+        if(strcmp(node->s_type,"Lshift")==0 ){
+            node->id = "";
+            node->filho->id = "";
+            node->filho->irmao->id ="";
+        }
 
         if(strcmp(node->s_type,"Id")==0){
-            
-            node->id=procura_tabela(node,tab);
-            node->id = coloca_id(node,tab);
+        
+            if(node->pai){
+                if(strcmp(node->pai->s_type,"Rshift")==0 ){
+                   
+                    node->id = "";
+                }else{
+                    node->id=procura_tabela(node,tab);
+                    node->id = coloca_id(node,tab);
+            }
+            }else{
+                    node->id=procura_tabela(node,tab);
+                    node->id = coloca_id(node,tab);
+            }
             if(strcmp(node->valor,"_")==0){
                 printf("Line %s, col %s: Symbssol _ is reserved\n",node->line,node->col);
             }  
@@ -507,16 +521,7 @@ void verifica_method_body(char * tab, no node){
                 aux = aux->irmao;
             }
         }
-        if(strcmp(node->s_type,"Lshift")==0){
-            node->id = (char*)strdup(" - int");
-            if(node->filho && node->filho->irmao){
-                
-                node->filho->id = coloca_id(node->filho,tab);
-                node->filho->irmao->id = coloca_id(node->filho->irmao,tab);
-             //   printf("%s -- %s\n",node->filho->irmao->id, node->filho->irmao->s_type);
-               
-            }
-        }
+       
         
 
     
@@ -558,17 +563,13 @@ void verifica_method_body(char * tab, no node){
         if(strcmp(node->s_type,"Mul")==0){
             node->id = (char*)strdup(" - int");
         }
-        if(strcmp(node->s_type,"Lshift")==0){
-          
-            //node->filho->id = coloca_id(node->filho,tab);
-//node->filho->irmao->id = coloca_id(node->filho->irmao,tab);
-        }
+        
         if(strcmp(node->s_type, "Assign")==0){
             
             long intv;
             char *num=NULL;
             char *valor=NULL;
-            
+           
 
 
 
@@ -643,13 +644,9 @@ void verifica_method_body(char * tab, no node){
             
             }
            
-          
+         
             if(strcmp(node->filho->irmao->s_type,"Length")==0){
-        
-                int x = atoi(node->filho->irmao->col);
-                x = x + strlen(node->filho->irmao->filho->valor);
-                char s[11];
-                sprintf(s,"%d",x);
+                
 
                 if(strcmp(transforma_type(node->filho->irmao->filho->id),"String[]")!= 0){
                     printf("Line %s, col %s: Operator %s cannot be applied to type %s\n",node->filho->irmao->line,node->filho->irmao->col,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->irmao->filho->id));
@@ -671,16 +668,21 @@ void verifica_method_body(char * tab, no node){
             }
             node->id=node->filho->id;
             if(strcmp(node->filho->irmao->s_type,"Lshift")==0){
-                node->filho->irmao->id = coloca_id(node->filho->irmao,tab);
-                node->filho->irmao->filho->id = coloca_id(node->filho->irmao->filho,tab);
-                node->filho->irmao->filho->irmao->id = coloca_id(node->filho->irmao->filho->irmao,tab);
-                if(!(strcmp(node->filho->irmao->filho->id," - int")==0 && strcmp(node->filho->irmao->filho->irmao->id," - int")==0)){
-                    node->filho->irmao->id = (char*)strdup(" - undef");
+                char *id, *idfilho,*idirmao;
+                id= coloca_id(node->filho->irmao,tab);
+                idfilho = coloca_id(node->filho->irmao->filho,tab);
+                idirmao= coloca_id(node->filho->irmao->filho->irmao,tab);
+                if(!(strcmp(idfilho," - int")==0 && strcmp(idirmao," - int")==0)){
+                    id = (char*)strdup(" - undef");
                     printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->filho->irmao->line,node->filho->irmao->col,
-                    transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->irmao->filho->id),transforma_type(node->filho->irmao->filho->irmao->id));
+                    transforma_type(node->filho->irmao->s_type),transforma_type(idfilho),transforma_type(idirmao));
                 }else{
-                    node->filho->irmao->id = node->filho->irmao->filho->id;
+                    id = node->filho->irmao->filho->id;
+                    node->filho->irmao->filho->id = "";
+                    node->filho->irmao->filho->irmao->id = "";
+                    
                 }
+
                
                 if(strcmp(node->filho->irmao->s_type,"Mul")==0){
                     node->filho->irmao->id = "";
@@ -706,7 +708,26 @@ void verifica_method_body(char * tab, no node){
             
             }
         
-        
+         if(strcmp(node->s_type,"Lshift")==0){
+            node->id = (char*)strdup(" - int");
+            if(node->filho && node->filho->irmao){
+                
+                node->filho->id = coloca_id(node->filho,tab);
+                node->filho->irmao->id = coloca_id(node->filho->irmao,tab);
+             //   printf("%s -- %s\n",node->filho->irmao->id, node->filho->irmao->s_type);
+               
+            }
+           
+            if(node->pai){
+                if(strcmp(node->pai->s_type,"Assign")==0){
+                  
+                    node->id = "";
+                    node->filho->id = "";
+                    node->filho->irmao->id = "";
+
+                }
+            }
+        }
         if(strcmp(node->s_type,"Print")==0){
             char * id = procura_tabela(node->filho,tab);
             tabela noo = procura_tab(tab);

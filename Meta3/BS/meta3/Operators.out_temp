@@ -1,3 +1,4 @@
+Line 5, col 9: Operator = cannot be applied to types int, none
 Line 12, col 9: Cannot find symbol operators()
 ===== Class Factorial Symbol Table =====
 operators	(int)	int
@@ -40,9 +41,9 @@ Program
 ........Id(y)
 ......Assign - int
 ........Id(x) - int
-........Lshift - int
-..........Id(b) - int
-..........Id(a) - int
+........Lshift
+..........Id(b)
+..........Id(a)
 ......Assign - int
 ........Id(b) - int
 ........Mul - int

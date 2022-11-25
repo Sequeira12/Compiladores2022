@@ -1,9 +1,6 @@
 Update: O codigo ta bue confuso mas funciona portanto tentar nao "tirar" merdas hahahah xD
 
 15 testes estão funcionais, 
-Bugs(2 TESTES): 
--os testes "if_tests" tem um bugzito com o id.
--o teste "invalid_parse_int" tem um bug com o Declit
 
 Testes que estão corretos mas o Script não mostra:
 
@@ -13,17 +10,15 @@ Testes que estão corretos mas o Script não mostra:
 
 
 Casos Por Resolver:
+Operator2 -> ids e Operadores, incompatible
+Operator_single -> ooperador, ambiguidade
+shifterrors--> todo fodido
+simpletest - operador simples
+testProblemaE --> TODO FODIDOOOOO
 testsMethods --> Ambiguous.
-while_erros.java --> uma manada de Coisas.
-testProblemaE --> SEG. FAULT
-simpleTest.java --> Operadores 
-shift_errors--> Operadores, Arvore.....
-Operatores -> ARvore
-Operator_single---> id's mal e operadores
-Operadores3---> SEG FAULT
-Operadores2---> idś e operadores
 
-24 + 3 feitos
+
+27 + 4 feitos
 
 Penso que so falte lidar com o resto dos erros
 Erros já vistos:

@@ -8,6 +8,7 @@ Line 72, col 27: Symbol ola56 already defined
 Line 10, col 15: Operator == cannot be applied to types undef, undef
 Line 10, col 9: Operator + cannot be applied to types boolean, boolean
 Line 13, col 6: Operator = cannot be applied to types boolean, int
+Line 21, col 11: Operator = cannot be applied to types int, none
 Line 21, col 14: Operator << cannot be applied to types int, none
 Line 62, col 10: Operator = cannot be applied to types boolean, double
 Line 63, col 10: Operator = cannot be applied to types int, double
@@ -183,9 +184,9 @@ Program
 ........Id(b)
 ......Assign - int
 ........Id(x) - int
-........Lshift - undef
-..........DecLit(1) - int
-..........Mulnone
+........Lshift
+..........DecLit(1)
+..........Mul
 ............Id(x)
 ............DecLit(1)
 ..MethodDecl
