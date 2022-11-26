@@ -66,16 +66,18 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
    //     printf("NTROU\n");
    // }
     if(new->tab){// se a tabela ja tem elementos
-       //printf("inserir->%s %s\n", valor,new->nome);
+       //printf("inserir->%s %s\n", valor,new->nome);strcmp(t->s_type, node->s_type)==0 &&
         node_t t=new->tab;
         for(; t->next; t=t->next){//compara até ao penultimo simbolo da tabela
-            if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || strcmp(node->pai->s_type,"FieldDecl")==0)){
+            if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || (strcmp(node->pai->s_type,"FieldDecl")==0) && strcmp(t->s_type,verifica_type(node->s_type))==0)){
+                            //printf("%s %s \n",t->s_type, node->valor);
                 printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
                 return;
             }
         }
         //compara com o ultimo simbolo da tabela
-        if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || strcmp(node->pai->s_type,"FieldDecl")==0)){
+        if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || (strcmp(node->pai->s_type,"FieldDecl")==0) && strcmp(t->s_type,verifica_type(node->s_type))==0)){
+           // printf("%s %s \n",t->s_type, node->s_type);
             printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
             return;
         }

@@ -4,9 +4,8 @@ Line 34, col 22: Symbol funcao3(int,int,double) already defined
 Line 43, col 41: Symbol i already defined
 Line 55, col 40: Symbol i already defined
 Line 57, col 26: Symbol funcao already defined
-Line 72, col 27: Symbol ola56 already defined
-Line 10, col 15: Operator == cannot be applied to types undef, undef
 Line 10, col 9: Operator + cannot be applied to types boolean, boolean
+Line 10, col 15: Operator == cannot be applied to types undef, int
 Line 13, col 6: Operator = cannot be applied to types boolean, int
 Line 21, col 11: Operator = cannot be applied to types int, none
 Line 21, col 14: Operator << cannot be applied to types int, none
@@ -14,7 +13,7 @@ Line 62, col 10: Operator = cannot be applied to types boolean, double
 Line 63, col 10: Operator = cannot be applied to types int, double
 Line 64, col 10: Operator = cannot be applied to types int, double
 Line 66, col 13: Operator Integer.parseInt cannot be applied to types boolean, double
-Line 69, col 12: Operator = cannot be applied to types int, undef
+Line 69, col 12: Operator = cannot be applied to types int, boolean
 ===== Class Java Symbol Table =====
 funcao2	(String[])	void
 x	(double,int)	double
@@ -29,6 +28,7 @@ funcao	(double,double)	double
 funcao	(int,int)	int
 maine	()	void
 ola56	(int)	int
+ola56		boolean
 
 ===== Method funcao2(String[]) Symbol Table =====
 return		void
@@ -401,7 +401,7 @@ Program
 ..............Div - double
 ................Id(e) - double
 ................DecLit(4) - int
-..............Minus
+..............Minus - double
 ................RealLit(4.3) - double
 ............DecLit(10) - int
 ......Assign - int
@@ -415,7 +415,7 @@ Program
 ..............Div - double
 ................Id(e) - double
 ................DecLit(4) - int
-..............Minus
+..............Minus - double
 ................RealLit(4.3) - double
 ............DecLit(10) - int
 ......Assign - int
@@ -429,7 +429,7 @@ Program
 ..............Div - double
 ................Id(e) - double
 ................DecLit(4) - int
-..............Minus
+..............Minus - double
 ................RealLit(4.3) - double
 ............DecLit(10) - int
 ......Assign - boolean
@@ -462,7 +462,7 @@ Program
 ....MethodBody
 ......Assign - int
 ........Id(x1) - int
-........Id(ola56) - undef
+........Id(ola56) - boolean
 ......Print
 ........StrLit("") - String
 ..FieldDecl
