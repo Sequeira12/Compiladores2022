@@ -1,5 +1,4 @@
 Line 7, col 11: Operator = cannot be applied to types int, none
-Line 7, col 14: Operator << cannot be applied to types int, none
 Line 15, col 11: Operator = cannot be applied to types int, none
 Line 16, col 11: Operator = cannot be applied to types double, none
 Line 17, col 11: Operator = cannot be applied to types int, none

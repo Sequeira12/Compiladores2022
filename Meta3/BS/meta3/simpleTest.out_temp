@@ -26,7 +26,7 @@ Line 20, col 14: Operator = cannot be applied to types String[], String[]
 Line 21, col 18: Operator = cannot be applied to types int, double
 Line 23, col 18: Operator = cannot be applied to types int, double
 Line 30, col 18: Operator > cannot be applied to types String[], int
-Line 31, col 16: Incompatible type undef in return statement
+Line 31, col 16: Incompatible type int in return statement
 Line 31, col 16: Cannot find symbol main(int)
 Line 32, col 16: Incompatible type String[] in return statement
 Line 33, col 9: Incompatible type void in return statement

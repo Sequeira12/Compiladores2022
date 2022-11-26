@@ -103,6 +103,18 @@ int verifica_repetidos(char * n){
     return 1;
 }
 
+char * retornaTipo(no node){
+    for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
+        for(node_t auxi = aux->tab; auxi!=NULL; auxi=auxi->next){
+            printf("CONA\n");
+            if(auxi->valor!=NULL && node->valor!=NULL){
+            if (strcmp(auxi->valor,node->valor)==0)return auxi->s_type;   
+            } 
+        }
+    }
+}
+
+
 void imprime_tabela(){
     for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
         printf("===== %s %s Symbol Table =====\n", aux->type, aux->nome);

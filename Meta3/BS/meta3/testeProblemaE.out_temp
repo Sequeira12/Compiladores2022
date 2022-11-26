@@ -8,7 +8,6 @@ Line 10, col 9: Operator + cannot be applied to types boolean, boolean
 Line 10, col 15: Operator == cannot be applied to types undef, int
 Line 13, col 6: Operator = cannot be applied to types boolean, int
 Line 21, col 11: Operator = cannot be applied to types int, none
-Line 21, col 14: Operator << cannot be applied to types int, none
 Line 62, col 10: Operator = cannot be applied to types boolean, double
 Line 63, col 10: Operator = cannot be applied to types int, double
 Line 64, col 10: Operator = cannot be applied to types int, double
