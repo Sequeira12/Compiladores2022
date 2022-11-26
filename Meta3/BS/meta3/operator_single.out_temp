@@ -1,6 +1,8 @@
 Line 13, col 9: Operator = cannot be applied to types int, double
 Line 20, col 11: Operator + cannot be applied to type boolean
+Line 20, col 9: Operator = cannot be applied to types boolean, undef
 Line 21, col 11: Operator + cannot be applied to type boolean
+Line 21, col 9: Operator = cannot be applied to types boolean, undef
 Line 28, col 12: Operator .length cannot be applied to type int
 Line 29, col 12: Operator .length cannot be applied to type double
 Line 33, col 11: Operator ! cannot be applied to type int
@@ -71,11 +73,11 @@ Program
 ..........RealLit(2.0) - double
 ......Assign - boolean
 ........Id(b) - boolean
-........Plus - boolean
+........Plus - undef
 ..........BoolLit(false) - boolean
 ......Assign - boolean
 ........Id(b) - boolean
-........Plus - boolean
+........Plus - undef
 ..........BoolLit(true) - boolean
 ......VarDecl
 ........Int

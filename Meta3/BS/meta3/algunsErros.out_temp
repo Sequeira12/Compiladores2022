@@ -29,7 +29,7 @@ Line 48, col 16: Incompatible type int in return statement
 Line 49, col 16: Incompatible type boolean in return statement
 Line 50, col 16: Incompatible type double in return statement
 Line 51, col 16: Incompatible type String[] in return statement
-Line 52, col 16: Incompatible type void in return statement
+Line 52, col 16: Incompatible type undef in return statement
 ===== Class Alguns_Erros Symbol Table =====
 main1	()	int
 main2	()	double

@@ -4,16 +4,18 @@
 #include <ctype.h>
 #include "semantics.h"
 #include "math.h"
+#include "symbol_table.h"
 
 
 
-
+int contadorTab = 0;
 
 
 void verifica(no raiz){
     if(raiz){
         if(strcmp(raiz->s_type,"Program")==0) nova_classe(raiz->filho->valor);
         else if(strcmp(raiz->s_type, "MethodDecl")==0) {
+            contadorTab++;
             verifica_method_decl(raiz->filho);
         
         }else if(strcmp(raiz->s_type, "FieldDecl")==0) insere(raiz->filho,NULL,NULL,"Class");
@@ -270,21 +272,12 @@ unsigned long calculaPotencia(int x, int y){
 
 
 void verifica_method_body(char * tab, no node){
+   
     if(node){
         if(strcmp(node->s_type,"Return")==0){
             tabela noo = procura_tab(tab);
             if(node->filho){
-                //caso em que retorna uma funcao
-                /*if(strcmp(noo->tab->s_type,"void")==0 && strcmp(node->filho->s_type,"Call")==0){
-                    no aux = node->filho;
-                    while (aux != NULL) {
-                        verifica_method_body(tab, aux);
-                        aux = aux->irmao;
-                    }
-                    printf("Line %s, col %s: Incompatible type %s in return statement\n",node->filho->line,
-                    node->filho->col,transforma_type(node->filho->id));
-                }*/
-                
+              
 
                 //casos normais
                 node->filho->id = procura_tabela(node->filho,tab);
@@ -314,7 +307,7 @@ void verifica_method_body(char * tab, no node){
                 if(strcmp(node->filho->s_type, "Call")==0 && strcmp(node->filho->id, noo->tab->s_type)!=0){
                   
                     printf("Line %s, col %s: Incompatible type %s in return statement\n",node->filho->line,
-                    node->filho->col,noo->tab->s_type);
+                    node->filho->col,transforma_type(node->filho->id));
                 }
                 if(strcmp(noo->tab->s_type,"int")==0 && ((strcmp(transforma_type(node->filho->id),"void")==0) ||
                 (strcmp(transforma_type(node->filho->id),"boolean")==0) || ((strcmp(transforma_type(node->filho->id),"double")==0))||
@@ -587,21 +580,15 @@ void verifica_method_body(char * tab, no node){
         }
         
         if(strcmp(node->s_type, "Assign")==0){
+            tabela tabe = procura_tab(tab);
+
             
+           
             
             long intv;
             char *num=NULL;
             char *valor=NULL;
-        
-
-
-          /*  if(strcmp(node->filho->irmao->s_type,"ParseArgs")==0){
-                if(strcmp(node->filho->irmao->id,node->filho->irmao->filho->id)==0){
-                    int a = atoi(node->filho->col);
-                    a = a + 4;
-                    printf("Line %s, col %d: Operator %s cannot be applied to types %s, %s\n",node->filho->line,a,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->id),transforma_type(node->filho->irmao->id));
-                }
-            }*/
+           
             if(strcmp(node->filho->irmao->s_type, "Not") == 0){
                 node->id=(char*)strdup(" - boolean");
                
@@ -620,7 +607,8 @@ void verifica_method_body(char * tab, no node){
            
             
             if(!(strcmp(node->filho->irmao->id," - int")==0 || strcmp(node->filho->irmao->id," - double")==0)){
-                printf("Line %s, col %s: Operator %s cannot be applied to type %s\n",node->filho->irmao->line,node->filho->irmao->col,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->irmao->id));
+                node->filho->irmao->id = (char*)strdup(" - undef");
+                printf("Line %s, col %s: Operator %s cannot be applied to type %s\n",node->filho->irmao->line,node->filho->irmao->col,transforma_type(node->filho->irmao->s_type),transforma_type(node->filho->irmao->filho->id));
                 }
         }
            
@@ -687,6 +675,70 @@ void verifica_method_body(char * tab, no node){
             }
             
 
+            if(strcmp(node->filho->irmao->s_type,"Lshift")==0){
+                char *id, *idfilho,*idirmao;
+                id= coloca_id(node->filho->irmao,tab);
+                idfilho = coloca_id(node->filho->irmao->filho,tab);
+                idirmao= coloca_id(node->filho->irmao->filho->irmao,tab);
+                if(strcmp(tabe->c_nome,"main")==0){
+                
+                if(!(strcmp(idfilho," - int")==0 && strcmp(idirmao," - int")==0) &&
+                 !(strcmp(idfilho," - int")==0 && strcmp(idirmao,"none")==0) &&
+                 !(strcmp(idfilho,"none")==0 && strcmp(idirmao," - int")==0)){
+                    id = (char*)strdup(" - undef");
+                    node->filho->irmao->id = id;
+                    node->filho->irmao->filho->id = idfilho;
+                    node->filho->irmao->filho->irmao->id = idirmao;
+                    printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->filho->irmao->line,node->filho->irmao->col,
+                    transforma_type(node->filho->irmao->s_type),transforma_type(idfilho),transforma_type(idirmao));
+                }else{
+                    node->filho->irmao->id = idfilho;
+                    node->filho->irmao->filho->id = idfilho;
+                    node->filho->irmao->filho->irmao->id = idirmao;
+                }   
+                }else{
+                    node->filho->irmao->id = "";
+                    node->filho->irmao->filho->id = "";
+                    node->filho->irmao->filho->irmao->id = "";
+                }
+                
+
+                if(strcmp(node->filho->irmao->filho->irmao->s_type,"Mul")==0){
+                    char *idM = idfilho;
+                if(strcmp(tabe->c_nome,"main")!=0){
+                    node->id = (char*)strdup(" - int");
+                    node->filho->irmao->filho->id = coloca_id(node->filho->irmao->filho,tab);
+                    node->filho->irmao->id = (char*)strdup(" - int");
+                    node->filho->irmao->filho->irmao->filho->id = coloca_id(node->filho->irmao->filho->irmao->filho,tab);
+                    node->filho->irmao->filho->irmao->id = node->filho->irmao->filho->irmao->filho->id ;
+                    node->filho->irmao->filho->irmao->filho->irmao->id=coloca_id(node->filho->irmao->filho->irmao->filho->irmao,tab);
+                    return;
+                }else{
+                   
+                    node->id = (char*)strdup(" - int");
+                    node->filho->irmao->id= "";
+                    node->filho->irmao->filho->id = "";
+                    node->filho->irmao->filho->irmao->filho->id = "";
+                    node->filho->irmao->filho->irmao->id = "";
+                    node->filho->irmao->filho->irmao->filho->irmao->id="";
+                    printf("Line %s, col %s: Operator = cannot be applied to types %s, none\n", node->line,node->col,transforma_type(idfilho));
+                    return;
+                }
+                
+                }
+               
+                if(strcmp(node->filho->irmao->s_type,"Mul")==0){
+                    node->filho->irmao->id = "";
+                    node->filho->irmao->filho->id = "";
+                    node->filho->irmao->filho->irmao->id="";
+                    return;
+                }
+               
+               
+        
+
+            }   
+            
             char * id1=malloc(sizeof(char) * 50);
             char * id2=malloc(sizeof(char) * 50);
             if(node->filho->id==NULL){
@@ -699,44 +751,13 @@ void verifica_method_body(char * tab, no node){
                 id2=node->filho->irmao->id;
             }
             else id2=node->filho->irmao->id;
-            
+           // printf("%s %s\n",transforma_type(id1),trasnforma_type(id2));
             if(!(strcmp(id1," - double")==0 && strcmp(id2," - int")==0)){
                 if(strcmp(id1,id2)!=0 || strcmp(id1," - undef")==0 || strcmp(id2," - undef")==0 || (strcmp(id1,id2)==0) && strcmp(id1, " - String[]")==0){
                     printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->line,node->col,transforma_type(node->s_type),transforma_type(id1),transforma_type(id2));
                 }
             }
-            node->id=node->filho->id;
-            if(strcmp(node->filho->irmao->s_type,"Lshift")==0){
-                char *id, *idfilho,*idirmao;
-                id= coloca_id(node->filho->irmao,tab);
-                idfilho = coloca_id(node->filho->irmao->filho,tab);
-                idirmao= coloca_id(node->filho->irmao->filho->irmao,tab);
-               
-                if(!(strcmp(idfilho," - int")==0 && strcmp(idirmao," - int")==0) &&
-                 !(strcmp(idfilho," - int")==0 && strcmp(idirmao,"none")==0) &&
-                 !(strcmp(idfilho,"none")==0 && strcmp(idirmao," - int")==0)){
-                    id = (char*)strdup(" - undef");
-                    printf("Line %s, col %s: Operator %s cannot be applied to types %s, %s\n",node->filho->irmao->line,node->filho->irmao->col,
-                    transforma_type(node->filho->irmao->s_type),transforma_type(idfilho),transforma_type(idirmao));
-                }else{
-                    id = node->filho->irmao->filho->id;
-                    node->filho->irmao->filho->id = "";
-                    node->filho->irmao->filho->irmao->id = "";
-                    
-                }
-
-               
-                if(strcmp(node->filho->irmao->s_type,"Mul")==0){
-                    node->filho->irmao->id = "";
-                    node->filho->irmao->filho->id = "";
-                    node->filho->irmao->filho->irmao->id="";
-                    return;
-                }
-               
-               
-        
-
-            }           
+            node->id=node->filho->id;        
         }
          if(strcmp(node->s_type,"And")==0 || strcmp(node->s_type,"Or")==0){
             if(node->filho && node->filho->irmao){
