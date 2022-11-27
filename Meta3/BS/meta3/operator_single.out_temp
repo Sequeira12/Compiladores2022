@@ -9,6 +9,7 @@ Line 33, col 11: Operator ! cannot be applied to type int
 Line 33, col 9: Operator = cannot be applied to types int, boolean
 Line 34, col 11: Operator ! cannot be applied to type double
 Line 34, col 9: Operator = cannot be applied to types double, boolean
+Line 38, col 7: Reference to method f(int,int) is ambiguous
 ===== Class operator_single Symbol Table =====
 main	(String[])	void
 f	(int,double)	void
@@ -106,8 +107,8 @@ Program
 ........Id(b) - boolean
 ........Not - boolean
 ..........Id(b) - boolean
-......Call - void
-........Id(f) - (int,double)
+......Call - undef
+........Id(f) - undef
 ........DecLit(1) - int
 ........DecLit(1) - int
 ..MethodDecl

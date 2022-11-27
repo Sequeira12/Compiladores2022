@@ -1,6 +1,7 @@
 Line 15, col 29: Cannot find symbol W
 Line 15, col 27: Cannot find symbol f(undef)
 Line 15, col 5: Cannot find symbol f(void,String[],int,undef)
+Line 16, col 5: Reference to method f(int,int) is ambiguous
 ===== Class Alguns_Erros Symbol Table =====
 f	(int,double,double,double)	double
 f	(double,double,double,int)	double
@@ -145,7 +146,7 @@ Program
 ........Call - undef
 ..........Id(f) - undef
 ..........Id(W) - undef
-......Call - double
-........Id(f) - (double,int)
+......Call - undef
+........Id(f) - undef
 ........DecLit(1) - int
 ........DecLit(1) - int

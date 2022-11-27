@@ -17,7 +17,6 @@ Line 25, col 11: Operator = cannot be applied to types int, undef
 Line 26, col 13: Cannot find symbol b
 Line 26, col 17: Cannot find symbol c
 Line 26, col 15: Operator * cannot be applied to types undef, undef
-Line 26, col 15: Operator * cannot be applied to types undef, int
 Line 26, col 11: Operator = cannot be applied to types int, undef
 Line 36, col 15: Operator = cannot be applied to types double, boolean
 Line 36, col 11: Operator = cannot be applied to types int, double
@@ -29,7 +28,7 @@ Line 48, col 16: Incompatible type int in return statement
 Line 49, col 16: Incompatible type boolean in return statement
 Line 50, col 16: Incompatible type double in return statement
 Line 51, col 16: Incompatible type String[] in return statement
-Line 52, col 16: Incompatible type undef in return statement
+Line 52, col 16: Incompatible type void in return statement
 ===== Class Alguns_Erros Symbol Table =====
 main1	()	int
 main2	()	double

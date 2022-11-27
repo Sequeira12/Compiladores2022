@@ -205,21 +205,58 @@ char * verificaAmbiguidade(char *nome , char **params){
     tabela h = tabela_simbolos;
    
     tabela aux_node = tabela_simbolos;
-  
+    int conta=0;
+    int controla_diferencas=100;
+    int controla_diferencas_iguais=0;
     for(aux_node = tabela_simbolos; aux_node; aux_node = aux_node->next){
         if(aux_node->array_params != NULL){
            
             if(strcmp(nome,aux_node->c_nome) == 0 && strcmp(params[0],aux_node->array_params[0])==0){
-                if(Diferenca(params,aux_node->array_params)!=atoi(params[0])){
-                    return aux_node->type;
+                int x;
+                if(x = Diferenca_reais(params,aux_node->array_params)==atoi(params[0])){
+                    return "FALSE";
+                }else{
+                    int y;
+                    if(y=Diferenca_compativeis(params,aux_node->array_params)){
+                        if(y==-1){
+                            return "FALSE";
+                        }
+                        if(y>0){
+                            conta++;
+                        }
+
+                    }
                 }    
             }
             
         }
     }
+    //printf(" %d  %d\n", controla_diferencas, controla_diferencas_iguais);
+    if(conta>1){
+        return "method";
+    }
     return "FALSE";
 }
-int Diferenca(char ** ParamT, char ** ParamC){
+int Diferenca_compativeis(char ** ParamT, char ** ParamC){
+    int numP = atoi(ParamT[0]);
+   
+    int contador = 0;
+    for(int i = 1; i <= numP;i++){
+        if(strcmp(ParamT[i],ParamC[i])!=0){
+            if(strcmp(ParamT[i],"int")==0 && strcmp(ParamC[i],"double")==0
+             /*strcmp(ParamT[i],"double")==0 && strcmp(ParamC[i],"int")==0*/)contador++;
+            else{
+                return -1;
+            }
+        }
+    }
+    return contador;
+}
+
+
+
+
+int Diferenca_reais(char ** ParamT, char ** ParamC){
     int numP = atoi(ParamT[0]);
    
     int contador = 0;

@@ -40,5 +40,6 @@ char * verificaAmbiguidade(char *nome, char ** params);
 
 tabela check_call(char * id, char ** params, int p);
 int verifica_repetidos(char * n);
-int Diferenca(char ** ParamT, char ** ParamC);
+int Diferenca_reais(char ** ParamT, char ** ParamC);
+int Diferenca_compativeis(char ** ParamT, char ** ParamC);
 #endif
