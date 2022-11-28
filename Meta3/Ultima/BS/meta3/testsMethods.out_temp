@@ -1,0 +1,152 @@
+Line 15, col 29: Cannot find symbol W
+Line 15, col 27: Cannot find symbol f(undef)
+Line 15, col 5: Cannot find symbol f(void,String[],int,undef)
+Line 16, col 5: Reference to method f(int,int) is ambiguous
+===== Class Alguns_Erros Symbol Table =====
+f	(int,double,double,double)	double
+f	(double,double,double,int)	double
+f	(double)	double
+f	(int)	double
+f	(double,int)	double
+f	(double,double)	double
+main	(String[])	void
+
+===== Method f(int,double,double,double) Symbol Table =====
+return		double
+a		int	param
+b		double	param
+c		double	param
+d		double	param
+
+===== Method f(double,double,double,int) Symbol Table =====
+return		double
+b		double	param
+c		double	param
+d		double	param
+a		int	param
+
+===== Method f(double) Symbol Table =====
+return		double
+b		double	param
+
+===== Method f(int) Symbol Table =====
+return		double
+b		int	param
+
+===== Method f(double,int) Symbol Table =====
+return		double
+b		double	param
+c		int	param
+
+===== Method f(double,double) Symbol Table =====
+return		double
+b		double	param
+c		double	param
+
+===== Method main(String[]) Symbol Table =====
+return		void
+args		String[]	param
+
+Program
+..Id(Alguns_Erros)
+..MethodDecl
+....MethodHeader
+......Double
+......Id(f)
+......MethodParams
+........ParamDecl
+..........Int
+..........Id(a)
+........ParamDecl
+..........Double
+..........Id(b)
+........ParamDecl
+..........Double
+..........Id(c)
+........ParamDecl
+..........Double
+..........Id(d)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Double
+......Id(f)
+......MethodParams
+........ParamDecl
+..........Double
+..........Id(b)
+........ParamDecl
+..........Double
+..........Id(c)
+........ParamDecl
+..........Double
+..........Id(d)
+........ParamDecl
+..........Int
+..........Id(a)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Double
+......Id(f)
+......MethodParams
+........ParamDecl
+..........Double
+..........Id(b)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Double
+......Id(f)
+......MethodParams
+........ParamDecl
+..........Int
+..........Id(b)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Double
+......Id(f)
+......MethodParams
+........ParamDecl
+..........Double
+..........Id(b)
+........ParamDecl
+..........Int
+..........Id(c)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Double
+......Id(f)
+......MethodParams
+........ParamDecl
+..........Double
+..........Id(b)
+........ParamDecl
+..........Double
+..........Id(c)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Void
+......Id(main)
+......MethodParams
+........ParamDecl
+..........StringArray
+..........Id(args)
+....MethodBody
+......Call - undef
+........Id(f) - undef
+........Call - void
+..........Id(main) - (String[])
+..........Id(args) - String[]
+........Id(args) - String[]
+........DecLit(1) - int
+........Call - undef
+..........Id(f) - undef
+..........Id(W) - undef
+......Call - undef
+........Id(f) - undef
+........DecLit(1) - int
+........DecLit(1) - int
