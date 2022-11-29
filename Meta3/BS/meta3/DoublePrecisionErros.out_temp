@@ -1,3 +1,5 @@
+Line 4, col 22: Number 0.002_4_3E-321 out of bounds
+Line 5, col 22: Number 0.5E-4965 out of bounds
 ===== Class Echo1 Symbol Table =====
 main	(String[])	void
 

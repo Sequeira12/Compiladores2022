@@ -481,9 +481,11 @@ void verifica_method_body(char * tab, no node){
             if(strcmp(node->valor,"_")==0){
                 printf("Line %s, col %s: Symbssol _ is reserved\n",node->line,node->col);
             }  
+            if(node->pai){
             if(strcmp(transforma_type(node->id),"undef")==0 && (strcmp(node->pai->s_type,"Length")==0 || strcmp(node->pai->s_type,"ParseArgs")==0)){
                 printf("Line %s, col %s: Cannot find symbol %s\n",node->line,node->col,node->valor);
             }
+            } 
         }
 
         if(strcmp(node->s_type,"DecLit")==0 || strcmp(node->s_type,"Length")==0 || strcmp(node->s_type,"ParseArgs")==0) {
@@ -790,32 +792,68 @@ void verifica_method_body(char * tab, no node){
         }
         
         if(strcmp(node->s_type,"Print")==0){
-            char * id = procura_tabela(node->filho,tab);
+           char * id = procura_tabela(node->filho,tab);
             tabela noo = procura_tab(tab);
-          /*  if(node->filho){
+            if(node->filho){
                 
                 if(strcmp(node->filho->s_type,"RealLit")==0){
                 
                 int b = 0;
                 char *id3 = node->filho->valor;
-                //printf("%s\n",node->filho->valor);
+               
                 char *id = RemoveUnderLine(id3);
                 char *ids2 = RemoveUnderLine(id3);
-             
-            
+                
+                char *erps;
                 char *Final = VerificaE(id,b);
             
                 b = 0;
                 int a = VerificaELen(ids2,b);
+                double x1 = strtod(ids2,&erps);
+                int x = CalculaN(x1);
                
+                x++;
+                int valorEle = atoi(Final) - x;
                 
-                int l = atoi(ids2) * 10^(atoi(Final));
-              
-                if(l >= 2147483648){
-                        printf("Line %s, col %s: Number %s out of bounds\n",node->filho->irmao->filho->line,node->filho->irmao->filho->col,node->filho->irmao->filho->valor);
+                if(valorEle == -324){
+                    double n;
+                    
+                   
+                    if(x == 0){
+                        n = x1;
+                    }else{
+                        n = x1 * calcPow(-x);
                     }
-                }     
-            */
+
+                    
+                   
+                    if(n < 2.5){
+                        printf("Line %s, col %s: Number %s out of bounds\n",node->filho->line,node->filho->col,node->filho->valor);
+                    }
+                }
+                if(valorEle < -324 || valorEle > 308){
+                    printf("Line %s, col %s: Number %s out of bounds\n",node->filho->line,node->filho->col,node->filho->valor);
+                 
+                    
+                }
+                if(valorEle == 308 ){
+                    double n;
+                    
+                   
+                    if(x == 0){
+                        n = x1;
+                    }else{
+                        n = x1 * calcPow(-x);
+                    }
+                    if(n > 1.0 ){
+                        printf("Line %s, col %s: Number %s out of bounds\n",node->filho->line,node->filho->col,node->filho->valor);
+                 
+                    
+                    }
+                }
+            }
+                 
+            
         
 
         if(strcmp(node->filho->s_type,"Length")==0){
@@ -833,6 +871,7 @@ void verifica_method_body(char * tab, no node){
                 printf("Line %s, col %s: Incompatible type %s in System.out.print statement\n",node->line,
                 node->col,transforma_type(node->filho->id));
             }}
+            }
           
             
         }
@@ -1113,3 +1152,48 @@ int VerificaELen(char * nome,int contador2){
 }
 
 
+
+
+int CalculaN(double num){
+   
+    if(num < 1.0){
+        for(int i = 0; i < 300; i++){
+            double x = calcPow(i);
+            double n = num * x;
+        
+            if(n >= 1.0){
+                return i;
+            }
+        }
+    }else{
+        for(int i = -1; i > -300; i--){
+            double x = calcPow(i);
+           
+            double n = num * x;
+            if(n <= 1){
+                return i;
+            }
+            
+           
+      
+        }
+    }
+}
+
+
+double calcPow(int i){
+  
+    double valor = 10;
+    if(i > 0){
+    for(int a = 0; a < i; a++){
+        valor = valor * 10;
+    }
+    }else{
+        valor = 0.1;
+        
+         for(int a = 0; a < (-i); a++){
+        valor = valor * 0.1;
+    }
+    }
+    return valor;
+}

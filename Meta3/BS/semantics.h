@@ -15,3 +15,8 @@ char * tipoXor(no node);
 char * VerificaE(char *nome,int contador2);
 bool temE(char * nome);
 int VerificaELen(char * nome,int contador2);
+
+
+double calcPow(int i);
+
+int CalculaN(double num);
