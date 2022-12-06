@@ -40,7 +40,7 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
         printf("Line %s, col %s: Symbol _ is reserved\n",node->pai->line,node->pai->col);
         return;
     }
-    node_t no_da_tabela = calloc(1000,sizeof(node_t));
+    node_t no_da_tabela = calloc(1,sizeof(node_table));
     no_da_tabela->valor=valor;
     no_da_tabela->s_type=type;
     no_da_tabela->next=NULL;
@@ -69,14 +69,14 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
        //printf("inserir->%s %s\n", valor,new->nome);strcmp(t->s_type, node->s_type)==0 &&
         node_t t=new->tab;
         for(; t->next; t=t->next){//compara até ao penultimo simbolo da tabela
-            if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || (strcmp(node->pai->s_type,"FieldDecl")==0) && strcmp(t->s_type,verifica_type(node->s_type))==0)){
+            if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || ((strcmp(node->pai->s_type,"FieldDecl")==0) && strcmp(t->s_type,verifica_type(node->s_type))==0))){
                             //printf("%s %s \n",t->s_type, node->valor);
                 printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
                 return;
             }
         }
         //compara com o ultimo simbolo da tabela
-        if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || (strcmp(node->pai->s_type,"FieldDecl")==0) && strcmp(t->s_type,verifica_type(node->s_type))==0)){
+        if(strcmp(t->valor,valor)==0 && (strcmp(node->pai->s_type,"VarDecl")==0 || ((strcmp(node->pai->s_type,"FieldDecl")==0) && strcmp(t->s_type,verifica_type(node->s_type))==0))){
            // printf("%s %s \n",t->s_type, node->s_type);
             printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
             return;
@@ -103,7 +103,7 @@ int verifica_repetidos(char * n){
     return 1;
 }
 
-char * retornaTipo(no node){
+/*void retornaTipo(no node){
     for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
         for(node_t auxi = aux->tab; auxi!=NULL; auxi=auxi->next){
             
@@ -112,7 +112,7 @@ char * retornaTipo(no node){
             } 
         }
     }
-}
+}*/
 
 
 void imprime_tabela(){
@@ -202,22 +202,18 @@ void novo_metodo(char *nome, char * valor, char ** array_de_parametros, char * t
 }
 
 char * verificaAmbiguidade(char *nome , char **params){
-    tabela h = tabela_simbolos;
-   
     tabela aux_node = tabela_simbolos;
     int conta=0;
-    int controla_diferencas=100;
-    int controla_diferencas_iguais=0;
     for(aux_node = tabela_simbolos; aux_node; aux_node = aux_node->next){
         if(aux_node->array_params != NULL){
            
             if(strcmp(nome,aux_node->c_nome) == 0 && strcmp(params[0],aux_node->array_params[0])==0){
                 int x;
-                if(x = Diferenca_reais(params,aux_node->array_params)==atoi(params[0])){
+                if((x = Diferenca_reais(params,aux_node->array_params)==atoi(params[0]))){
                     return "FALSE";
                 }else{
                     int y;
-                    if(y=Diferenca_compativeis(params,aux_node->array_params)){
+                    if((y=Diferenca_compativeis(params,aux_node->array_params))){
                         if(y==-1){
                             return "FALSE";
                         }
@@ -294,13 +290,13 @@ char* procura_tabela(no node, char * tab){
         }
 
     }
-     return strdup(" - undef");
+     return (char*)strdup(" - undef\0");
 }
 
 
 
 char ** retorna_variaveis_parametros(char* tab){
-    char** vars= (char**)malloc(100*sizeof(char*));;
+    char** vars= (char**)malloc(100*sizeof(char*)+1);;
     int i = 0;
 
     

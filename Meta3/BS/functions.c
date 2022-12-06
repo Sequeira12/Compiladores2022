@@ -6,7 +6,7 @@
 
 
 no CriaNo(char *id[3], char *valor, char *s_type){
-	no novo = malloc(sizeof(node));
+	no novo = calloc(1,sizeof(node));
 	novo->s_type = (char *)malloc(1 + strlen(s_type) * sizeof(char));
 	if(valor){
 		novo->valor = (char *) malloc(1 + strlen(valor) * sizeof(char));
@@ -29,6 +29,7 @@ no CriaNo(char *id[3], char *valor, char *s_type){
 	novo->irmao = NULL;
 	novo->filho = NULL; 
 	novo->num_node = 0;
+	return novo;
 }
 
 void AdicionaNo(no pai,no novo){

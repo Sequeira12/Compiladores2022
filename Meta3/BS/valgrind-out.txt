@@ -1,1526 +1,1173 @@
-==8028== Memcheck, a memory error detector
-==8028== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==8028== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
-==8028== Command: ./jucompiler -s
-==8028== Parent PID: 2931
-==8028== 
---8028-- 
---8028-- Valgrind options:
---8028--    --leak-check=full
---8028--    --show-leak-kinds=all
---8028--    --track-origins=yes
---8028--    --verbose
---8028--    --log-file=valgrind-out.txt
---8028-- Contents of /proc/version:
---8028--   Linux version 5.15.0-52-generic (buildd@lcy02-amd64-045) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #58~20.04.1-Ubuntu SMP Thu Oct 13 13:09:46 UTC 2022
---8028-- 
---8028-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-rdrand
---8028-- Page sizes: currently 4096, max supported 4096
---8028-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
---8028-- Reading syms from /home/bruno/Desktop/ProjetoVERSAOLAST/Compiladores2022/Meta3/BS/jucompiler
---8028-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
---8028--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
---8028--   .. build-id is valid
---8028-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
---8028--    object doesn't have a symbol table
---8028--    object doesn't have a dynamic symbol table
---8028-- Scheduler: using generic scheduler lock implementation.
---8028-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
-==8028== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-8028-by-bruno-on-???
-==8028== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-8028-by-bruno-on-???
-==8028== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-8028-by-bruno-on-???
-==8028== 
-==8028== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==8028== don't want to do, unless you know exactly what you're doing,
-==8028== or are doing some strange experiment):
-==8028==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=8028 ...command...
-==8028== 
-==8028== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==8028==   /path/to/gdb ./jucompiler
-==8028== and then give GDB the following command
-==8028==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=8028
-==8028== --pid is optional if only one valgrind process is running
-==8028== 
---8028-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
---8028-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
---8028-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
---8028--    object doesn't have a symbol table
---8028-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
---8028--    object doesn't have a symbol table
-==8028== WARNING: new redirection conflicts with existing -- ignoring it
---8028--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
---8028--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
---8028-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
---8028-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
---8028-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
---8028--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
---8028--   .. build-id is valid
---8028-- REDIR: 0x48fc480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc7b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb0a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb7e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fdc50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x4918ce0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x4918820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc5e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x49187e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb1d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x4919f50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x4918860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fb630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x4904bb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc3d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x4918930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fbae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc6f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fdc90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x48fc8a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---8028-- REDIR: 0x49e4500 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
---8028-- REDIR: 0x49dfbd0 (libc.so.6:__strcmp_avx2) redirected to 0x483fed0 (strcmp)
---8028-- REDIR: 0x48f60e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
---8028-- REDIR: 0x49e7b60 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x48428e0 (memset)
---8028-- REDIR: 0x49e46d0 (libc.so.6:__strlen_avx2) redirected to 0x483ef40 (strlen)
---8028-- REDIR: 0x49e76e0 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x48429f0 (memmove)
---8028-- REDIR: 0x49e4310 (libc.so.6:__strchrnul_avx2) redirected to 0x4843540 (strchrnul)
---8028-- REDIR: 0x48f7b10 (libc.so.6:calloc) redirected to 0x483dce0 (calloc)
---8028-- REDIR: 0x49e5c10 (libc.so.6:__strcpy_avx2) redirected to 0x483f090 (strcpy)
---8028-- REDIR: 0x49e4b90 (libc.so.6:__strcat_avx2) redirected to 0x483ec20 (strcat)
-==8028== Invalid write of size 2
-==8028==    at 0x11056F: verifica_method_body (semantics.c:425)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a66248 is 8 bytes inside a block of size 9 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11045F: verifica_method_body (semantics.c:413)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== Invalid write of size 1
-==8028==    at 0x110575: verifica_method_body (semantics.c:425)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a6624a is 1 bytes after a block of size 9 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11045F: verifica_method_body (semantics.c:413)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== Invalid read of size 1
-==8028==    at 0x483FEE8: strcmp (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10F09E: transforma_type (semantics.c:189)
-==8028==    by 0x110780: verifica_method_body (semantics.c:449)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a66249 is 0 bytes after a block of size 9 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11045F: verifica_method_body (semantics.c:413)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== Conditional jump or move depends on uninitialised value(s)
-==8028==    at 0x1131E6: verifica_method_body (semantics.c:917)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Uninitialised value was created by a heap allocation
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x114A3F: retorna_variaveis_parametros (symbol_table.c:303)
-==8028==    by 0x113135: verifica_method_body (semantics.c:913)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
---8028-- REDIR: 0x48f66d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
-==8028== Invalid write of size 1
-==8028==    at 0x483F0BE: strcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE87: RemoveUnderLine (semantics.c:157)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== Invalid read of size 1
-==8028==    at 0x10EE3C: removeChar (semantics.c:143)
-==8028==    by 0x10EE98: RemoveUnderLine (semantics.c:158)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== Invalid write of size 1
-==8028==    at 0x10EE47: removeChar (semantics.c:147)
-==8028==    by 0x10EE98: RemoveUnderLine (semantics.c:158)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== Invalid read of size 1
-==8028==    at 0x48A4B3A: ____strtol_l_internal (strtol_l.c:292)
-==8028==    by 0x111B6B: verifica_method_body (semantics.c:661)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== Conditional jump or move depends on uninitialised value(s)
-==8028==    at 0x1131E6: verifica_method_body (semantics.c:917)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Uninitialised value was created by a heap allocation
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x114A3F: retorna_variaveis_parametros (symbol_table.c:303)
-==8028==    by 0x113135: verifica_method_body (semantics.c:913)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
---8028-- REDIR: 0x49e76c0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4843660 (mempcpy)
-==8028== 
-==8028== HEAP SUMMARY:
-==8028==     in use at exit: 59,483 bytes in 284 blocks
-==8028==   total heap usage: 426 allocs, 142 frees, 70,299 bytes allocated
-==8028== 
-==8028== Searching for pointers to 284 not-freed blocks
-==8028== Checked 111,680 bytes
-==8028== 
-==8028== 0 bytes in 1 blocks are definitely lost in loss record 1 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 1 bytes in 1 blocks are still reachable in loss record 2 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10951F: CriaNo (functions.c:12)
-==8028==    by 0x1152D9: yyparse (jucompiler.y:63)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are still reachable in loss record 3 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B18D: yylex (jucompiler.l:144)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are still reachable in loss record 4 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B1FD: yylex (jucompiler.l:144)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are indirectly lost in loss record 5 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10EDC8: check_calls_method_params (semantics.c:135)
-==8028==    by 0x11311F: verifica_method_body (semantics.c:911)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 2 bytes in 1 blocks are indirectly lost in loss record 6 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10EDC8: check_calls_method_params (semantics.c:135)
-==8028==    by 0x11311F: verifica_method_body (semantics.c:911)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 7 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B8DA: yylex (jucompiler.l:153)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 8 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B917: yylex (jucompiler.l:153)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 9 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BC02: yylex (jucompiler.l:157)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 10 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BC3F: yylex (jucompiler.l:157)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 11 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A6B1: yylex (jucompiler.l:130)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 12 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A420: yylex (jucompiler.l:127)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 13 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A453: yylex (jucompiler.l:127)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 14 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10ACD1: yylex (jucompiler.l:138)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 15 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10AD04: yylex (jucompiler.l:138)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 16 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C252: yylex (jucompiler.l:165)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 17 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C188: yylex (jucompiler.l:164)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 18 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A356: yylex (jucompiler.l:126)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 2 bytes in 1 blocks are definitely lost in loss record 19 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BDD3: yylex (jucompiler.l:159)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are still reachable in loss record 20 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B1C0: yylex (jucompiler.l:144)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 21 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BBCF: yylex (jucompiler.l:157)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 22 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A67E: yylex (jucompiler.l:130)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 23 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A6EE: yylex (jucompiler.l:130)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 24 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A490: yylex (jucompiler.l:127)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 25 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10AD41: yylex (jucompiler.l:138)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 26 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C28F: yylex (jucompiler.l:165)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 27 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C1C5: yylex (jucompiler.l:164)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 28 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A389: yylex (jucompiler.l:126)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 29 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A3C6: yylex (jucompiler.l:126)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 30 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BE60: yylex (jucompiler.l:160)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 31 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BE9D: yylex (jucompiler.l:160)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 3 bytes in 1 blocks are definitely lost in loss record 32 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BD96: yylex (jucompiler.l:159)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 1 blocks are still reachable in loss record 33 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10F00A: verifica_array_method_params (semantics.c:177)
-==8028==    by 0x10E5CE: verifica_method_decl (semantics.c:39)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 4 bytes in 2 blocks are still reachable in loss record 34 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10F052: verifica_array_method_params (semantics.c:183)
-==8028==    by 0x10E5CE: verifica_method_decl (semantics.c:39)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 4 bytes in 1 blocks are indirectly lost in loss record 35 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10ED84: check_calls_method_params (semantics.c:128)
-==8028==    by 0x11311F: verifica_method_body (semantics.c:911)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 4 bytes in 1 blocks are indirectly lost in loss record 36 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10ED84: check_calls_method_params (semantics.c:128)
-==8028==    by 0x11311F: verifica_method_body (semantics.c:911)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 37 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BF2A: yylex (jucompiler.l:161)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 38 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BF67: yylex (jucompiler.l:161)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 39 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C0BE: yylex (jucompiler.l:163)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 40 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BFF4: yylex (jucompiler.l:162)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 41 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B18D: yylex (jucompiler.l:144)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 42 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B1FD: yylex (jucompiler.l:144)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 43 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10AB3D: yylex (jucompiler.l:136)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 4 bytes in 2 blocks are definitely lost in loss record 44 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B321: yylex (jucompiler.l:146)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 5 bytes in 1 blocks are definitely lost in loss record 45 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C21F: yylex (jucompiler.l:165)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 5 bytes in 2 blocks are definitely lost in loss record 46 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C031: yylex (jucompiler.l:162)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 5 bytes in 2 blocks are definitely lost in loss record 47 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B1C0: yylex (jucompiler.l:144)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 5 bytes in 2 blocks are definitely lost in loss record 48 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10AB70: yylex (jucompiler.l:136)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 5 bytes in 2 blocks are definitely lost in loss record 49 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B354: yylex (jucompiler.l:146)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 6 bytes in 1 blocks are still reachable in loss record 50 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113C6D: nova_classe (symbol_table.c:14)
-==8028==    by 0x10E4A9: verifica (semantics.c:16)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 6 bytes in 1 blocks are definitely lost in loss record 51 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B8A7: yylex (jucompiler.l:153)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 6 bytes in 2 blocks are definitely lost in loss record 52 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C0FB: yylex (jucompiler.l:163)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 6 bytes in 2 blocks are definitely lost in loss record 53 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10ABAD: yylex (jucompiler.l:136)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 6 bytes in 2 blocks are definitely lost in loss record 54 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B391: yylex (jucompiler.l:146)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 6 bytes in 3 blocks are definitely lost in loss record 55 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A8DC: yylex (jucompiler.l:133)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 6 bytes in 3 blocks are definitely lost in loss record 56 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A90F: yylex (jucompiler.l:133)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 6 bytes in 3 blocks are definitely lost in loss record 57 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BCCC: yylex (jucompiler.l:158)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 58 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C155: yylex (jucompiler.l:164)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 59 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114941: procura_tabela (symbol_table.c:285)
-==8028==    by 0x11090B: verifica_method_body (semantics.c:471)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 60 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114941: procura_tabela (symbol_table.c:285)
-==8028==    by 0x10F5F8: coloca_id (semantics.c:245)
-==8028==    by 0x11092F: verifica_method_body (semantics.c:472)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 61 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x110AE3: verifica_method_body (semantics.c:489)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 62 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x112E7F: verifica_method_body (semantics.c:880)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 63 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113308: verifica_method_body (semantics.c:931)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 64 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x111180: verifica_method_body (semantics.c:580)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 65 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x112E7F: verifica_method_body (semantics.c:880)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 66 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114941: procura_tabela (symbol_table.c:285)
-==8028==    by 0x11090B: verifica_method_body (semantics.c:471)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 67 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114941: procura_tabela (symbol_table.c:285)
-==8028==    by 0x10F5F8: coloca_id (semantics.c:245)
-==8028==    by 0x11092F: verifica_method_body (semantics.c:472)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 68 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x110AE3: verifica_method_body (semantics.c:489)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 7 bytes in 1 blocks are definitely lost in loss record 69 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113308: verifica_method_body (semantics.c:931)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 8 bytes in 1 blocks are still reachable in loss record 70 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10E14B: yyalloc (lex.yy.c:2309)
-==8028==    by 0x10DC14: yyensure_buffer_stack (lex.yy.c:2007)
-==8028==    by 0x109972: yylex (lex.yy.c:919)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 8 bytes in 1 blocks are still reachable in loss record 71 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x1094F0: CriaNo (functions.c:10)
-==8028==    by 0x1152D9: yyparse (jucompiler.y:63)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 8 bytes in 3 blocks are definitely lost in loss record 72 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BD09: yylex (jucompiler.l:158)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 8 bytes in 4 blocks are definitely lost in loss record 73 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A0BD: yylex (jucompiler.l:123)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 8 bytes in 4 blocks are definitely lost in loss record 74 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A0D3: yylex (jucompiler.l:123)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 9 bytes in 1 blocks are still reachable in loss record 75 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10EF35: verifica_array_method_params (semantics.c:174)
-==8028==    by 0x10E5CE: verifica_method_decl (semantics.c:39)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 76 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11045F: verifica_method_body (semantics.c:413)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 77 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x10F773: verifica_method_body (semantics.c:285)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 78 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x10F773: verifica_method_body (semantics.c:285)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 79 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11090B: verifica_method_body (semantics.c:471)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 80 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x10F5F8: coloca_id (semantics.c:245)
-==8028==    by 0x11092F: verifica_method_body (semantics.c:472)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 81 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x1133CE: verifica_method_body (semantics.c:939)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 82 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11090B: verifica_method_body (semantics.c:471)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 83 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x10F5F8: coloca_id (semantics.c:245)
-==8028==    by 0x11092F: verifica_method_body (semantics.c:472)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 84 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x1133CE: verifica_method_body (semantics.c:939)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 1 blocks are definitely lost in loss record 85 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x112830: verifica_method_body (semantics.c:792)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 9 bytes in 3 blocks are definitely lost in loss record 86 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A94C: yylex (jucompiler.l:133)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 9 bytes in 4 blocks are definitely lost in loss record 87 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A106: yylex (jucompiler.l:123)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 10 bytes in 1 blocks are still reachable in loss record 88 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113C94: nova_classe (symbol_table.c:15)
-==8028==    by 0x10E4A9: verifica (semantics.c:16)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 10 bytes in 5 blocks are definitely lost in loss record 89 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B3EB: yylex (jucompiler.l:147)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 11 bytes in 1 blocks are definitely lost in loss record 90 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x110C41: verifica_method_body (semantics.c:494)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 12 bytes in 3 blocks are definitely lost in loss record 91 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BC99: yylex (jucompiler.l:158)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 12 bytes in 4 blocks are definitely lost in loss record 92 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10A143: yylex (jucompiler.l:123)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 12 bytes in 5 blocks are definitely lost in loss record 93 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B41E: yylex (jucompiler.l:147)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 14 bytes in 2 blocks are still reachable in loss record 94 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x1144BB: novo_metodo (symbol_table.c:180)
-==8028==    by 0x10E712: verifica_method_decl (semantics.c:59)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 14 bytes in 2 blocks are definitely lost in loss record 95 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BEF7: yylex (jucompiler.l:161)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 14 bytes in 2 blocks are definitely lost in loss record 96 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C08B: yylex (jucompiler.l:163)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 14 bytes in 2 blocks are definitely lost in loss record 97 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BFC1: yylex (jucompiler.l:162)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 14 bytes in 7 blocks are definitely lost in loss record 98 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10AA70: yylex (jucompiler.l:135)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 14 bytes in 7 blocks are definitely lost in loss record 99 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B257: yylex (jucompiler.l:145)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 15 bytes in 2 blocks are still reachable in loss record 100 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10E596: verifica_method_decl (semantics.c:37)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 15 bytes in 2 blocks are definitely lost in loss record 101 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x1138EC: check_ast (semantics.c:1015)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 15 bytes in 5 blocks are definitely lost in loss record 102 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B45B: yylex (jucompiler.l:147)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 17 bytes in 2 blocks are still reachable in loss record 103 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10ECC9: verifica_method_params (semantics.c:112)
-==8028==    by 0x10E5B2: verifica_method_decl (semantics.c:38)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 17 bytes in 1 blocks are definitely lost in loss record 104 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BE2D: yylex (jucompiler.l:160)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 17 bytes in 1 blocks are definitely lost in loss record 105 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10BD63: yylex (jucompiler.l:159)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 17 bytes in 2 blocks are definitely lost in loss record 106 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10ECC9: verifica_method_params (semantics.c:112)
-==8028==    by 0x1138CC: check_ast (semantics.c:1014)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 17 bytes in 7 blocks are definitely lost in loss record 107 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10AAA3: yylex (jucompiler.l:135)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 17 bytes in 7 blocks are definitely lost in loss record 108 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B28A: yylex (jucompiler.l:145)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 21 bytes in 3 blocks are definitely lost in loss record 109 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x110AE3: verifica_method_body (semantics.c:489)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 21 bytes in 7 blocks are definitely lost in loss record 110 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10AAE3: yylex (jucompiler.l:135)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 21 bytes in 7 blocks are definitely lost in loss record 111 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10B2C7: yylex (jucompiler.l:145)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 30 bytes in 2 blocks are still reachable in loss record 112 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10E68E: verifica_method_decl (semantics.c:50)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 30 bytes in 2 blocks are definitely lost in loss record 113 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x11391A: check_ast (semantics.c:1017)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 32 bytes in 14 blocks are definitely lost in loss record 114 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C4CE: yylex (jucompiler.l:168)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 33 bytes in 4 blocks are definitely lost in loss record 115 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114941: procura_tabela (symbol_table.c:285)
-==8028==    by 0x11090B: verifica_method_body (semantics.c:471)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 33 bytes in 4 blocks are definitely lost in loss record 116 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114941: procura_tabela (symbol_table.c:285)
-==8028==    by 0x10F5F8: coloca_id (semantics.c:245)
-==8028==    by 0x11092F: verifica_method_body (semantics.c:472)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 40 bytes in 14 blocks are definitely lost in loss record 117 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C50B: yylex (jucompiler.l:168)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 50 bytes in 1 blocks are definitely lost in loss record 118 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x11233E: verifica_method_body (semantics.c:740)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 50 bytes in 1 blocks are definitely lost in loss record 119 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x11234F: verifica_method_body (semantics.c:741)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 56 bytes in 1 blocks are still reachable in loss record 120 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113C50: nova_classe (symbol_table.c:13)
-==8028==    by 0x10E4A9: verifica (semantics.c:16)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 64 bytes in 1 blocks are still reachable in loss record 121 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10E14B: yyalloc (lex.yy.c:2309)
-==8028==    by 0x10D789: yy_create_buffer (lex.yy.c:1847)
-==8028==    by 0x10999C: yylex (lex.yy.c:921)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 80 bytes in 1 blocks are still reachable in loss record 122 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x1094CF: CriaNo (functions.c:9)
-==8028==    by 0x1152D9: yyparse (jucompiler.y:63)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 80 bytes in 2 blocks are still reachable in loss record 123 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x1143FF: insere_elemento (symbol_table.c:158)
-==8028==    by 0x11456C: novo_metodo (symbol_table.c:200)
-==8028==    by 0x10E712: verifica_method_decl (semantics.c:59)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 90 bytes in 14 blocks are definitely lost in loss record 124 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x10C49B: yylex (jucompiler.l:168)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== 112 bytes in 2 blocks are still reachable in loss record 125 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x1144A8: novo_metodo (symbol_table.c:179)
-==8028==    by 0x10E712: verifica_method_decl (semantics.c:59)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 240 bytes in 2 blocks are definitely lost in loss record 126 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10E600: verifica_method_decl (semantics.c:41)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 406 (400 direct, 6 indirect) bytes in 1 blocks are definitely lost in loss record 127 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10ED17: check_calls_method_params (semantics.c:120)
-==8028==    by 0x11311F: verifica_method_body (semantics.c:911)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 406 (400 direct, 6 indirect) bytes in 1 blocks are definitely lost in loss record 128 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10ED17: check_calls_method_params (semantics.c:120)
-==8028==    by 0x11311F: verifica_method_body (semantics.c:911)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 480 bytes in 2 blocks are still reachable in loss record 129 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EEC8: verifica_array_method_params (semantics.c:167)
-==8028==    by 0x10E5CE: verifica_method_decl (semantics.c:39)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 8,000 bytes in 1 blocks are still reachable in loss record 130 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113E2F: insere (symbol_table.c:43)
-==8028==    by 0x110823: verifica_method_body (semantics.c:459)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 16,000 bytes in 2 blocks are still reachable in loss record 131 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113E2F: insere (symbol_table.c:43)
-==8028==    by 0x10E6FA: verifica_method_decl (semantics.c:57)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 16,000 bytes in 2 blocks are still reachable in loss record 132 of 133
-==8028==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x113E2F: insere (symbol_table.c:43)
-==8028==    by 0x10E79A: verifica_method_decl (semantics.c:66)
-==8028==    by 0x10E4E5: verifica (semantics.c:19)
-==8028==    by 0x10E53D: verifica (semantics.c:26)
-==8028==    by 0x10E311: main (jucompiler.l:215)
-==8028== 
-==8028== 16,386 bytes in 1 blocks are still reachable in loss record 133 of 133
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10E14B: yyalloc (lex.yy.c:2309)
-==8028==    by 0x10D7BE: yy_create_buffer (lex.yy.c:1856)
-==8028==    by 0x10999C: yylex (lex.yy.c:921)
-==8028==    by 0x1150BF: yyparse (y.tab.c:1504)
-==8028==    by 0x10E2F3: main (jucompiler.l:213)
-==8028== 
-==8028== LEAK SUMMARY:
-==8028==    definitely lost: 2,080 bytes in 245 blocks
-==8028==    indirectly lost: 12 bytes in 4 blocks
-==8028==      possibly lost: 0 bytes in 0 blocks
-==8028==    still reachable: 57,391 bytes in 35 blocks
-==8028==         suppressed: 0 bytes in 0 blocks
-==8028== 
-==8028== ERROR SUMMARY: 115 errors from 113 contexts (suppressed: 0 from 0)
-==8028== 
-==8028== 1 errors in context 1 of 113:
-==8028== Conditional jump or move depends on uninitialised value(s)
-==8028==    at 0x1131E6: verifica_method_body (semantics.c:917)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Uninitialised value was created by a heap allocation
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x114A3F: retorna_variaveis_parametros (symbol_table.c:303)
-==8028==    by 0x113135: verifica_method_body (semantics.c:913)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 1 errors in context 2 of 113:
-==8028== Invalid read of size 1
-==8028==    at 0x48A4B3A: ____strtol_l_internal (strtol_l.c:292)
-==8028==    by 0x111B6B: verifica_method_body (semantics.c:661)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 1 errors in context 3 of 113:
-==8028== Invalid write of size 1
-==8028==    at 0x10EE47: removeChar (semantics.c:147)
-==8028==    by 0x10EE98: RemoveUnderLine (semantics.c:158)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 1 errors in context 4 of 113:
-==8028== Invalid read of size 1
-==8028==    at 0x10EE3C: removeChar (semantics.c:143)
-==8028==    by 0x10EE98: RemoveUnderLine (semantics.c:158)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 1 errors in context 5 of 113:
-==8028== Invalid write of size 1
-==8028==    at 0x483F0BE: strcpy (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE87: RemoveUnderLine (semantics.c:157)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a690a0 is 0 bytes after a block of size 0 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10EE70: RemoveUnderLine (semantics.c:155)
-==8028==    by 0x111B4B: verifica_method_body (semantics.c:660)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 1 errors in context 6 of 113:
-==8028== Conditional jump or move depends on uninitialised value(s)
-==8028==    at 0x1131E6: verifica_method_body (semantics.c:917)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Uninitialised value was created by a heap allocation
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x114A3F: retorna_variaveis_parametros (symbol_table.c:303)
-==8028==    by 0x113135: verifica_method_body (semantics.c:913)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 1 errors in context 7 of 113:
-==8028== Invalid write of size 1
-==8028==    at 0x110575: verifica_method_body (semantics.c:425)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a6624a is 1 bytes after a block of size 9 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11045F: verifica_method_body (semantics.c:413)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 2 errors in context 8 of 113:
-==8028== Invalid read of size 1
-==8028==    at 0x483FEE8: strcmp (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x10F09E: transforma_type (semantics.c:189)
-==8028==    by 0x110780: verifica_method_body (semantics.c:449)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a66249 is 0 bytes after a block of size 9 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11045F: verifica_method_body (semantics.c:413)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== 
-==8028== 2 errors in context 9 of 113:
-==8028== Invalid write of size 2
-==8028==    at 0x11056F: verifica_method_body (semantics.c:425)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028==  Address 0x4a66248 is 8 bytes inside a block of size 9 alloc'd
-==8028==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8028==    by 0x48FB38E: strdup (strdup.c:42)
-==8028==    by 0x114A0F: procura_tabela (symbol_table.c:297)
-==8028==    by 0x11045F: verifica_method_body (semantics.c:413)
-==8028==    by 0x110ECC: verifica_method_body (semantics.c:519)
-==8028==    by 0x11396D: check_ast (semantics.c:1023)
-==8028==    by 0x113987: check_ast (semantics.c:1028)
-==8028==    by 0x10E320: main (jucompiler.l:216)
-==8028== 
-==8028== ERROR SUMMARY: 115 errors from 113 contexts (suppressed: 0 from 0)
+==5701== Memcheck, a memory error detector
+==5701== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==5701== Using Valgrind-3.18.1-42b08ed5bd-20211015 and LibVEX; rerun with -h for copyright info
+==5701== Command: ./jucompiler -s
+==5701== Parent PID: 9
+==5701== 
+--5701-- 
+--5701-- Valgrind options:
+--5701--    --leak-check=full
+--5701--    --show-leak-kinds=all
+--5701--    --track-origins=yes
+--5701--    --verbose
+--5701--    --log-file=valgrind-out.txt
+--5701-- Contents of /proc/version:
+--5701--   Linux version 5.10.16.3-microsoft-standard-WSL2 (oe-user@oe-host) (x86_64-msft-linux-gcc (GCC) 9.3.0, GNU ld (GNU Binutils) 2.34.0.20200220) #1 SMP Fri Apr 2 22:23:49 UTC 2021
+--5701-- 
+--5701-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
+--5701-- Page sizes: currently 4096, max supported 4096
+--5701-- Valgrind library directory: /usr/libexec/valgrind
+--5701-- Reading syms from /mnt/c/Users/conta/OneDrive/Ambiente de Trabalho/compgit/Compiladores2022/Meta3/bs/jucompiler
+--5701-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+--5701--   Considering /usr/lib/debug/.build-id/61/ef896a699bb1c2e4e231642b2e1688b2f1a61e.debug ..
+--5701--   .. build-id is valid
+--5701-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--5701--    object doesn't have a symbol table
+--5701--    object doesn't have a dynamic symbol table
+--5701-- Scheduler: using generic scheduler lock implementation.
+--5701-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==5701== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-5701-by-kapellaz-on-???
+==5701== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-5701-by-kapellaz-on-???
+==5701== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-5701-by-kapellaz-on-???
+==5701== 
+==5701== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==5701== don't want to do, unless you know exactly what you're doing,
+==5701== or are doing some strange experiment):
+==5701==   /usr/bin/vgdb --pid=5701 ...command...
+==5701== 
+==5701== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==5701==   /path/to/gdb ./jucompiler
+==5701== and then give GDB the following command
+==5701==   target remote | /usr/bin/vgdb --pid=5701
+==5701== --pid is optional if only one valgrind process is running
+==5701== 
+--5701-- REDIR: 0x402aa60 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bcec2 (???)
+--5701-- REDIR: 0x402a830 (ld-linux-x86-64.so.2:index) redirected to 0x580bcedc (???)
+--5701-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--5701--    object doesn't have a symbol table
+--5701-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+--5701--    object doesn't have a symbol table
+==5701== WARNING: new redirection conflicts with existing -- ignoring it
+--5701--     old: 0x0402aa60 (strlen              ) R-> (0000.0) 0x580bcec2 ???
+--5701--     new: 0x0402aa60 (strlen              ) R-> (2007.0) 0x0484ee30 strlen
+--5701-- REDIR: 0x4027240 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484fcd0 (strcmp)
+--5701-- REDIR: 0x402afc0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853840 (mempcpy)
+--5701-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
+--5701--   Considering /usr/lib/debug/.build-id/69/389d485a9793dbe873f0ea2c93e02efaa9aa3d.debug ..
+--5701--   .. build-id is valid
+==5701== WARNING: new redirection conflicts with existing -- ignoring it
+--5701--     old: 0x0490bce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--5701--     new: 0x0490bce0 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==5701== WARNING: new redirection conflicts with existing -- ignoring it
+--5701--     old: 0x0490bce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--5701--     new: 0x0490bce0 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+==5701== WARNING: new redirection conflicts with existing -- ignoring it
+--5701--     old: 0x0490bce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--5701--     new: 0x0490bce0 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==5701== WARNING: new redirection conflicts with existing -- ignoring it
+--5701--     old: 0x0490bce0 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--5701--     new: 0x0490bce0 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+--5701-- REDIR: 0x490e7a0 (libc.so.6:strnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490ea60 (libc.so.6:strpbrk) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e360 (libc.so.6:strcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x492cd50 (libc.so.6:wcsnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490f750 (libc.so.6:memset) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x492b5c0 (libc.so.6:wcslen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490fc90 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x492b3f0 (libc.so.6:wcschr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e2e0 (libc.so.6:index) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e9e0 (libc.so.6:rindex) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490f620 (libc.so.6:memmove) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+==5701== Preferring higher priority redirection:
+--5701--     old: 0x04a06940 (__memcpy_avx_unalign) R-> (2018.0) 0x04850f90 __memcpy_avx_unaligned_erms
+--5701--     new: 0x04a06940 (__memcpy_avx_unalign) R-> (2018.1) 0x04852880 memmove
+--5701-- REDIR: 0x492b470 (libc.so.6:wcscmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490fa60 (libc.so.6:stpncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x492ba30 (libc.so.6:wmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e8b0 (libc.so.6:strncmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490faf0 (libc.so.6:strcasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e4a0 (libc.so.6:strcspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x492b4f0 (libc.so.6:wcscpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e250 (libc.so.6:strcat) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490fbe0 (libc.so.6:strncasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490f500 (libc.so.6:bcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x49175f0 (libc.so.6:memrchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x4911090 (libc.so.6:strchrnul) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e410 (libc.so.6:strcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490fb90 (libc.so.6:strcasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e720 (libc.so.6:strlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490e950 (libc.so.6:strncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490f9d0 (libc.so.6:stpcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490f470 (libc.so.6:memchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490eb80 (libc.so.6:strspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490f850 (libc.so.6:mempcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x490fb40 (libc.so.6:strncasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x4911000 (libc.so.6:rawmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--5701-- REDIR: 0x4a03790 (libc.so.6:__strrchr_avx2) redirected to 0x484e810 (rindex)
+--5701-- REDIR: 0x49feac0 (libc.so.6:__strcmp_avx2) redirected to 0x484fbd0 (strcmp)
+--5701-- REDIR: 0x490b120 (libc.so.6:malloc) redirected to 0x4848820 (malloc)
+--5701-- REDIR: 0x4a07100 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4852770 (memset)
+--5701-- REDIR: 0x4a03960 (libc.so.6:__strlen_avx2) redirected to 0x484ed10 (strlen)
+--5701-- REDIR: 0x4a06940 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852880 (memmove)
+--5701-- REDIR: 0x4a03580 (libc.so.6:__strchrnul_avx2) redirected to 0x4853330 (strchrnul)
+--5701-- REDIR: 0x490c5a0 (libc.so.6:calloc) redirected to 0x484d9d0 (calloc)
+--5701-- REDIR: 0x4a04e30 (libc.so.6:__strcpy_avx2) redirected to 0x484ee60 (strcpy)
+--5701-- REDIR: 0x4a03db0 (libc.so.6:__strcat_avx2) redirected to 0x484ea20 (strcat)
+--5701-- REDIR: 0x4a06900 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4853440 (mempcpy)
+==5701== Conditional jump or move depends on uninitialised value(s)
+==5701==    at 0x113B22: verifica_method_body (semantics.c:944)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Uninitialised value was created by a heap allocation
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x11542A: retorna_variaveis_parametros (symbol_table.c:299)
+==5701==    by 0x113A71: verifica_method_body (semantics.c:940)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== Invalid write of size 2
+==5701==    at 0x10FC65: verifica_method_body (semantics.c:290)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0178 is 8 bytes inside a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FD32: verifica_method_body (semantics.c:302)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FD66: verifica_method_body (semantics.c:303)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FD96: verifica_method_body (semantics.c:303)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FDF6: verifica_method_body (semantics.c:305)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+--5701-- REDIR: 0x490b460 (libc.so.6:free) redirected to 0x484b210 (free)
+==5701== 
+==5701== HEAP SUMMARY:
+==5701==     in use at exit: 19,756 bytes in 350 blocks
+==5701==   total heap usage: 493 allocs, 143 frees, 24,942 bytes allocated
+==5701== 
+==5701== Searching for pointers to 350 not-freed blocks
+==5701== Checked 108,168 bytes
+==5701== 
+==5701== 1 bytes in 1 blocks are still reachable in loss record 1 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x109535: CriaNo (functions.c:12)
+==5701==    by 0x115CD7: yyparse (jucompiler.y:63)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are still reachable in loss record 2 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B379: yylex (jucompiler.l:144)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are still reachable in loss record 3 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B3F9: yylex (jucompiler.l:144)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are still reachable in loss record 4 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10F425: verifica_array_method_params (semantics.c:183)
+==5701==    by 0x10E9D3: verifica_method_decl (semantics.c:39)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 2 bytes in 1 blocks are indirectly lost in loss record 5 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10F178: check_calls_method_params (semantics.c:135)
+==5701==    by 0x113A5B: verifica_method_body (semantics.c:938)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 6 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BB7A: yylex (jucompiler.l:153)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 7 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BBBE: yylex (jucompiler.l:153)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 8 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C262: yylex (jucompiler.l:161)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 9 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C2A6: yylex (jucompiler.l:161)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 10 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C41C: yylex (jucompiler.l:163)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 11 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C5D6: yylex (jucompiler.l:165)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 12 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C4F9: yylex (jucompiler.l:164)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 13 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BFCB: yylex (jucompiler.l:158)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 14 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C00F: yylex (jucompiler.l:158)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 15 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A11A: yylex (jucompiler.l:123)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 16 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A130: yylex (jucompiler.l:123)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 17 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A16C: yylex (jucompiler.l:123)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 18 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B379: yylex (jucompiler.l:144)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 2 bytes in 1 blocks are definitely lost in loss record 19 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B3F9: yylex (jucompiler.l:144)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 3 bytes in 1 blocks are still reachable in loss record 20 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B3B5: yylex (jucompiler.l:144)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 3 bytes in 1 blocks are still reachable in loss record 21 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10E99B: verifica_method_decl (semantics.c:37)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 3 bytes in 1 blocks are definitely lost in loss record 22 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C460: yylex (jucompiler.l:163)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 3 bytes in 1 blocks are definitely lost in loss record 23 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C61A: yylex (jucompiler.l:165)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 3 bytes in 1 blocks are definitely lost in loss record 24 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C53D: yylex (jucompiler.l:164)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 3 bytes in 1 blocks are definitely lost in loss record 25 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A1B0: yylex (jucompiler.l:123)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 3 bytes in 1 blocks are definitely lost in loss record 26 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B3B5: yylex (jucompiler.l:144)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 3 bytes in 1 blocks are definitely lost in loss record 27 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1141C0: check_ast (semantics.c:1036)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 4 bytes in 1 blocks are definitely lost in loss record 28 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BF8F: yylex (jucompiler.l:158)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 4 bytes in 2 blocks are definitely lost in loss record 29 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A9F7: yylex (jucompiler.l:133)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 4 bytes in 2 blocks are definitely lost in loss record 30 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10AA33: yylex (jucompiler.l:133)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 4 bytes in 2 blocks are definitely lost in loss record 31 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BC57: yylex (jucompiler.l:154)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 5 bytes in 1 blocks are definitely lost in loss record 32 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C59A: yylex (jucompiler.l:165)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 6 bytes in 1 blocks are still reachable in loss record 33 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x1146BE: nova_classe (symbol_table.c:14)
+==5701==    by 0x10E8A2: verifica (semantics.c:16)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 6 bytes in 1 blocks are still reachable in loss record 34 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x1146E5: nova_classe (symbol_table.c:15)
+==5701==    by 0x10E8A2: verifica (semantics.c:16)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 6 bytes in 1 blocks are definitely lost in loss record 35 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BB3E: yylex (jucompiler.l:153)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 6 bytes in 2 blocks are definitely lost in loss record 36 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10AA77: yylex (jucompiler.l:133)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 6 bytes in 2 blocks are definitely lost in loss record 37 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BC9B: yylex (jucompiler.l:154)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 7 bytes in 1 blocks are still reachable in loss record 38 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x114EB4: novo_metodo (symbol_table.c:180)
+==5701==    by 0x10EB1A: verifica_method_decl (semantics.c:59)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 7 bytes in 1 blocks are definitely lost in loss record 39 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C226: yylex (jucompiler.l:161)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 7 bytes in 1 blocks are definitely lost in loss record 40 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C3E0: yylex (jucompiler.l:163)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 7 bytes in 1 blocks are definitely lost in loss record 41 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C4BD: yylex (jucompiler.l:164)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 7 bytes in 1 blocks are definitely lost in loss record 42 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x111021: verifica_method_body (semantics.c:488)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 8 bytes in 1 blocks are still reachable in loss record 43 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10E52B: yyalloc (lex.yy.c:2309)
+==5701==    by 0x10DFE2: yyensure_buffer_stack (lex.yy.c:2007)
+==5701==    by 0x10998B: yylex (lex.yy.c:919)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 8 bytes in 1 blocks are still reachable in loss record 44 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10950B: CriaNo (functions.c:10)
+==5701==    by 0x115CD7: yyparse (jucompiler.y:63)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 8 bytes in 1 blocks are definitely lost in loss record 45 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x113C3B: verifica_method_body (semantics.c:958)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 8 bytes in 3 blocks are definitely lost in loss record 46 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A06A: yylex (jucompiler.l:122)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 9 bytes in 1 blocks are still reachable in loss record 47 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10F2F3: verifica_array_method_params (semantics.c:174)
+==5701==    by 0x10E9D3: verifica_method_decl (semantics.c:39)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 9 bytes in 1 blocks are indirectly lost in loss record 48 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10F131: check_calls_method_params (semantics.c:128)
+==5701==    by 0x113A5B: verifica_method_body (semantics.c:938)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 9 bytes in 3 blocks are definitely lost in loss record 49 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A0AE: yylex (jucompiler.l:122)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 9 bytes in 4 blocks are definitely lost in loss record 50 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C185: yylex (jucompiler.l:160)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 10 bytes in 5 blocks are definitely lost in loss record 51 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10AC91: yylex (jucompiler.l:136)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 10 bytes in 5 blocks are definitely lost in loss record 52 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B533: yylex (jucompiler.l:146)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 10 bytes in 5 blocks are definitely lost in loss record 53 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C383: yylex (jucompiler.l:162)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 11 bytes in 1 blocks are still reachable in loss record 54 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10F073: verifica_method_params (semantics.c:112)
+==5701==    by 0x10E9B7: verifica_method_decl (semantics.c:38)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 11 bytes in 1 blocks are definitely lost in loss record 55 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10F073: verifica_method_params (semantics.c:112)
+==5701==    by 0x1141A0: check_ast (semantics.c:1035)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 11 bytes in 5 blocks are definitely lost in loss record 56 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10ACCD: yylex (jucompiler.l:136)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 11 bytes in 5 blocks are definitely lost in loss record 57 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B56F: yylex (jucompiler.l:146)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 12 bytes in 3 blocks are definitely lost in loss record 58 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A018: yylex (jucompiler.l:122)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 12 bytes in 3 blocks are definitely lost in loss record 59 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10A02E: yylex (jucompiler.l:122)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 12 bytes in 4 blocks are definitely lost in loss record 60 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C1C9: yylex (jucompiler.l:160)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 12 bytes in 6 blocks are definitely lost in loss record 61 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C0A8: yylex (jucompiler.l:159)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 12 bytes in 6 blocks are definitely lost in loss record 62 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C0EC: yylex (jucompiler.l:159)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 13 bytes in 1 blocks are still reachable in loss record 63 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10EA93: verifica_method_decl (semantics.c:50)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 13 bytes in 1 blocks are definitely lost in loss record 64 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x1141EE: check_ast (semantics.c:1038)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 14 bytes in 1 blocks are definitely lost in loss record 65 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x113CEE: verifica_method_body (semantics.c:966)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 15 bytes in 5 blocks are definitely lost in loss record 66 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10AD11: yylex (jucompiler.l:136)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 15 bytes in 5 blocks are definitely lost in loss record 67 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B5B3: yylex (jucompiler.l:146)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 15 bytes in 5 blocks are definitely lost in loss record 68 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C33F: yylex (jucompiler.l:162)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 16 bytes in 2 blocks are definitely lost in loss record 69 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10BC1B: yylex (jucompiler.l:154)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 18 bytes in 2 blocks are definitely lost in loss record 70 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x110E24: verifica_method_body (semantics.c:470)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 18 bytes in 2 blocks are definitely lost in loss record 71 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FA3F: coloca_id (semantics.c:245)
+==5701==    by 0x110E48: verifica_method_body (semantics.c:471)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 19 bytes in 2 blocks are definitely lost in loss record 72 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x115329: procura_tabela (symbol_table.c:281)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 24 bytes in 12 blocks are definitely lost in loss record 73 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10ABB1: yylex (jucompiler.l:135)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 24 bytes in 12 blocks are definitely lost in loss record 74 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B456: yylex (jucompiler.l:145)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 24 bytes in 12 blocks are definitely lost in loss record 75 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B610: yylex (jucompiler.l:147)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 26 bytes in 12 blocks are definitely lost in loss record 76 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10ABED: yylex (jucompiler.l:135)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 26 bytes in 12 blocks are definitely lost in loss record 77 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B492: yylex (jucompiler.l:145)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 27 bytes in 3 blocks are definitely lost in loss record 78 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 29 bytes in 12 blocks are definitely lost in loss record 79 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B64C: yylex (jucompiler.l:147)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 31 bytes in 3 blocks are definitely lost in loss record 80 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x115329: procura_tabela (symbol_table.c:281)
+==5701==    by 0x110E24: verifica_method_body (semantics.c:470)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 31 bytes in 3 blocks are definitely lost in loss record 81 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x115329: procura_tabela (symbol_table.c:281)
+==5701==    by 0x10FA3F: coloca_id (semantics.c:245)
+==5701==    by 0x110E48: verifica_method_body (semantics.c:471)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 35 bytes in 5 blocks are definitely lost in loss record 82 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C303: yylex (jucompiler.l:162)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 36 bytes in 12 blocks are definitely lost in loss record 83 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10AC34: yylex (jucompiler.l:135)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 36 bytes in 12 blocks are definitely lost in loss record 84 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B4D6: yylex (jucompiler.l:145)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 36 bytes in 12 blocks are definitely lost in loss record 85 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10B690: yylex (jucompiler.l:147)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 37 bytes in 16 blocks are definitely lost in loss record 86 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C88B: yylex (jucompiler.l:168)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 40 bytes in 1 blocks are still reachable in loss record 87 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x114888: insere (symbol_table.c:43)
+==5701==    by 0x10EB02: verifica_method_decl (semantics.c:57)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 40 bytes in 1 blocks are still reachable in loss record 88 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x114DF8: insere_elemento (symbol_table.c:158)
+==5701==    by 0x114F68: novo_metodo (symbol_table.c:200)
+==5701==    by 0x10EB1A: verifica_method_decl (semantics.c:59)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 40 bytes in 1 blocks are still reachable in loss record 89 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x114888: insere (symbol_table.c:43)
+==5701==    by 0x10EBA2: verifica_method_decl (semantics.c:66)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 40 bytes in 1 blocks are still reachable in loss record 90 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x114888: insere (symbol_table.c:43)
+==5701==    by 0x110D33: verifica_method_body (semantics.c:458)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 42 bytes in 6 blocks are definitely lost in loss record 91 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x111021: verifica_method_body (semantics.c:488)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 47 bytes in 16 blocks are definitely lost in loss record 92 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C8CF: yylex (jucompiler.l:168)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 56 bytes in 1 blocks are still reachable in loss record 93 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x1146A1: nova_classe (symbol_table.c:13)
+==5701==    by 0x10E8A2: verifica (semantics.c:16)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 56 bytes in 1 blocks are still reachable in loss record 94 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x114EA1: novo_metodo (symbol_table.c:179)
+==5701==    by 0x10EB1A: verifica_method_decl (semantics.c:59)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 64 bytes in 1 blocks are still reachable in loss record 95 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10E52B: yyalloc (lex.yy.c:2309)
+==5701==    by 0x10DB51: yy_create_buffer (lex.yy.c:1847)
+==5701==    by 0x1099B5: yylex (lex.yy.c:921)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 65 bytes in 16 blocks are definitely lost in loss record 96 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C84F: yylex (jucompiler.l:168)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 68 bytes in 4 blocks are definitely lost in loss record 97 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C149: yylex (jucompiler.l:160)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 79 bytes in 7 blocks are definitely lost in loss record 98 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x115329: procura_tabela (symbol_table.c:281)
+==5701==    by 0x110E24: verifica_method_body (semantics.c:470)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 79 bytes in 7 blocks are definitely lost in loss record 99 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x115329: procura_tabela (symbol_table.c:281)
+==5701==    by 0x10FA3F: coloca_id (semantics.c:245)
+==5701==    by 0x110E48: verifica_method_body (semantics.c:471)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 80 bytes in 1 blocks are still reachable in loss record 100 of 106
+==5701==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x1094EF: CriaNo (functions.c:9)
+==5701==    by 0x115CD7: yyparse (jucompiler.y:63)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 102 bytes in 6 blocks are definitely lost in loss record 101 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x10C06C: yylex (jucompiler.l:159)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== 104 bytes in 1 blocks are definitely lost in loss record 102 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10EA05: verifica_method_decl (semantics.c:41)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 240 bytes in 1 blocks are still reachable in loss record 103 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F280: verifica_array_method_params (semantics.c:167)
+==5701==    by 0x10E9D3: verifica_method_decl (semantics.c:39)
+==5701==    by 0x10E8E4: verifica (semantics.c:19)
+==5701==    by 0x10E942: verifica (semantics.c:26)
+==5701==    by 0x10E700: main (jucompiler.l:215)
+==5701== 
+==5701== 411 (400 direct, 11 indirect) bytes in 1 blocks are definitely lost in loss record 104 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F0C4: check_calls_method_params (semantics.c:120)
+==5701==    by 0x113A5B: verifica_method_body (semantics.c:938)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 801 bytes in 1 blocks are definitely lost in loss record 105 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x11542A: retorna_variaveis_parametros (symbol_table.c:299)
+==5701==    by 0x113A71: verifica_method_body (semantics.c:940)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 16,386 bytes in 1 blocks are still reachable in loss record 106 of 106
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10E52B: yyalloc (lex.yy.c:2309)
+==5701==    by 0x10DB89: yy_create_buffer (lex.yy.c:1856)
+==5701==    by 0x1099B5: yylex (lex.yy.c:921)
+==5701==    by 0x115A93: yyparse (y.tab.c:1368)
+==5701==    by 0x10E6E2: main (jucompiler.l:213)
+==5701== 
+==5701== LEAK SUMMARY:
+==5701==    definitely lost: 2,622 bytes in 324 blocks
+==5701==    indirectly lost: 11 bytes in 2 blocks
+==5701==      possibly lost: 0 bytes in 0 blocks
+==5701==    still reachable: 17,123 bytes in 24 blocks
+==5701==         suppressed: 0 bytes in 0 blocks
+==5701== 
+==5701== ERROR SUMMARY: 87 errors from 86 contexts (suppressed: 0 from 0)
+==5701== 
+==5701== 1 errors in context 1 of 86:
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FDF6: verifica_method_body (semantics.c:305)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 
+==5701== 1 errors in context 2 of 86:
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FD96: verifica_method_body (semantics.c:303)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 
+==5701== 1 errors in context 3 of 86:
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FD66: verifica_method_body (semantics.c:303)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 
+==5701== 1 errors in context 4 of 86:
+==5701== Invalid read of size 1
+==5701==    at 0x484FBE8: strcmp (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x10F4E5: transforma_type (semantics.c:192)
+==5701==    by 0x10FD32: verifica_method_body (semantics.c:302)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0179 is 0 bytes after a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 
+==5701== 1 errors in context 5 of 86:
+==5701== Conditional jump or move depends on uninitialised value(s)
+==5701==    at 0x113B22: verifica_method_body (semantics.c:944)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Uninitialised value was created by a heap allocation
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x11542A: retorna_variaveis_parametros (symbol_table.c:299)
+==5701==    by 0x113A71: verifica_method_body (semantics.c:940)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== 
+==5701== 2 errors in context 6 of 86:
+==5701== Invalid write of size 2
+==5701==    at 0x10FC65: verifica_method_body (semantics.c:290)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701==  Address 0x4aa0178 is 8 bytes inside a block of size 9 alloc'd
+==5701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5701==    by 0x490E60E: strdup (strdup.c:42)
+==5701==    by 0x1153FA: procura_tabela (symbol_table.c:293)
+==5701==    by 0x10FBD4: verifica_method_body (semantics.c:285)
+==5701==    by 0x11144A: verifica_method_body (semantics.c:518)
+==5701==    by 0x114241: check_ast (semantics.c:1044)
+==5701==    by 0x11425B: check_ast (semantics.c:1049)
+==5701==    by 0x10E70F: main (jucompiler.l:216)
+==5701== 
+==5701== ERROR SUMMARY: 87 errors from 86 contexts (suppressed: 0 from 0)

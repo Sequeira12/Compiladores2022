@@ -1,240 +1,329 @@
-Line 3, col 9: Incompatible type void in return statement
-Line 11, col 16: Incompatible type double in return statement
-Line 16, col 14: Operator .length cannot be applied to type int
-Line 18, col 13: Operator Integer.parseInt cannot be applied to types int, int
-Line 19, col 13: Incompatible type undef in if statement
-Line 19, col 18: Operator * cannot be applied to types boolean, boolean
-Line 19, col 13: Operator + cannot be applied to types int, undef
-Line 23, col 15: Operator + cannot be applied to types undef, boolean
-Line 23, col 11: Operator = cannot be applied to types int, undef
-Line 24, col 15: Operator + cannot be applied to types int, undef
-Line 24, col 11: Operator = cannot be applied to types int, undef
-Line 25, col 15: Operator + cannot be applied to types undef, int
-Line 25, col 11: Operator = cannot be applied to types int, undef
-Line 26, col 13: Cannot find symbol b
-Line 26, col 17: Cannot find symbol c
-Line 26, col 15: Operator * cannot be applied to types undef, undef
-Line 26, col 11: Operator = cannot be applied to types int, undef
-Line 36, col 15: Operator = cannot be applied to types double, boolean
-Line 36, col 11: Operator = cannot be applied to types int, double
-Line 37, col 13: Number 123123122121 out of bounds
-Line 39, col 15: Operator = cannot be applied to types double, boolean
-Line 39, col 11: Operator = cannot be applied to types int, double
-Line 41, col 9: Cannot find symbol factorial(int,int,int)
-Line 48, col 16: Incompatible type int in return statement
-Line 49, col 16: Incompatible type boolean in return statement
-Line 50, col 16: Incompatible type double in return statement
-Line 51, col 16: Incompatible type String[] in return statement
-Line 52, col 16: Incompatible type void in return statement
-===== Class Alguns_Erros Symbol Table =====
-main1	()	int
-main2	()	double
-main3	()	int
-cenas	(String[])	int
-main	(String[])	void
-ola	(String[])	void
+Line 4, col 24: Cannot find symbol a
+Line 4, col 19: Cannot find symbol func(undef)
+Line 4, col 18: Operator none cannot be applied to type undef
+Line 4, col 16: Operator * cannot be applied to types int, undef
+Line 4, col 12: Operator = cannot be applied to types int, undef
+Line 5, col 24: Cannot find symbol a
+Line 5, col 19: Cannot find symbol func(undef)
+Line 5, col 18: Operator + cannot be applied to type undef
+Line 5, col 16: Operator * cannot be applied to types int, undef
+Line 5, col 12: Operator = cannot be applied to types int, undef
+Line 6, col 18: Operator none cannot be applied to type int
+Line 7, col 18: Operator + cannot be applied to type int
+Line 8, col 19: Operator Integer.parseInt cannot be applied to types int, int
+Line 8, col 18: Operator none cannot be applied to type int
+Line 9, col 19: Operator Integer.parseInt cannot be applied to types int, int
+Line 9, col 18: Operator + cannot be applied to type int
+Line 10, col 18: Operator none cannot be applied to type int
+Line 11, col 18: Operator + cannot be applied to type int
+Line 12, col 19: Operator + cannot be applied to type int
+Line 12, col 18: Operator none cannot be applied to type int
+Line 13, col 24: Operator none cannot be applied to type int
+Line 13, col 23: Operator + cannot be applied to type int
+Line 13, col 22: Operator none cannot be applied to type int
+Line 13, col 21: Operator + cannot be applied to type int
+Line 13, col 20: Operator none cannot be applied to type int
+Line 13, col 19: Operator + cannot be applied to type int
+Line 13, col 18: Operator none cannot be applied to type int
+Line 18, col 16: Incompatible type double in return statement
+Line 19, col 16: Incompatible type boolean in return statement
+Line 29, col 29: Operator == cannot be applied to types boolean, int
+Line 30, col 33: Cannot find symbol args
+Line 30, col 16: Operator Integer.parseInt cannot be applied to types undef, int
+Line 31, col 33: Cannot find symbol args
+Line 31, col 38: Cannot find symbol args
+Line 31, col 16: Operator Integer.parseInt cannot be applied to types undef, undef
+Line 32, col 16: Cannot find symbol args
+Line 34, col 16: Incompatible type int in return statement
+Line 35, col 16: Operator none cannot be applied to type int
+Line 36, col 16: Operator + cannot be applied to type int
+Line 38, col 16: Cannot find symbol NaoTaFacil()
+Line 38, col 16: Incompatible type undef in return statement
+Line 39, col 17: Cannot find symbol NaoTaFacil()
+Line 39, col 16: Operator none cannot be applied to type undef
+Line 40, col 17: Cannot find symbol NaoTaFacil()
+Line 40, col 16: Operator + cannot be applied to type undef
+Line 41, col 17: Cannot find symbol NaoTaFacil()
+Line 42, col 16: Incompatible type double in return statement
+Line 43, col 16: Operator none cannot be applied to type double
+Line 44, col 16: Operator + cannot be applied to type double
+Line 46, col 18: Operator = cannot be applied to types int, boolean
+Line 47, col 16: Operator none cannot be applied to type int
+Line 48, col 16: Operator + cannot be applied to type int
+===== Class Ta_Puxado Symbol Table =====
+HojeNaoDa	(int)	int
+NaoTaFacil	(int)	boolean
+MyBad	(int)	double
 
-===== Method main1() Symbol Table =====
+===== Method HojeNaoDa(int) Symbol Table =====
 return		int
-
-===== Method main2() Symbol Table =====
-return		double
-a		int
-
-===== Method main3() Symbol Table =====
-return		int
-a		double
-
-===== Method cenas(String[]) Symbol Table =====
-return		int
-args		String[]	param
-x		int
-a		int
-xd		double
-
-===== Method main(String[]) Symbol Table =====
-return		void
-args		String[]	param
+id		int	param
 i		int
-i2		int
 d		double
 b		boolean
-x		int
 
-===== Method ola(String[]) Symbol Table =====
-return		void
-args		String[]	param
-a		int
-b		boolean
-c		double
+===== Method NaoTaFacil(int) Symbol Table =====
+return		boolean
+id		int	param
+
+===== Method MyBad(int) Symbol Table =====
+return		double
+id		int	param
 
 Program
-..Id(Alguns_Erros)
+..Id(Ta_Puxado)
 ..MethodDecl
 ....MethodHeader
 ......Int
-......Id(main1)
-......MethodParams
-....MethodBody
-......Return
-..MethodDecl
-....MethodHeader
-......Double
-......Id(main2)
-......MethodParams
-....MethodBody
-......VarDecl
-........Int
-........Id(a)
-......Return
-........Id(a) - int
-..MethodDecl
-....MethodHeader
-......Int
-......Id(main3)
-......MethodParams
-....MethodBody
-......VarDecl
-........Double
-........Id(a)
-......Return
-........Id(a) - double
-..MethodDecl
-....MethodHeader
-......Int
-......Id(cenas)
+......Id(HojeNaoDa)
 ......MethodParams
 ........ParamDecl
-..........StringArray
-..........Id(args)
+..........Int
+..........Id(id)
 ....MethodBody
-......Call - int
-........Id(cenas) - (String[])
-........Id(args) - String[]
-......VarDecl
-........Int
-........Id(x)
 ......Assign - int
-........Id(x) - int
-........Length - int
-..........Id(x) - int
-......Assign - int
-........Id(x) - int
-........ParseArgs - int
-..........Id(args) - String[]
-..........DecLit(0) - int
-......Assign - int
-........Id(x) - int
-........ParseArgs - int
-..........Id(x) - int
-..........DecLit(0) - int
-......If
-........Add - undef
-..........DecLit(2) - int
-..........Mul - undef
-............BoolLit(true) - boolean
-............BoolLit(true) - boolean
-........Block
-........Block
-......VarDecl
-........Int
-........Id(a)
-......Assign - int
-........Id(a) - int
-........Add - undef
-..........Id(b) - undef
-..........BoolLit(true) - boolean
-......Assign - int
-........Id(a) - int
-........Add - undef
-..........DecLit(1) - int
-..........Id(b) - undef
-......Assign - int
-........Id(a) - int
-........Add - undef
-..........Id(b) - undef
-..........DecLit(1) - int
-......Assign - int
-........Id(a) - int
+........Id(id) - int
 ........Mul - undef
-..........Id(b) - undef
-..........Id(c) - undef
-......VarDecl
-........Double
-........Id(xd)
-......Assign - double
-........Id(xd) - double
-........Id(a) - int
-..MethodDecl
-....MethodHeader
-......Void
-......Id(main)
-......MethodParams
-........ParamDecl
-..........StringArray
-..........Id(args)
-....MethodBody
+..........DecLit(1) - int
+..........Minus - undef
+............Call - undef
+..............Id(func) - undef
+..............Id(a) - undef
+......Assign - int
+........Id(id) - int
+........Mul - undef
+..........DecLit(1) - int
+..........Plus - undef
+............Call - undef
+..............Id(func) - undef
+..............Id(a) - undef
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Minus - int
+............DecLit(1) - int
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Plus - int
+............DecLit(1) - int
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Minus - int
+............ParseArgs - int
+..............Id(id) - int
+..............DecLit(1) - int
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Plus - int
+............ParseArgs - int
+..............Id(id) - int
+..............DecLit(1) - int
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Minus - int
+............Length - int
+..............Id(id) - int
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Plus - int
+............Length - int
+..............Id(id) - int
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Minus - int
+............Plus - int
+..............DecLit(1) - int
+......Assign - int
+........Id(id) - int
+........Mul - int
+..........DecLit(1) - int
+..........Minus - int
+............Plus - int
+..............Minus - int
+................Plus - int
+..................Minus - int
+....................Plus - int
+......................Minus - int
+........................DecLit(1) - int
 ......VarDecl
 ........Int
 ........Id(i)
-......VarDecl
-........Int
-........Id(i2)
 ......VarDecl
 ........Double
 ........Id(d)
 ......VarDecl
 ........Bool
 ........Id(b)
-......Assign - int
-........Id(i) - int
-........Assign - double
-..........Id(d) - double
-..........Id(b) - boolean
-......Assign - int
-........Id(i) - int
-........DecLit(123123122121) - int
-......VarDecl
-........Int
-........Id(x)
-......Assign - int
-........Id(i) - int
-........Assign - double
-..........Id(d) - double
-..........Id(b) - boolean
 ......Return
-......Call - undef
-........Id(factorial) - undef
 ........Id(i) - int
-........Id(i) - int
-........Id(i) - int
-..MethodDecl
-....MethodHeader
-......Void
-......Id(ola)
-......MethodParams
-........ParamDecl
-..........StringArray
-..........Id(args)
-....MethodBody
-......VarDecl
-........Int
-........Id(a)
-......VarDecl
-........Bool
-........Id(b)
-......VarDecl
-........Double
-........Id(c)
 ......Return
-........Id(a) - int
+........Id(d) - double
 ......Return
 ........Id(b) - boolean
 ......Return
-........Id(c) - double
+........Add - int
+..........Id(i) - int
+..........Id(i) - int
 ......Return
-........Id(args) - String[]
+........Sub - int
+..........Id(i) - int
+..........Id(i) - int
 ......Return
-........Call - void
-..........Id(ola) - (String[])
-..........Id(args) - String[]
+........Mul - int
+..........Id(i) - int
+..........Id(i) - int
+......Return
+........Div - int
+..........Id(i) - int
+..........Id(i) - int
+......Return
+........Mod - int
+..........Id(i) - int
+..........DecLit(1) - int
+......Return
+........Lshift - int
+..........Id(i) - int
+..........Id(i) - int
+......Return
+........Rshift - int
+..........Id(i) - int
+..........Id(i) - int
+......Return
+........Lt - boolean
+..........Id(i) - int
+..........Id(i) - int
+......Return
+........Eq - boolean
+..........Id(i) - int
+..........DecLit(1) - int
+......Return
+........Eq - boolean
+..........Lt - boolean
+............Sub - int
+..............Add - int
+................Id(i) - int
+................Div - int
+..................Mod - int
+....................Mul - int
+......................Id(i) - int
+......................Id(i) - int
+....................Id(i) - int
+..................Id(i) - int
+..............Id(i) - int
+............Id(i) - int
+..........Rshift - int
+............Lshift
+..............Id(i) - int
+..............Id(i) - int
+............Id(i) - int
+......Return
+........ParseArgs - int
+..........Id(args) - undef
+..........Id(i) - int
+......Return
+........ParseArgs - int
+..........Id(args) - undef
+..........Id(args) - undef
+......Return
+........Length - int
+..........Id(args) - undef
+......Return
+........Length - int
+..........Id(i) - int
+......Return
+........Call - int
+..........Id(HojeNaoDa) - (int)
+..........Id(id) - int
+......Return
+........Minus - int
+..........Call - int
+............Id(HojeNaoDa) - (int)
+............Id(id) - int
+......Return
+........Plus - int
+..........Call - int
+............Id(HojeNaoDa) - (int)
+............Id(id) - int
+......Return
+........Not - boolean
+..........Call - int
+............Id(HojeNaoDa) - (int)
+............Id(id) - int
+......Return
+........Call - undef
+..........Id(NaoTaFacil) - undef
+......Return
+........Minus - undef
+..........Call - undef
+............Id(NaoTaFacil) - undef
+......Return
+........Plus - undef
+..........Call - undef
+............Id(NaoTaFacil) - undef
+......Return
+........Not - boolean
+..........Call - undef
+............Id(NaoTaFacil) - undef
+......Return
+........Call - double
+..........Id(MyBad) - (int)
+..........DecLit(1) - int
+......Return
+........Minus - double
+..........Call - double
+............Id(MyBad) - (int)
+............DecLit(1) - int
+......Return
+........Plus - double
+..........Call - double
+............Id(MyBad) - (int)
+............DecLit(1) - int
+......Return
+........Not - boolean
+..........Call - double
+............Id(MyBad) - (int)
+............DecLit(1) - int
+......Return
+........Assign - int
+..........Id(i) - int
+..........Id(b) - boolean
+......Return
+........Minus - int
+..........Id(i) - int
+......Return
+........Plus - int
+..........Id(i) - int
+......Return
+........Not - boolean
+..........Id(i) - int
+..MethodDecl
+....MethodHeader
+......Bool
+......Id(NaoTaFacil)
+......MethodParams
+........ParamDecl
+..........Int
+..........Id(id)
+....MethodBody
+..MethodDecl
+....MethodHeader
+......Double
+......Id(MyBad)
+......MethodParams
+........ParamDecl
+..........Int
+..........Id(id)
+....MethodBody
