@@ -451,7 +451,7 @@ void verifica_method_body(char * tab, no node){
                 strcpy(node->filho->id," - boolean");
             }
             
-            if(strcmp(transforma_type(node->filho->id),"boolean")!=0){
+            if(strcmp(transforma_type(node->filho->id),"boolean")!=0 && strcmp(node->filho->s_type,"Call")!=0){
             //printf("%s\n", node->filho->s_type);
                 printf("Line %s, col %s: Incompatible type %s in if statement\n",node->filho->line,
                 node->filho->col,transforma_type(node->filho->id));
@@ -486,11 +486,14 @@ void verifica_method_body(char * tab, no node){
             if(strcmp(node->valor,"_")==0){
                 printf("Line %s, col %s: Symbssol _ is reserved\n",node->line,node->col);
             }  
+          
             if(node->pai){
+                
             if(strcmp(transforma_type(node->id),"undef")==0 && (strcmp(node->pai->s_type,"Length")==0 || strcmp(node->pai->s_type,"ParseArgs")==0)){
                 printf("Line %s, col %s: Cannot find symbol %s\n",node->line,node->col,node->valor);
             }
-            } 
+            }
+          
         }
         if(strcmp(node->s_type,"DecLit")==0 || strcmp(node->s_type,"Length")==0 || strcmp(node->s_type,"ParseArgs")==0) {
             node->id=(char*)strdup(" - int");}
@@ -598,6 +601,14 @@ void verifica_method_body(char * tab, no node){
         if(strcmp(node->s_type, "Assign")==0){
             tabela tabe = procura_tab(tab);
 
+            if(node->filho){
+                if(strcmp(node->filho->s_type,"Id")==0){
+                    node->filho->id = coloca_id(node->filho,tab);
+                    if(strcmp(node->filho->id," - undef")==0){
+                         printf("Line %s, col %s: Cannot find symbol %s\n",node->filho->line,node->filho->col,node->filho->valor);
+                }
+                   }
+            }
             
            
             
@@ -1021,6 +1032,12 @@ void verifica_method_body(char * tab, no node){
                 node->id = n_string;
                 node->filho->id = n_string;
             }
+            
+            if(node->pai && strcmp(node->pai->s_type, "If")==0 && strcmp(node->id," - boolean")!=0 && strcmp(node->pai->filho->s_type, node->s_type) == 0){
+               
+                printf("Line %s, col %s: Incompatible type %s in if statement\n",node->line,
+                node->col,transforma_type(node->id));
+            }
             tabela noo = procura_tab(tab);
            // printf("%s %s\n", transforma_type(node->id), noo->tab->s_type);
             if(node->pai && strcmp(node->pai->s_type, "Return")==0 && (strcmp(transforma_type(node->id), noo->tab->s_type)!=0
@@ -1028,6 +1045,7 @@ void verifica_method_body(char * tab, no node){
                 printf("Line %s, col %s: Incompatible type %s in return statement\n",node->line,
                 node->col,transforma_type(node->id));
             }
+
            //   AMBIGUIDADE FUNCIONA MAS FODE O RESTO
              if(node->filho){
                /* printf("%s\n", node->filho->valor);
