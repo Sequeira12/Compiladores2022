@@ -5,10 +5,12 @@ class ThatsWhatSheSaid{
       double b;
       a = b;
       b = a = b;
+      x = 2;
       a = a*b;
       a = a==b;
       return a;
   }
+  
   public static int main(String[] args) {
         int argument;
         double iterator;
@@ -38,6 +40,9 @@ class ThatsWhatSheSaid{
   }
   public static double two() {
     return 1;
+    t = 2;
+    int t;
     return 1.0;
   }
+  public static int x;
 }

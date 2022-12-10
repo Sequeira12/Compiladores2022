@@ -180,7 +180,7 @@ char* procura_tabela(no node, char * tab){
     aux = procura_tab(tab);
     if (aux) {
         for (aux_node = aux->tab; aux_node; aux_node = aux_node->next) {
-            if (strcmp(aux_node->valor, nome) == 0) {
+            if (strcmp(aux_node->valor, nome) == 0 ) {
                 strcat(string, aux_node->s_type);
                 return strdup(string);
             }

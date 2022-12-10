@@ -2,7 +2,7 @@ Line 3, col 9: Incompatible type void in return statement
 Line 11, col 16: Incompatible type double in return statement
 Line 16, col 14: Operator .length cannot be applied to type int
 Line 18, col 13: Operator Integer.parseInt cannot be applied to types int, int
-Line 19, col 13: Incompatible type undef in if statement
+Line 19, col 13: Incompatible type none in if statement
 Line 19, col 18: Operator * cannot be applied to types boolean, boolean
 Line 19, col 13: Operator + cannot be applied to types int, undef
 Line 23, col 13: Cannot find symbol b

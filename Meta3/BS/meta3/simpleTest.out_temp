@@ -1,41 +1,44 @@
 Line 6, col 9: Operator = cannot be applied to types int, double
 Line 7, col 13: Operator = cannot be applied to types int, double
-Line 8, col 9: Operator = cannot be applied to types int, double
-Line 9, col 9: Operator = cannot be applied to types int, boolean
-Line 15, col 21: Operator * cannot be applied to types String[], String[]
-Line 15, col 28: Operator + cannot be applied to types undef, String[]
-Line 15, col 43: Operator && cannot be applied to types String[], String[]
-Line 15, col 35: Operator || cannot be applied to types undef, boolean
-Line 15, col 14: Operator = cannot be applied to types String[], boolean
-Line 16, col 21: Operator * cannot be applied to types String[], int
-Line 16, col 25: Operator + cannot be applied to types undef, int
-Line 16, col 46: Operator && cannot be applied to types boolean, String[]
-Line 16, col 38: Operator || cannot be applied to types undef, boolean
-Line 16, col 14: Operator = cannot be applied to types String[], boolean
-Line 17, col 25: Operator >= cannot be applied to types boolean, int
-Line 17, col 21: Operator < cannot be applied to types String[], int
-Line 17, col 47: Operator != cannot be applied to types boolean, String[]
+Line 9, col 9: Operator = cannot be applied to types int, double
+Line 10, col 9: Operator = cannot be applied to types int, boolean
+Line 17, col 21: Operator * cannot be applied to types String[], String[]
+Line 17, col 28: Operator + cannot be applied to types undef, String[]
+Line 17, col 43: Operator && cannot be applied to types String[], String[]
+Line 17, col 35: Operator || cannot be applied to types undef, boolean
 Line 17, col 14: Operator = cannot be applied to types String[], boolean
-Line 18, col 21: Operator < cannot be applied to types boolean, int
-Line 18, col 33: Operator == cannot be applied to types String[], double
+Line 18, col 21: Operator * cannot be applied to types String[], int
+Line 18, col 25: Operator + cannot be applied to types undef, int
+Line 18, col 46: Operator && cannot be applied to types boolean, String[]
+Line 18, col 38: Operator || cannot be applied to types undef, boolean
 Line 18, col 14: Operator = cannot be applied to types String[], boolean
-Line 19, col 21: Operator && cannot be applied to types String[], String[]
-Line 19, col 29: Operator || cannot be applied to types boolean, String[]
+Line 19, col 25: Operator >= cannot be applied to types boolean, int
+Line 19, col 21: Operator < cannot be applied to types String[], int
+Line 19, col 47: Operator != cannot be applied to types boolean, String[]
 Line 19, col 14: Operator = cannot be applied to types String[], boolean
-Line 20, col 14: Operator = cannot be applied to types String[], String[]
-Line 21, col 18: Operator = cannot be applied to types int, double
+Line 20, col 21: Operator < cannot be applied to types boolean, int
+Line 20, col 33: Operator == cannot be applied to types String[], double
+Line 20, col 14: Operator = cannot be applied to types String[], boolean
+Line 21, col 21: Operator && cannot be applied to types String[], String[]
+Line 21, col 29: Operator || cannot be applied to types boolean, String[]
+Line 21, col 14: Operator = cannot be applied to types String[], boolean
+Line 22, col 14: Operator = cannot be applied to types String[], String[]
 Line 23, col 18: Operator = cannot be applied to types int, double
-Line 30, col 18: Operator > cannot be applied to types String[], int
-Line 31, col 16: Cannot find symbol main(int)
-Line 31, col 16: Incompatible type undef in return statement
-Line 32, col 16: Incompatible type String[] in return statement
-Line 33, col 9: Incompatible type void in return statement
-Line 37, col 12: Incompatible type double in return statement
+Line 25, col 18: Operator = cannot be applied to types int, double
+Line 32, col 18: Operator > cannot be applied to types String[], int
+Line 33, col 16: Cannot find symbol main(int)
+Line 33, col 16: Incompatible type undef in return statement
+Line 34, col 16: Incompatible type String[] in return statement
+Line 35, col 9: Incompatible type void in return statement
+Line 39, col 12: Incompatible type double in return statement
+Line 43, col 5: Cannot find symbol t
+Line 43, col 7: Operator = cannot be applied to types undef, int
 ===== Class ThatsWhatSheSaid Symbol Table =====
 main2	()	double
 main	(String[])	int
 one	()	int
 two	()	double
+x		int
 
 ===== Method main2() Symbol Table =====
 return		double
@@ -53,6 +56,7 @@ return		int
 
 ===== Method two() Symbol Table =====
 return		double
+t		int
 
 Program
 ..Id(ThatsWhatSheSaid)
@@ -76,6 +80,9 @@ Program
 ........Assign - int
 ..........Id(a) - int
 ..........Id(b) - double
+......Assign - int
+........Id(x) - int
+........DecLit(2) - int
 ......Assign - int
 ........Id(a) - int
 ........Mul - double
@@ -255,5 +262,14 @@ Program
 ....MethodBody
 ......Return
 ........DecLit(1) - int
+......Assign - undef
+........Id(t) - undef
+........DecLit(2) - int
+......VarDecl
+........Int
+........Id(t)
 ......Return
 ........RealLit(1.0) - double
+..FieldDecl
+....Int
+....Id(x)

@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
 #include "symbol_table.h"
 #include "semantics.h"
 
@@ -13,8 +12,8 @@ void nova_classe(char * valor){
     tabela_simbolos= calloc(1, sizeof(table));
     tabela_simbolos->type = (char*)calloc((strlen("Class")+1), sizeof(char));
     tabela_simbolos->nome = (char*)calloc((strlen(valor)+1), sizeof(char));
-    strcpy(tabela_simbolos->type, "Class");
-    strcpy(tabela_simbolos->nome, valor);
+    tabela_simbolos->type = (char*)strdup("Class");
+    tabela_simbolos->nome = (char*)strdup(valor);
     tabela_simbolos->array_params=NULL;
 }
 
@@ -36,7 +35,6 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
     char * valor = node->irmao->valor;
    
     if(strcmp(valor,"_")==0){
-        //printf("%s\n", node->pai->col);
         printf("Line %s, col %s: Symbol _ is reserved\n",node->pai->line,node->pai->col);
         return;
     }
@@ -45,28 +43,24 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
     no_da_tabela->s_type=type;
     no_da_tabela->next=NULL;
     if (param_types) {
-        no_da_tabela->param_types = param_types;
-                //printf("%s\n", param_types);
+        no_da_tabela->param_types = (char*)strdup(param_types);
     }
     else {
-        no_da_tabela->param_types = "";
+        no_da_tabela->param_types = (char*)strdup("");
     }
     if (param) {
-               // printf("%s\n", param);
-        no_da_tabela->param = param;
+        no_da_tabela->param = (char*)strdup(param);
     }
     else {
-        no_da_tabela->param = "";
+        no_da_tabela->param = (char*)strdup("");
     }
     tabela new = NULL;
 
     if(strcmp(tabela_t, "Class")==0) new=tabela_simbolos;
     else new=procura_tab(tabela_t);
-   // if(strcmp(node->id,"_")==0){
-   //     printf("NTROU\n");
-   // }
+  
     if(new->tab){// se a tabela ja tem elementos
-       //printf("inserir->%s %s\n", valor,new->nome);strcmp(t->s_type, node->s_type)==0 &&
+       
         node_t t=new->tab;
         for(; t->next; t=t->next){//compara até ao penultimo simbolo da tabela
             if(strcmp(t->valor,valor)==0 && 
@@ -84,7 +78,7 @@ void insere(no node, char * param_types, char * param, char * tabela_t){
         //compara com o ultimo simbolo da tabela
        if(strcmp(t->valor,valor)==0 && 
             (strcmp(node->pai->s_type,"VarDecl")==0 || ((strcmp(node->pai->s_type,"FieldDecl")==0) && 
-            strcmp(t->s_type,verifica_type(node->s_type))==0 ))) {   // printf("%s %s \n",t->s_type, node->s_type);
+            strcmp(t->s_type,verifica_type(node->s_type))==0 ))) {  
             printf("Line %s, col %s: Symbol %s already defined\n", node->irmao->line, node->irmao->col, node->irmao->valor);
             return;
         }
@@ -113,7 +107,6 @@ int verifica_repetidos(char * n){
 char * retornaTipo(no node){
     for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
         for(node_t auxi = aux->tab; auxi!=NULL; auxi=auxi->next){
-            
             if(auxi->valor!=NULL && node->valor!=NULL){
             if (strcmp(auxi->valor,node->valor)==0)return auxi->s_type;   
             } 
@@ -121,7 +114,7 @@ char * retornaTipo(no node){
     }
 }
 
-
+//Imprime as tabelas
 void imprime_tabela(){
     for(tabela aux = tabela_simbolos; aux!=NULL; aux=aux->next){
         printf("===== %s %s Symbol Table =====\n", aux->type, aux->nome);
@@ -135,7 +128,7 @@ void imprime_tabela(){
 
 
 
-//mudei aquiii
+//Procura tabela consoante o nome.
 tabela procura_tab(char * n){
     tabela i = tabela_simbolos;
     tabela aux = NULL;
@@ -168,16 +161,16 @@ void insere_elemento(char * valor, char * s_type, char * param_types, char * par
     n_node->s_type = s_type;
     n_node->next = NULL;
     if (param_types) {
-        n_node->param_types = param_types;
+        n_node->param_types = (char*)strdup(param_types);
     }
     else {
-        n_node->param_types = "";
+        n_node->param_types = (char*)strdup("");
     }
     if (param) {
-        n_node->param = param;
+        n_node->param = (char*)strdup(param);
     }
     else {
-        n_node->param = "";
+        n_node->param = (char*)strdup("");
     }
     tabela_t->tab = n_node;
 }
@@ -185,15 +178,11 @@ void insere_elemento(char * valor, char * s_type, char * param_types, char * par
 void novo_metodo(char *nome, char * valor, char ** array_de_parametros, char * tipo){
     tabela node = calloc(1,sizeof(table));
     node->type = (char*)calloc((strlen("Method")+1), sizeof(char));
-    strcpy(node->type, "Method");
+    node->type = (char*)strdup("Method");
     node->nome=nome;
     node->c_nome=valor;
     node->array_params=array_de_parametros;
     
-   /* for(int i=0; i<30 && array_de_parametros[i]!=NULL;i++){
-        printf("%s ",array_de_parametros[i]);
-    }printf("\n");*/
-
     tabela h = tabela_simbolos;
     if (h == NULL) {
         tabela_simbolos = node;
@@ -238,7 +227,7 @@ char * verificaAmbiguidade(char *nome , char **params){
             
         }
     }
-    //printf(" %d  %d\n", controla_diferencas, controla_diferencas_iguais);
+  
     if(conta>1){
         return "method";
     }
@@ -250,8 +239,7 @@ int Diferenca_compativeis(char ** ParamT, char ** ParamC){
     int contador = 0;
     for(int i = 1; i <= numP;i++){
         if(strcmp(ParamT[i],ParamC[i])!=0){
-            if(strcmp(ParamT[i],"int")==0 && strcmp(ParamC[i],"double")==0
-             /*strcmp(ParamT[i],"double")==0 && strcmp(ParamC[i],"int")==0*/)contador++;
+            if(strcmp(ParamT[i],"int")==0 && strcmp(ParamC[i],"double")==0)contador++;
             else{
                 return -1;
             }
@@ -280,7 +268,7 @@ int Diferenca_reais(char ** ParamT, char ** ParamC){
 
 char* procura_tabela(no node, char * tab){
     char * nome = node->valor;
-    //printf("%s   ", node->id);
+    
     tabela aux = NULL;
     node_t aux_node = NULL;
     char string[500] = " - ";

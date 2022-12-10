@@ -2385,7 +2385,7 @@ int main(int argc, char *argv[]){
 
     }else{
 			flagYacc = true;
-			flag = false;
+			flag = true;
 			yyparse();
 			if(flagErro == true){
 				verifica(raiz);
