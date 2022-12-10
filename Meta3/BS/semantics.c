@@ -267,7 +267,7 @@ long double calculaPotencia(double x, long double y){
     for(i=0; i<y;i++){
         p=p*x;
     }
-    //printf("%d  %Lf  %Lf\n", i,-y,p);
+   
     return p;
 }
 
